@@ -3,33 +3,57 @@
 
 set -e
 
-ivyjar="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"
-tmpdir=$(mktemp -d -t jrun)
-scalaVersion="2.9.1"
+jfetch_debug=0
+[[ -n "$JRUN_DEBUG" ]] && jfetch_debug=1
 
-fetch () {
+ivyjar_path=~/.jrun/lib/ivy.jar
+ivyjar_url="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"
+ivy_dynamic_revision="latest.release"
+tmpdir=$(mktemp -d -t jrun)
+scalaVersion="2.9.0-1"
+
+ensure_jar () {
+  local path="$1"
+  local url="$2"
+  
+  [[ -f "$path" ]] || {
+    dir=$(dirname "$path")
+    [[ -d "$dir" ]] || mkdir -p "$dir"
+    
+    curl -s -o "$path" "$url"
+  }
+}
+
+log-exec () {
+  local args="$@"
+  (( $jfetch_debug )) && printf "[exec] %s\n" "${args[@]}"
+
+  "$@" &>/dev/null
+}
+
+fetch3 () {
   local org="$1"
   local module="$2"
   local revision="$3"
+  local tmpfile=$(mktemp -t jrun)
 
-  java \
-    -jar "$ivyjar" \
+  log-exec java \
+    -jar "$ivyjar_path" \
     -types jar \
     -dependency "$org" "$module" "$revision" \
-    -cachepath "$tmpdir/cachepath" &> "$tmpdir/error.log"
+    -cachepath "$tmpfile"
   
-  if [[ $? ]]; then
-    cat "$tmpdir/cachepath"
-  else
-    cat "$tmpdir/error.log" 1>&2
-  fi
+  [[ $? ]] && cat "$tmpfile"
 }
 
-versionParser () {
+fetch () {
   (
+    SAVED_IFS="$IFS"
     IFS="%"
-    echo "$@" | tr -d ' ' | read -a fields
+    echo "$1" | tr -d ' ' | read -a fields
+    IFS="$SAVED_IFS"
   
+    # "${fields[#]}"  ${#fields[@]}
     local organization="${fields[0]}"
     local module="${fields[1]}"
     local revision="";
@@ -40,8 +64,11 @@ versionParser () {
     else
       revision="${fields[2]}"
     fi
+    
+    [[ -n "$revision" ]] || revision="$ivy_dynamic_revision"
   
-    echo "$organization $module $revision"
+    (( $jfetch_debug )) && printf "[fetch] %s %% %s %% %s\n" $organization $module $revision 1>&2
+    fetch3 $organization $module $revision
   )
 }
 
@@ -59,7 +86,9 @@ mkString-stdin () {
   done
 }
 
-for arg; do fetch "$arg" ; done | mkString-stdin :
+ensure_jar "$ivyjar_path" "$ivyjar_url"
+
+for arg; do fetch "$arg" ; done | echo $(mkString-stdin :)
 
 # 
 # for arg; do
