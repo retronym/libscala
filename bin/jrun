@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+
+set -e
+
+jrun_home=${JRUN_HOME:-~/.jrun}
+jrun_apps="$jrun_home/apps"
+
+[[ -d "$jrun_apps" ]] || mkdir -p "$jrun_apps"
+
+url="$1"
+app_path=$(printf "$1\n" | perl -pe 's#^.*?:/*##;' | tr -dc '[:alnum:]./' )
+app_home="$jrun_apps/$app_path"
+
+[[ -d "$app_home" ]] || mkdir -p "$app_home"
+
+echo "$app_home"
