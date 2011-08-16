@@ -1,0 +1,162 @@
+#!/usr/bin/env bash
+#
+
+set -e
+
+ivyjar="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"
+tmpdir=$(mktemp -d -t jrun)
+scalaVersion="2.9.1"
+
+fetch () {
+  local org="$1"
+  local module="$2"
+  local revision="$3"
+
+  java \
+    -jar "$ivyjar" \
+    -types jar \
+    -dependency "$org" "$module" "$revision" \
+    -cachepath "$tmpdir/cachepath" &> "$tmpdir/error.log"
+  
+  if [[ $? ]]; then
+    cat "$tmpdir/cachepath"
+  else
+    cat "$tmpdir/error.log" 1>&2
+  fi
+}
+
+versionParser () {
+  (
+    IFS="%"
+    echo "$@" | tr -d ' ' | read -a fields
+  
+    local organization="${fields[0]}"
+    local module="${fields[1]}"
+    local revision="";
+
+    if [[ "$module" == "" ]]; then
+      module="${fields[2]}_${scalaVersion}"
+      revision="${fields[3]}"
+    else
+      revision="${fields[2]}"
+    fi
+  
+    echo "$organization $module $revision"
+  )
+}
+
+mkString-stdin () {
+  local sep="$1"
+  local first=1
+
+  while read line; do
+    if (( $first )); then
+      first=0
+      printf "%s" "$line"
+    else
+      printf "${sep}%s" "$line"
+    fi
+  done
+}
+
+for arg; do fetch "$arg" ; done | mkString-stdin :
+
+# 
+# for arg; do
+#   jar=$(fetch "$arg")
+#   
+#   
+#   if [[ "$fetchedCP" == "" ]]; then
+#     fetchedCP="$out"
+#   else
+#     fetchedCP="${fetchedCP}:${out}"
+#   fi
+# done
+# 
+# echo $fetchedCP
+# 
+
+# 
+# BASEDIR=$(cd $(dirname $0)/.. ; pwd)
+# 
+# declare -a java_args
+# declare -a ivy_args
+# declare -a prog_args
+# 
+# 
+# DynamicRevision="latest.integration"
+# 
+# while [ $# -gt 0 ]; do
+#   case "$1" in
+#     -D*)
+#       java_args=("${java_args[@]}" "$1")
+#       shift
+#       ;;
+#     -J*)
+#       java_args=("${java_args[@]}" "${1:2}")
+#       shift
+#       ;;
+#     -help)
+#       java -jar "$BASEDIR/ivy.jar" -?
+#       exit 0
+#       ;;
+#     -debug | -verbose | -warn)
+#       ivy_args=("${ivy_args[@]}" $1)
+#       shift
+#       ;;
+#     -scala)
+#       java_args=("${java_args[@]}" "-Dscala.version=$2")
+#       shift 2
+#       ;;
+#     -dynamic)
+#       DynamicRevision="latest.${2/#latest.//}"
+#       shift 2
+#       ;;
+#     *)
+#       prog_args=("${prog_args[@]}" "$1")
+#       shift
+#       ;;
+#   esac
+# done
+# 
+# # reset "$@" to the remaining args
+# set -- "${prog_args[@]}"
+# 
+# TMP=$(mktemp -d -t fetch)
+# 
+# function fetchOne {
+#   if [[ $# -eq 2 ]]; then
+#     args="$@ $DynamicRevision"
+#   else
+#     args="$@"
+#   fi
+#   
+#   java \
+#     "${java_args[@]}" \
+#     -Divy.default.settings.dir="$BASEDIR/ivy" \
+#     -jar $BASEDIR/ivy.jar \
+#     -settings $BASEDIR/ivy/ivysettings.xml \
+#     "${ivy_args[@]}" \
+#     -dependency $args \
+#     -cachepath $TMP/cachepath &> $TMP/error
+#   
+#   if [ $? ]; then
+#     cat $TMP/cachepath
+#   else
+#     cat $TMP/error 1>&2
+#   fi
+# }
+# 
+# fetchedCP=""
+# 
+# for arg in "$@"
+# do
+#   out=$(fetchOne $arg)
+#   if [[ "$fetchedCP" == "" ]]; then
+#     fetchedCP="$out"
+#   else
+#     fetchedCP="${fetchedCP}:${out}"
+#   fi
+# done
+# 
+# echo $fetchedCP
