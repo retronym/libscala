@@ -1,0 +1,30 @@
+<!-- <ivysettings>
+  <settings defaultResolver="default"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-public.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-shared.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-local.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-main-chain.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-default-chain.xml"/>
+</ivysettings> -->
+<ivysettings>
+  <include url="${ivy.default.settings.dir}/ivysettings-public.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-shared.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-local.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-main-chain.xml"/>
+  <include url="${ivy.default.settings.dir}/ivysettings-default-chain.xml"/>
+
+  <settings defaultResolver="jrun-chain"/>
+	<resolvers>
+    <!-- <ivyrep name="public" ivyroot="http://ivyrep.jayasoft.org/" /> -->
+    <!-- <ivyrep name="typesafe" ivyroot="http://typesafe.artifactoryonline.com/typesafe/ivy-releases/" /> -->
+    <!-- <ibiblio name="ibiblio"/> -->
+		<ibiblio name="scala-tools-releases" m2compatible="true" root="http://scala-tools.org/repo-releases/"/>
+		<ibiblio name="scala-tools-snapshots" m2compatible="true" root="http://scala-tools.org/repo-snapshots/"/>
+		<chain name="jrun-chain" returnFirst="true" checkmodified="true">
+      <!-- <resolver ref="local"/> -->
+      <!-- <resolver ref="ibiblio"/> -->
+			<resolver ref="scala-tools-releases"/>
+			<resolver ref="scala-tools-snapshots"/>
+		</chain>
+	</resolvers>
+</ivysettings>

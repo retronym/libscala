@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 
-set -e
+. ~/.jrun/lib/shared.sh
 
 jrun_home=${JRUN_HOME:-~/.jrun}
 jrun_apps="$jrun_home/apps"

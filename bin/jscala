@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+
+. ~/.jrun/lib/shared.sh
+jrunInit
+
+onExit () {
+  [[ -n "$saved_stty" ]] && stty $saved_stty
+}
+# to reenable echo if we are interrupted before completing.
+trap onExit INT
+saved_stty=$(stty -g 2>/dev/null)
+unset revision
+
+# The leading : in :achs suppresses some errors. Each letter is a valid
+# option. If an option takes an argument, a colon follows it, e.g.
+# it would be :ach:s if -h took an argument.
+while getopts :r:s: opt; do
+  case $opt in
+    r) revision="$opt" ;;
+    s) revision="latest.snapshot" ;;
+  esac
+done
+
+# This removes all the options from $@, as getopts doesn't touch it.
+# After this, "$@" contains the non-option arguments.
+shift $((OPTIND-1))
+
+rev="org.scala-lang % scala-compiler % ${revision:-2.9.0-1}"
+execRunner java -cp $(jfetch $rev) scala.tools.nsc.MainGenericRunner -usejavacp "$@"

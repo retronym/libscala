@@ -1,191 +1,133 @@
 #!/usr/bin/env bash
 #
 
-set -e
+[[ -d "$JRUN_HOME" ]] || [[ -d ~/.jrun ]] || { echo "JRUN_HOME must be set, or ~/.jlib exist."; exit 1; }
 
-jfetch_debug=0
-[[ -n "$JRUN_DEBUG" ]] && jfetch_debug=1
+. ~/.jrun/lib/shared.sh
+jrunInit
 
-ivyjar_path=~/.jrun/lib/ivy.jar
+ivyjar_path="$jrun_home/lib/ivy.jar"
 ivyjar_url="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"
-ivy_dynamic_revision="latest.release"
 tmpdir=$(mktemp -d -t jrun)
-scalaVersion="2.9.0-1"
+scalaVersion="2.9.1.RC4"
 
 ensure_jar () {
   local path="$1"
   local url="$2"
   
   [[ -f "$path" ]] || {
-    dir=$(dirname "$path")
-    [[ -d "$dir" ]] || mkdir -p "$dir"
-    
+    mkdir -p "$(dirname "$path")" &&
     curl -s -o "$path" "$url"
   }
 }
 
-log-exec () {
-  local args="$@"
-  (( $jfetch_debug )) && printf "[exec] %s\n" "${args[@]}"
-
-  "$@" &>/dev/null
-}
-
+# -main <main>                 the FQCN of the main class to launch
+# -args <args>                 the arguments to give to the launched process
+# -cp <cp>                     extra classpath to use when launching process
 fetch3 () {
   local org="$1"
   local module="$2"
   local revision="$3"
-  local tmpfile=$(mktemp -t jrun)
+  local cachepath=$(mktemp -t jrun)
+  local args=$(cat <<EOM
+java
+-Divy.settings.dir=$jrun_home/lib
+-jar $ivyjar_path
+-types jar
+-settings $jrun_home/lib/ivysettings.xml
+-dependency $org $module $revision
+-cachepath $cachepath
+EOM
+  )
 
-  log-exec java \
-    -jar "$ivyjar_path" \
-    -types jar \
-    -dependency "$org" "$module" "$revision" \
-    -cachepath "$tmpfile"
-  
-  [[ $? ]] && cat "$tmpfile"
+  $args >"$jrun_home/last-output.log"
+  cat "$cachepath"
 }
 
-fetch () {
-  # (
-    SAVED_IFS="$IFS"
-    IFS="%"
-    echo "$1" | tr -d ' ' | read -a fields
-    IFS="$SAVED_IFS"
-  
-    # "${fields[#]}"  ${#fields[@]}
-    local organization="${fields[0]}"
-    local module="${fields[1]}"
-    local revision="";
+split-artifact-string () {
+  local scalaVersion="$1"
+  local string="$2"
+  local SAVED_IFS="$IFS"
 
-    if [[ "$module" == "" ]]; then
-      module="${fields[2]}_${scalaVersion}"
-      revision="${fields[3]}"
-    else
-      revision="${fields[2]}"
-    fi
-    
-    [[ -n "$revision" ]] || revision="$ivy_dynamic_revision"
-  
-    (( $jfetch_debug )) && printf "[fetch] %s %% %s %% %s\n" $organization $module $revision 1>&2
-    fetch3 $organization $module $revision
-  # )
+  IFS="%"
+  echo "$string" | tr -d ' ' | read -a fields
+  IFS="$SAVED_IFS"
+
+  local org="${fields[0]}"
+  local artifact="${fields[1]}"
+  local revision=""
+
+  if [[ "$artifact" == "" ]]; then
+    module="${fields[2]}_${scalaVersion}"
+    revision="${fields[3]}"
+  else
+    revision="${fields[2]}"
+  fi
+
+  echo "$org $artifact $revision"
 }
 
-mkString-stdin () {
-  local sep="$1"
-  local first=1
-
-  while read line; do
-    if (( $first )); then
-      first=0
-      printf "%s" "$line"
-    else
-      printf "${sep}%s" "$line"
-    fi
-  done
-}
-
-ensure_jar "$ivyjar_path" "$ivyjar_url"
-
-for arg; do fetch "$arg" ; done | echo $(mkString-stdin :)
-
-# 
-# for arg; do
-#   jar=$(fetch "$arg")
-#   
-#   
-#   if [[ "$fetchedCP" == "" ]]; then
-#     fetchedCP="$out"
-#   else
-#     fetchedCP="${fetchedCP}:${out}"
-#   fi
-# done
-# 
-# echo $fetchedCP
-# 
-
-# 
-# BASEDIR=$(cd $(dirname $0)/.. ; pwd)
-# 
-# declare -a java_args
-# declare -a ivy_args
-# declare -a prog_args
-# 
-# 
-# DynamicRevision="latest.integration"
-# 
-# while [ $# -gt 0 ]; do
-#   case "$1" in
-#     -D*)
-#       java_args=("${java_args[@]}" "$1")
-#       shift
-#       ;;
-#     -J*)
-#       java_args=("${java_args[@]}" "${1:2}")
-#       shift
-#       ;;
-#     -help)
-#       java -jar "$BASEDIR/ivy.jar" -?
-#       exit 0
-#       ;;
-#     -debug | -verbose | -warn)
-#       ivy_args=("${ivy_args[@]}" $1)
-#       shift
-#       ;;
-#     -scala)
-#       java_args=("${java_args[@]}" "-Dscala.version=$2")
-#       shift 2
-#       ;;
-#     -dynamic)
-#       DynamicRevision="latest.${2/#latest.//}"
-#       shift 2
-#       ;;
-#     *)
-#       prog_args=("${prog_args[@]}" "$1")
-#       shift
-#       ;;
-#   esac
-# done
-# 
-# # reset "$@" to the remaining args
-# set -- "${prog_args[@]}"
-# 
-# TMP=$(mktemp -d -t fetch)
-# 
-# function fetchOne {
-#   if [[ $# -eq 2 ]]; then
-#     args="$@ $DynamicRevision"
-#   else
-#     args="$@"
-#   fi
-#   
-#   java \
-#     "${java_args[@]}" \
-#     -Divy.default.settings.dir="$BASEDIR/ivy" \
-#     -jar $BASEDIR/ivy.jar \
-#     -settings $BASEDIR/ivy/ivysettings.xml \
-#     "${ivy_args[@]}" \
-#     -dependency $args \
-#     -cachepath $TMP/cachepath &> $TMP/error
-#   
-#   if [ $? ]; then
-#     cat $TMP/cachepath
-#   else
-#     cat $TMP/error 1>&2
-#   fi
+# mkString-stdin () {
+#   local sep="$1"
+#   shift
+#   local savedIFS="$IFS"
+#   IFS="$sep"
+#   echo "$*"
+#   IFS="$savedIFS"
 # }
 # 
-# fetchedCP=""
+# mkString-stdin () {
+#   local sep="$1"
+#   local first=1
 # 
-# for arg in "$@"
-# do
-#   out=$(fetchOne $arg)
-#   if [[ "$fetchedCP" == "" ]]; then
-#     fetchedCP="$out"
-#   else
-#     fetchedCP="${fetchedCP}:${out}"
-#   fi
-# done
+#   while read line; do
+#     if (( $first )); then
+#       first=0
+#       printf "%s" "$line"
+#     else
+#       printf "${sep}%s" "$line"
+#     fi
+#   done
+# }
 # 
-# echo $fetchedCP
+# map () {
+#   local fxn="$@"
+# 
+#   while read line; do
+#     $fxn $line
+#   done
+# }
+# 
+# filter () {
+#   local fxn="$@"
+# 
+#   while read line; do
+#     if $fxn $line; then
+#       echo "$line"
+#     fi
+#   done
+# }
+# 
+# collect () {
+#   local fxn="$@"
+# 
+#   while read line; do
+#     result=$($fxn $line)
+#     if [[ -n "$result" ]]; then
+#       echo "$result"
+#     fi
+#   done
+# }
+# 
+# 
+# 
+# 
+# ensure_jar "$ivyjar_path" "$ivyjar_url" && {
+#   
+#   
+#   
+#   
+#   for arg; do 
+#     fetch3 $(split-artifact-string "$scalaVersion" "$arg")
+#   done | mkString-stdin :
+# }
