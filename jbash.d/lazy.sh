@@ -1,6 +1,9 @@
 # lazy vals
 #
 
+# Create a lazy val.  The first argument is the name,
+# the remainder are the thunk to execute.  The value is
+# stored in <name>_value and is marked readonly.
 lazyval () {
   local name="$1"
   shift
@@ -8,25 +11,11 @@ lazyval () {
   local fxn=$(cat <<EOM
 $name () {
   [[ -z "\$${name}_value" ]] && ${name}_value="\$(eval ${args[@]})"
+  readonly "${name}_value"
   echo "\$${name}_value"
 }
 EOM
   )
-  echo "$fxn"
+  jlog "[lazyval] $fxn"
   eval "$fxn"
 }
-# readonly "${name}_value"
-
-
-# "lazy vals"
-# jbash_path_separator=""
-# pathSeparator () {
-#   [[ -z "$jbash_path_separator" ]] && {
-#     jbash_path_separator=$(java-property path.separator)
-#     readonly jbash_path_separator
-#   }
-#   echo "$jbash_path_separator"
-# }
-# javaClassPath () {
-#   java-property java.class.path
-# }

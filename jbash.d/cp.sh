@@ -4,29 +4,9 @@
 jbashClasspath=""
 
 # "lazy vals"
-jbash_path_separator=""
-pathSeparator () {
-  [[ -z "$jbash_path_separator" ]] && {
-    jbash_path_separator=$(java-property path.separator)
-    readonly jbash_path_separator
-  }
-  echo "$jbash_path_separator"
-}
-javaClassPath () {
-  java-property java.class.path
-}
-
-# Given a program which can be found on the path,
-# gives its assessment of where its "home" is, which
-# is to say, the directory with the bin directory.
-program-home () {
-  local program=$(which "$1") && ( cd $(dirname $program)/.. && pwd )
-}
-
-run-code () {
-  jlog "[run] $@"
-  "$@"
-}
+lazyval pathSeparator java-property path.separator
+lazyval javaClassPath java-property java.class.path
+lazyval sunBootClassPath java-property sun.boot.class.path
 
 # cp-signatures java.util.Map
 #
@@ -56,10 +36,6 @@ cp-star () {
 
 cp-join () {
   mkString $pathSeparator "$@"
-}
-
-cp-boot-classpath () {
-  java-property sun.boot.class.path
 }
 
 cp-find-jar () {

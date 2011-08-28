@@ -12,3 +12,7 @@ isSet () {
     [[ "x${!1}" != "x" ]]
   }
 }
+
+for arg in strings lazy; do
+  . "$jbash_sources/$arg.sh"
+done

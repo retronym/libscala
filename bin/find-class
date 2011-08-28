@@ -4,8 +4,11 @@
 # given a classname, echo the jar or dir where it is found.
 #
 
-[[ -n "$JBASH_HOME" ]] && . "$JBASH_HOME/jbash"
-[[ -n "$jbash_home" ]] && . "$jbash_home/jbash"
+if [[ -n "$jbash_home" ]]; then
+  source "$jbash_home/jbash"
+elif [[ -n "$JBASH_HOME" ]]; then
+  source "${JBASH_HOME}/jbash"
+fi
 
 jbash_usage="[class class ...]"
 jbash_help=$(cat <<EOM

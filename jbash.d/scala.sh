@@ -3,6 +3,7 @@
 
 jbashScalaOpts=""
 jbashScalaPath="scala"
+# lazyval sunBootClassPath java-property sun.boot.class.path
 
 set-scala-opts () {
   jbashScalaOpts="$@"
