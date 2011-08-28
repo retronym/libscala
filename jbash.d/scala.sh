@@ -1,14 +1,14 @@
 # running scala
 #
 
-jutilsScalaOpts=""
-jutilsScalaPath="scala"
+jbashScalaOpts=""
+jbashScalaPath="scala"
 
 set-scala-opts () {
-  jutilsScalaOpts="$@"
+  jbashScalaOpts="$@"
 }
 set-scala-path () {
-  jutilsScalaPath="$1"
+  jbashScalaPath="$1"
 }
 
 scala-home () {
@@ -26,7 +26,7 @@ run-scalac () {
 }
 run-scala () {
   jlog "[run-scala] scala $@"
-  $jutilsScalaPath "$@"
+  $jbashScalaPath "$@"
 }
 
 run-scala-expr () {
@@ -38,15 +38,15 @@ run-scala-expr () {
   jlog "[run-scala-expr] $name in $dirname"
 
   ( builtin cd "$dirname" &&
-      run-scalac $jutilsScalaOpts -cp $jutilsClasspath "$file" && 
-      run-scala $jutilsScalaOpts -cp $jutilsClasspath "$name"
+      run-scalac $jbashScalaOpts -cp $jbashClasspath "$file" && 
+      run-scala $jbashScalaOpts -cp $jbashClasspath "$name"
   )
 }
 
 # Creates a java program and returns the name of the source file.
 wrap-scala-expr () {
-  local dir=$(mktemp -d -t jutils)
-  local name="jutils$RANDOM"
+  local dir=$(mktemp -d -t jbash)
+  local name="jbash$RANDOM"
   local file="$dir/$name.scala"
   jlog "[wrap-scala-expr] file $file"
   

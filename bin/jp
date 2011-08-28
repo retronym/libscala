@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# jpw: a javap wrapper
+# jp: a javap wrapper
 # Paul Phillips <paulp@improving.org>
 
 set -e

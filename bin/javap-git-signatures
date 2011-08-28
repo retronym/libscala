@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-#
-
-signatures () {
-  java -cp $JUTILS_HOME/.lib/javassist.jar javassist.tools.Dump $@ | grep ^signature: 2>&1
-}

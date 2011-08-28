@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
 
-jutils_auto_args=1
-source $(dirname $BASH_SOURCE)/../lib/jutils.sh
+jbash_auto_args=1
+source $(dirname $BASH_SOURCE)/../lib/jbash.sh
 
-jutils_usage="[path]"
-jutils_help=$(cat <<EOM
+jbash_usage="[path]"
+jbash_help=$(cat <<EOM
 Prints the classpath used by the scala runner at the given path.
 If given no argument, uses $(which scala).
 EOM

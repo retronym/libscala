@@ -1,7 +1,7 @@
 # classpath functions.
 #
 
-jutilsClasspath=""
+jbashClasspath=""
 
 pathSeparator () {
   java-property path.separator
@@ -33,7 +33,7 @@ run-code () {
 # ()Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
 # <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/lang/Object;
 cp-signatures () {
-  local cp=$(cp-join "$jutilsClasspath" "$jutils_home/.lib/javassist.jar" ".")
+  local cp=$(cp-join "$jbashClasspath" "$jbash_home/.lib/javassist.jar" ".")
   for arg; do
     path=$(cp-find-class "$arg")
     java -classpath "$cp" javassist.tools.Dump "$path" 2>&1 | grep ^signature: | sed 's/^signature: //;'
@@ -53,11 +53,11 @@ cp-boot-classpath () {
 }
 
 cp-find-jar () {
-  jutilsExtraJavaSource=$(whereClassSource)
-  # jutilsClasspath="$(cp-boot-classpath)"
+  jbashExtraJavaSource=$(whereClassSource)
+  # jbashClasspath="$(cp-boot-classpath)"
   run-java-expr "new WhereClass().findAll(\"$1\")"
   
-  jutilsExtraJavaSource=""
+  jbashExtraJavaSource=""
 }
 
 cp-find-class () {
@@ -66,7 +66,7 @@ cp-find-class () {
   [[ -f "$1" ]] && echo "$1" && return
   
   local container=$(cp-find-jar "$1")
-  local dir=$(mktemp -d -t jutils)
+  local dir=$(mktemp -d -t jbash)
   local path="$(echo "$1" | tr '.' '/' ).class"
   
   cp-extract "$container" "$path"
@@ -80,14 +80,14 @@ cp-extract () {
 append-classpath () {
   for arg in "$@"; do
     if [[ -n "$arg" ]]; then
-      if [[ -n "$jutilsClasspath" ]]; then
-        jutilsClasspath="$jutilsClasspath${pathSeparator}"
+      if [[ -n "$jbashClasspath" ]]; then
+        jbashClasspath="$jbashClasspath${pathSeparator}"
       fi
-      jutilsClasspath="$jutilsClasspath${arg}"
+      jbashClasspath="$jbashClasspath${arg}"
     fi
   done
     
-  jlog "[cp] append-classpath, now $jutilsClasspath"
+  jlog "[cp] append-classpath, now $jbashClasspath"
 }
 
 
@@ -117,7 +117,7 @@ directory-classnames () {
   )
 }
 jar-classnames () {
-  dir=$(mktemp -d -t jutils)
+  dir=$(mktemp -d -t jbash)
   jar="$1"
   [[ "$jar" == /* ]] || jar="$(pwd)/$1"
   

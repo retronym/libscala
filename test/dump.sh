@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
 
-# jutils_auto_args=1
-. jutils.sh
-jutils-init-args "$@"
-set -- "${jutils_args[@]}"
+# jbash_auto_args=1
+. jbash.sh
+jbash-init-args "$@"
+set -- "${jbash_args[@]}"
 
-# for arg in "$jutils_args"; do
-for arg in "${jutils_args[@]}"; do
+# for arg in "$jbash_args"; do
+for arg in "${jbash_args[@]}"; do
 # for arg; do  
   cp-find-class "$arg"
 done

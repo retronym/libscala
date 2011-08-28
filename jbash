@@ -1,0 +1,40 @@
+#!bash
+#
+# jbash - bash functions for use with the jvm
+#
+#   . /path/to/jbash      # normal way
+#   . /path/to/jbash -d   # debugging output
+#
+
+# If JBASH_DEBUG is non-empty, enable debugging
+jbash_debug=0
+[[ "x${JBASH_DEBUG}" == "x" ]] || jbash_debug=1
+for arg; do
+  if [[ $arg == -d ]] || [[ $arg == -debug ]]; then
+    jbash_debug=1;
+  fi
+done
+
+dirname_absolute () {
+  ( cd "$(dirname "$1")" && pwd )
+}
+
+# only source once; disabled
+# [[ "x${jbash_dollar0}" == "x" ]] || { jlog "Already set: $jbash_dollar0"; return; }
+
+declare jbash_sh="$BASH_SOURCE"
+declare jbash_sh_args="$@"
+# changing directory will alter relative paths, so note script dir up front
+declare jbash_sh_dir=$(dirname_absolute "$jbash_sh")
+declare jbash_home="${JBASH_HOME:-$jbash_sh_dir}"
+declare jbash_sources="$jbash_home/jbash.d"
+
+jlog () {
+  # avoid non-zero return hitting set -e with || true
+  (( $jbash_debug )) && printf "%s\n" "$@" 1>&2 || true
+}
+
+# source everything in jbash.d
+for arg in $jbash_sources/*.sh; do
+  jlog "[init] source $arg" && . "$arg"
+done

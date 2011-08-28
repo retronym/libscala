@@ -4,16 +4,16 @@
 # given a classname, echo the jar or dir where it is found.
 #
 
-. $JUTILS_HOME/jutils.sh
+[[ -n "$JBASH_HOME" ]] && . "$JBASH_HOME/jbash"
 
-jutils_usage="[class class ...]"
-jutils_help=$(cat <<EOM
+jbash_usage="[class class ...]"
+jbash_help=$(cat <<EOM
 For each given name, prints the jar or directory where it is found.
 The arguments can be classnames or paths to files.
 EOM
 )
-jutils-init-args "$@"
+jbash-command "$0" "$@"
 
-for arg; do 
+for arg in $jbash_args; do
   cp-find-class "$arg"
 done
