@@ -23,8 +23,9 @@ jar-classes () {
 
   ( cd "$dir" && cwd-files-ext class | foreach-stdin echo '$(quote %1)' '$(quote $(file-to-class %1))' )
 }
-cp-classes () {
-  
+# cp-classes () {
+#   
+# }
 
 # 
 #   for file in $(find . -name '*.class')

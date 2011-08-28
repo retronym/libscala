@@ -44,6 +44,12 @@ args-into-lines () {
   done
 }
 
+map-args () {
+  local mapFn="$1"
+  shift
+  for arg; do echo $($mapFn "$arg"); done
+}
+
 contains () {
   grep -q "$2" <<<"$1"
 }

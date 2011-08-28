@@ -3,8 +3,14 @@
 
 jbashClasspath=""
 
+# "lazy vals"
+jbash_path_separator=""
 pathSeparator () {
-  java-property path.separator
+  [[ -z "$jbash_path_separator" ]] && {
+    jbash_path_separator=$(java-property path.separator)
+    readonly jbash_path_separator
+  }
+  echo "$jbash_path_separator"
 }
 javaClassPath () {
   java-property java.class.path
