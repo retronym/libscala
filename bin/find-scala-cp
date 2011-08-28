@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+
+jutils_auto_args=1
+source $(dirname $BASH_SOURCE)/../lib/jutils.sh
+
+jutils_usage="[path]"
+jutils_help=$(cat <<EOM
+Prints the classpath used by the scala runner at the given path.
+If given no argument, uses $(which scala).
+EOM
+)
+
+program=${1:-$(which scala)}
+
+if [[ ! $(which $program) ]]; then
+  echo "No such file: $program"
+  exit 1
+fi
+
+set-scala-path "$program"
+set-scala-opts -nobootcp -usejavacp
+
+run-scala-expr 'sys.props("java.class.path")'

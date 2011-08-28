@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+#
+# jpw: a javap wrapper
+# Paul Phillips <paulp@improving.org>
+
+set -e
+script_dir=$(cd $(dirname $0) ; pwd)
+javassist="/soft/jar/javassist.jar"
+# scala="$script_dir/../bin/scala"
+# javassist="$script_dir/../lib/javassist.jar"
+
+# declare some arrays
+declare -a classes
+declare -a javap_args
+
+showInner=0
+showSigs=0
+
+run-javap () {
+  echo "# Running \"javap ${javap_args[@]} "$@"\" from $(pwd)"
+
+  javap ${javap_args[@]} "$@"
+}
+
+javap-file () {
+  local path="$1"
+  local dirname=$(dirname "$path")
+  local basename=$(basename "$path")
+  local class=${basename%%.class}
+  
+  pushd "$dirname" >/dev/null
+    
+  run-javap "$class"
+  (( $showInner )) && inner-classes "$class"
+  (( $showSigs  )) && signatures "$class"
+
+  popd >/dev/null
+}
+
+javap-class () {
+  run-javap $(classpath-arg) "$@"
+  (( $showInner )) && inner-classes $(classpath-arg) "$@"
+  (( $showSigs  )) && signatures "$@"
+}
+
+# printing inner classes only
+inner-classes () {
+  local seenInner=0
+  
+  run-javap -v "$@" | while read line; do
+    if [[ "$line" =~ version: ]]; then
+      return;
+    elif (( $seenInner )); then
+      echo "$line"
+    elif [[ "$line" =~ InnerClass ]]; then
+      echo "InnerClasses:"
+      seenInner=1
+    fi
+  done
+}
+
+signatures () {
+  # local class=${basename%%.class}
+  for arg in "$@"; do
+    echo "Signatures for $arg:"
+    echo java -classpath "$javassist:$classpath" javassist.tools.Dump "$arg"
+    java -classpath "$javassist:$classpath" javassist.tools.Dump "$arg" | grep ^signature: 2>&1
+  done
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -inner)
+      showInner=1
+      shift
+      ;;
+    -sig)
+      showSigs=1
+      shift
+      ;;
+    -*)
+      javap_args=("${javap_args[@]}" "$1")
+      shift
+      ;;
+    *)
+      classes=("${classes[@]}" "$1")
+      shift
+      ;;
+  esac
+done
+
+for arg in "${classes[@]}"; do
+  if [[ -f "$arg" ]]; then
+    javap-file "$arg"
+  else
+    javap-class "$arg"
+  fi
+done

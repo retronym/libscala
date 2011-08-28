@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+#
+# Give any number of dirs, jars, or classfiles
+# See the javap output with numbers squashed so the diff isn't ruined.
+
+set -e
+
+JAVAP="javap -verbose -private"
+GSED="gsed"
+
+classfiles () {
+  if [[ -n "$JPFILTER" ]]; then
+    find . -name '*.class' | grep $JPFILTER | sort
+  else
+    find . -name '*.class' | sort
+  fi
+}
+
+# Fun with removing digits and control characters
+jpclassname () {
+  # #123
+  # 123;
+  # 123\n
+  # ctrl chars.
+  $JAVAP "$1" | \
+    $GSED -e 's/#[[:digit:]]*/##/g' | \
+    $GSED -e 's/[[:digit:]]*[:]/##/g' | \
+    $GSED -e 's/[[:space:]][[:digit:]][[:digit:]]*$/##/g' | \
+    $GSED -e 's/[^([:print:]|[:space:])]//g'
+}
+
+jpclass () {
+  local file="$1"
+  local base="$(basename "$file")"
+  
+  if [[ -f "$file" ]]; then
+    pushd "$(dirname $file)" > /dev/null
+    classname=${base/\.class/}
+    jpclassname $classname
+    popd
+  fi
+}
+
+jpdir () {
+  pushd "$1" > /dev/null
+  
+  for file in $(classfiles); do
+    classname=${file/\.class/}
+    jpclassname $classname
+  done
+  
+  popd
+}
+
+jpjar () {
+  local jar="$1"
+  local dir=$(mktemp -d -t jpmany)
+  
+  pushd "$dir" > /dev/null
+  jar xf "$jar"
+  jpdir $(pwd)
+  popd
+  
+  rm -rf "$dir"
+}
+
+if [[ $# -eq 0 ]]; then
+  echo "Usage: $0 [dir/jar/classfile ...]"
+  exit 1
+fi
+
+for arg in "$@"
+do
+  if [[ -d "$arg" ]]; then
+    jpdir "$arg"
+  elif [[ -f "$arg" ]]; then
+    extension=${arg#*.}
+
+    if [[ "$extension" == "jar" ]]; then
+      jpjar "$arg"
+    elif [[ "$extension" == "class" ]]; then
+      jpclass "$arg"
+    fi
+  fi
+done

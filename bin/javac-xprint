@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+
+JAVAC=/soft/inst/java7/bin/javac
+CP=$1
+shift
+
+for arg in $@
+do
+  for file in $(find $arg -name '*.class' | grep -v '\$')
+  do
+    f2=${file#./}
+    classname=$(echo ${f2%.class} | tr / .)
+    echo $classname
+    $JAVAC -cp $CP -Xprint $classname &> /dev/null || {
+      $JAVAC -cp $CP -Xprint $classname
+    }
+  done
+done

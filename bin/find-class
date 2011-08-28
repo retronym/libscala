@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# find-class
+# given a classname, echo the jar or dir where it is found.
+#
+
+. $JUTILS_HOME/jutils.sh
+
+jutils_usage="[class class ...]"
+jutils_help=$(cat <<EOM
+For each given name, prints the jar or directory where it is found.
+The arguments can be classnames or paths to files.
+EOM
+)
+jutils-init-args "$@"
+
+for arg; do 
+  cp-find-class "$arg"
+done

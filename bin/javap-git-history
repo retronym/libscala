@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Prints a report on the history of a classfile, as inferred
+# from the git repository.
+
+path="$1"
+export GIT_PAGER=cat
+
+echo "Searching for changes to $path ..."
+revisions=$(git log --format=%h -- "$path" | perl -e 'print reverse <>')
+revisioncount=$(echo $revisions | wc -w)
+
+echo "Found $revisioncount candidate revisions."
+echo ""
+
+for rev in $revisions
+do
+  svnrev=$(git log -1 --format="%B" $rev)
+  gitrev=$(cd /repo/scala && git svn find-rev $svnrev)
+  tmpfile=$(mktemp -t java-git)
+  
+  git diff $rev^ $rev -- "$path" >"$tmpfile"
+  difflines=$(wc -l "$tmpfile" | awk '{ print $1 }')
+  
+  # if the diff is only two lines, it's empty,
+  # so this is a non-event wrt our javap filter.
+  if (( $difflines <= 2 )); then
+    echo "Dropping $svnrev, no change after applying javap filter."
+    revisioncount=$(($revisioncount-1))
+  else
+    echo "=== $svnrev ==="
+    echo ""
+    (cd /repo/scala && git log -1 $gitrev )
+    echo ""
+    echo ""
+    cat "$tmpfile"
+    echo ""
+  fi
+done
+
+echo ""
+echo "Found $revisioncount revisions of interest."
+echo ""
