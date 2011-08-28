@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# Format string
+
+while getopts :c:g:p: opt; do
+  case $opt in
+    c) command="$OPTARG" ;;
+    g) grep="$OPTARG" ;;
+    p) package="$OPTARG" ; packagepath=$(echo $package | tr '.' '/') ;;
+    :) echo "Option -$OPTARG requires an argument." >&2 ; exit 1 ;;
+    *) echo "Unrecognized argument $OPTARG" ; exit 1 ;;
+  esac
+done
+
+shift $((OPTIND-1))
+targets="$@"
+
+for target in $targets;
+do
+  traverse-source $(abspath $target)
+done
+

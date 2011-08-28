@@ -1,24 +1,18 @@
 #!/usr/bin/env bash
 #
-# find-class
-# given a classname, echo the jar or dir where it is found.
-#
+# class name -> class file
 
-if [[ -n "$jbash_home" ]]; then
-  source "$jbash_home/jbash"
-elif [[ -n "$JBASH_HOME" ]]; then
-  source "${JBASH_HOME}/jbash"
-fi
+source /r/jbash/jbash
 
 jbash_usage="[class class ...]"
 jbash_help=$(cat <<EOM
-For each given name, prints the jar or directory where it is found.
-The arguments can be classnames or paths to files.
+For each given class, prints the path to its classfile, which
+will be extracted from the jar if necessary.
 EOM
 )
 jbash-command "$0" "$@"
-echo "hello"
 
-for arg in $jbash_args; do
+for arg in "${jbash_args[@]}"; do
   cp-find-class "$arg"
 done
+

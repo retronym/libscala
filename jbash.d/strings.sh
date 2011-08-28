@@ -37,31 +37,3 @@ absolute-path () {
   fi
 }
 
-# print each arg on its own line, for pipelining
-args-into-lines () {
-  for arg in "$@"; do
-    printf "%s\n" "$arg"
-  done
-}
-
-map-args () {
-  local mapFn="$1"
-  shift
-  for arg; do echo $($mapFn "$arg"); done
-}
-
-contains () {
-  grep -q "$2" <<<"$1"
-}
-containsWhitespace () {
-  contains "$1" " "
-}
-maybeQuote () {
-  local arg="$1"
-
-  if containsWhitespace "$arg"; then
-    printf "\"%s\"\n" "$arg"
-  else
-    printf "%s\n" "$arg"
-  fi
-}

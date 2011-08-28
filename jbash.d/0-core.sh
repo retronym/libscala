@@ -13,6 +13,6 @@ isSet () {
   }
 }
 
-for arg in strings lazy; do
+for arg in 0-nodeps lazy; do
   . "$jbash_sources/$arg.sh"
 done

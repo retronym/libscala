@@ -2,8 +2,6 @@
 # functional-bash.sh
 # Author: Paul Phillips <paulp@improving.org>
 #
-# set scalabash_debug=true to see some debug output.
-#
 
 scalabash-help () {
   cat <<EOM
@@ -33,17 +31,23 @@ EOM
 # both sides.  See foreach-stdin for examples.
 bind-foreach () {
   local name="anon$RANDOM"
+  local cmd=$(jbash-percent-substitution "$@")
+
+  jlog "[debug] eval $name() { ( "$cmd"; ) }"
+
+  eval "$name() { ( "$cmd"; ) }"
+  echo $name
+}
+
+jbash-percent-substitution () {
   local cmd=""
-  
+
   for arg in $@; do
     arg1=$(echo "$arg" | sed -E 's/%([[:digit:]])/"$\1"/g;' | sed -E 's/([[:space:]]%[[:space:]])/ "$1" /g;')
     cmd="${cmd} $arg1"
   done
   
-  [[ $scalabash_debug ]] && echo "[debug] eval $name() { ( "$cmd"; ) }" >&2
-
-  eval "$name() { ( "$cmd"; ) }"
-  echo $name
+  echo "$cmd"
 }
 
 # Fail of a workaround, hopefully to be removed when I figure
@@ -55,9 +59,7 @@ bind-in-same-shell () {
   
   "$@" >$tmpfile
 
-  if [[ $scalabash_debug ]]; then
-    echo "[debug] eval \"$varname=$(cat $tmpfile)\"" >&2
-  fi
+  jlog "[debug] eval \"$varname=$(cat $tmpfile)\""
 
   eval "$varname=$(cat $tmpfile)"
 }
@@ -81,7 +83,7 @@ foreach-stdin () {
   local fxnname="foreach$RANDOM"
   bind-in-same-shell $fxnname bind-foreach "$@"
 
-  [[ $scalabash_debug ]] && echo "[debug] fxn=$(eval echo \$$fxnname)" >&2
+  jlog "[debug] fxn=$(eval echo \$$fxnname)"
   # now we find out the name of the anonymous function
   local fxn=$(eval echo \$$fxnname)
 

@@ -12,7 +12,7 @@
 for arg; do
   if [[ $arg == -d ]] || [[ $arg == -debug ]]; then
     jbash_debug=1;
-  elif [[ $arg == -d ]] || [[ $arg == -debug ]]; then
+  elif [[ $arg == -q ]] || [[ $arg == -quiet ]]; then
     jbash_debug=0;
   fi
 done
@@ -36,12 +36,12 @@ absolute_path () {
 # only source once; disabled
 # [[ "x${jbash_dollar0}" == "x" ]] || { jlog "Already set: $jbash_dollar0"; return; }
 
-declare jbash_sh="$BASH_SOURCE"
-declare jbash_sh_args="$@"
+declare -x jbash_sh="$BASH_SOURCE"
+declare -x jbash_sh_args="$@"
 # changing directory will alter relative paths, so note script dir up front
-declare jbash_sh_dir=$(absolute_dirname "$jbash_sh")
-declare jbash_home="${JBASH_HOME:-$jbash_sh_dir}"
-declare jbash_sources="$jbash_home/jbash.d"
+declare -x jbash_sh_dir=$(absolute_dirname "$jbash_sh")
+declare -x jbash_home="${JBASH_HOME:-$jbash_sh_dir}"
+declare -x jbash_sources="$jbash_home/jbash.d"
 
 jlog () {
   # avoid non-zero return hitting set -e with || true

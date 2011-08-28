@@ -14,23 +14,19 @@ _jbash_help () {
 _jbash_usage () {
   local usage="${jbash_usage:-No usage for $jbash_name.}"
   
-  echo "$usage"
+  echo "Usage: $jbash_program $usage"
   echo ""
 }
 
-_upvar() {
-    if unset -v "$1"; then           # Unset & validate varname
-        if (( $# == 2 )); then
-            eval $1=\"\$2\"          # Return single value
-        else
-            eval $1=\(\"\${@:2}\"\)  # Return array
-        fi
-    fi
+jbash-arg () {
+  local index="$1"
+  echo "${jbash_args[$index]}"
 }
 
 # handles standard args; sets jbash_args with residuals.
 jbash-command () {
-  _upvar jbash_program "$1"
+  # _jbash_upvar jbash_program $(basename "$1")
+  jbash_program=$(basename "$1")
   shift
   local saved="$@"
 
@@ -49,5 +45,6 @@ jbash-command () {
   jlog "[args]   in: $saved"
   jlog "[args]  out: $jbash_args"
   
-  _upvar jbash_args "$@"
+  jbash_args="$@"
+  # _jbash_upvar jbash_args "$@"
 }

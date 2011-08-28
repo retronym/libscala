@@ -2,11 +2,22 @@
 #
 
 jbashClasspath=""
+jbashClasspathArg () {
+  [[ -n "$jbashClasspath" ]] && echo "-classpath $jbashClasspath"
+}
+
+echoerr () {
+  echo "$@" >&2
+}
 
 # "lazy vals"
-lazyval pathSeparator java-property path.separator
-lazyval javaClassPath java-property java.class.path
-lazyval sunBootClassPath java-property sun.boot.class.path
+# lazyval pathSeparator java-property path.separator
+# lazyval javaClassPath java-property java.class.path
+# lazyval sunBootClassPath java-property sun.boot.class.path
+# 
+
+# danger danger
+shopt -s nullglob
 
 # cp-signatures java.util.Map
 #
@@ -26,16 +37,43 @@ cp-signatures () {
   done
 }
 
-cp-jars () {
-  ( IFS=$(pathSeparator) && for arg in $jbashClasspath ; do echo "$arg" ; done )
+cp-expand-star () {
+  if contains "$1" '*'; then
+    eval ls "$1" | mkString $(pathSeparator)
+  else
+    echo "$1"
+  fi
+}
+
+cp-split () {
+  local sep=$(pathSeparator)
+  local toSplit="$1"
+  
+  [[ -z "$sep" ]] && { echoerr "No path separator!"; return; }
+  
+  ( IFS="$sep"
+    for arg in "$toSplit" ; do 
+      echo "$arg"
+    done
+  )
 }
 
 cp-star () {
-  cp-join $(find "$@" -name '*.jar')
+  cp-join "$(find "$@" -name '*.jar')"
 }
 
 cp-join () {
-  mkString $pathSeparator "$@"
+  mkString-args $(pathSeparator) "$@"
+}
+
+cp-expand () {
+  for arg in $(cp-split); do
+    if contains "$arg" '*'; then
+      ls $arg
+    else
+      echo "$arg"
+    fi
+  done
 }
 
 cp-find-jar () {
@@ -67,7 +105,7 @@ append-classpath () {
   for arg in "$@"; do
     if [[ -n "$arg" ]]; then
       if [[ -n "$jbashClasspath" ]]; then
-        jbashClasspath="$jbashClasspath${pathSeparator}"
+        jbashClasspath="$jbashClasspath$(pathSeparator)"
       fi
       jbashClasspath="$jbashClasspath${arg}"
     fi
@@ -93,7 +131,7 @@ directory-classnames () {
   
   process () {
     path=${1%.class}
-    [[ ! $filter ]] || [[ $path =~ $filter ]] && echo ${path#./} | tr '/' '.'
+    [[ ! $filter && $path =~ $filter ]] && echo ${path#./} | tr '/' '.'
   }
   
   (
