@@ -5,18 +5,17 @@
 #
 
 _jbash_help () {
-  local nohelp="No help for $jbash_name."
+  local help="${jbash_help:-No help for $jbash_name.}"
 
-  [[ -n "$jbash_usage" ]] && { _jbash_usage ; echo ""; }
-  printf "%s\n" "${jbash_help:-$nohelp}"
+  _jbash_usage
+  echo "$help"
 }
 
 _jbash_usage () {
-  if [[ -n "$jbash_usage" ]]; then
-    printf "Usage: $jbash_name %s\n" "$jbash_usage"
-  else
-    echo "No usage for $jbash_name."
-  fi
+  local usage="${jbash_usage:-No usage for $jbash_name.}"
+  
+  echo "$usage"
+  echo ""
 }
 
 _upvar() {
@@ -37,9 +36,8 @@ jbash-command () {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-             -help) _jbash_help && exit 1 ;;
-            -usage) _jbash_usage && exit 1 ;;
-            -debug) _jbash_debug=1 && shift ;;
+          -h|-help) _jbash_help && exit 1 ;;
+         -d|-debug) _jbash_debug=1 && shift ;;
     -cp|-classpath) append-classpath "$2" && shift 2 ;;
                  *)
         jlog "[args] passing through argument $1" &&

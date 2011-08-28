@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 #
-# Create a "collection" from a specification.
-# The elements of the collection are lines of output.
-
-#!/usr/bin/env bash
-#
 # Format string
 
 set -e

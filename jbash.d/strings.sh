@@ -43,3 +43,19 @@ args-into-lines () {
     printf "%s\n" "$arg"
   done
 }
+
+contains () {
+  grep -q "$2" <<<"$1"
+}
+containsWhitespace () {
+  contains "$1" " "
+}
+maybeQuote () {
+  local arg="$1"
+
+  if containsWhitespace "$arg"; then
+    printf "\"%s\"\n" "$arg"
+  else
+    printf "%s\n" "$arg"
+  fi
+}

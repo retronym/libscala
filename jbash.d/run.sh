@@ -18,3 +18,14 @@ run-code () {
   "$@"
 }
 
+logAndRun () {
+  if (( $blib_debug )); then
+    # print the arguments one to a line, quoting any containing spaces
+    echo "# Executing command line:" && {
+      for arg; do maybeQuote "$arg"; done
+      echo ""
+    }
+  fi
+
+  "$@"
+}

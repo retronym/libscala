@@ -40,6 +40,10 @@ cp-signatures () {
   done
 }
 
+cp-jars () {
+  ( IFS=$(pathSeparator) && for arg in $jbashClasspath ; do echo "$arg" ; done )
+}
+
 cp-star () {
   cp-join $(find "$@" -name '*.jar')
 }

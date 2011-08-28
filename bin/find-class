@@ -5,6 +5,7 @@
 #
 
 [[ -n "$JBASH_HOME" ]] && . "$JBASH_HOME/jbash"
+[[ -n "$jbash_home" ]] && . "$jbash_home/jbash"
 
 jbash_usage="[class class ...]"
 jbash_help=$(cat <<EOM
@@ -13,6 +14,7 @@ The arguments can be classnames or paths to files.
 EOM
 )
 jbash-command "$0" "$@"
+echo "hello"
 
 for arg in $jbash_args; do
   cp-find-class "$arg"
