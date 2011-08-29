@@ -30,9 +30,11 @@ cwd-classes () {
 jar-classes () {
   local source="$1"
   local dir=$(jbash-explode "$source")
-  jbash_source="$source"
 
-  ( cd "$dir" && cwd-files-ext class | foreach-stdin echo '$(quote %1)' '$(quote $(file-to-class %1))' )
+  jbash_source="$source" &&
+  ( cd "$dir" && cwd-files-ext class | foreach-stdin echo '$(quote %1)' )
+
+  # ( cd "$dir" && cwd-files-ext class | foreach-stdin echo '$(quote %1)' '$(quote $(file-to-class %1))' )
 }
 
 # 

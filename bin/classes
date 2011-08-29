@@ -1,22 +1,41 @@
 #!/usr/bin/env bash
 #
-# Format string
 
-while getopts :c:g:p: opt; do
-  case $opt in
-    c) command="$OPTARG" ;;
-    g) grep="$OPTARG" ;;
-    p) package="$OPTARG" ; packagepath=$(echo $package | tr '.' '/') ;;
-    :) echo "Option -$OPTARG requires an argument." >&2 ; exit 1 ;;
-    *) echo "Unrecognized argument $OPTARG" ; exit 1 ;;
-  esac
-done
+source /r/jbash/jbash
 
-shift $((OPTIND-1))
-targets="$@"
+jbash_usage=""
+jbash_help=$(cat <<EOM
+Prints each class found on the given classpath.
+EOM
+)
+jbash-command "$0" "$@"
 
-for target in $targets;
-do
-  traverse-source $(abspath $target)
-done
-
+echo "$jbashClasspath"
+cp-split "$jbashClasspath"
+# cp-expand "$jbashClasspath"
+ # | foreach-stdin classnames %1
+# 
+# for arg in "${jbash_args[@]}"; do
+#   cp-find-class "$arg"
+# done
+# 
+# 
+# 
+# while getopts :c:g:p: opt; do
+#   case $opt in
+#     c) command="$OPTARG" ;;
+#     g) grep="$OPTARG" ;;
+#     p) package="$OPTARG" ; packagepath=$(echo $package | tr '.' '/') ;;
+#     :) echo "Option -$OPTARG requires an argument." >&2 ; exit 1 ;;
+#     *) echo "Unrecognized argument $OPTARG" ; exit 1 ;;
+#   esac
+# done
+# 
+# shift $((OPTIND-1))
+# targets="$@"
+# 
+# for target in $targets;
+# do
+#   traverse-source $(abspath $target)
+# done
+# 

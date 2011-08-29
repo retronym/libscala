@@ -26,6 +26,23 @@ mkString-args () {
   args-into-lines "$@" | mkString "$sep"
 }
 
+string-chars () {
+  local exprcmd i
+  
+  exprcmd=expr
+  have gexpr && exprcmd=gexpr
+
+  for str; do
+    i=1
+    while (( i <= ${#str} ))
+    do
+      char=$($exprcmd substr "$str" $i 1)
+      echo "$char"
+      (( i += 1 ))
+    done
+  done
+}
+
 absolute-path () {
   if [[ -d "$1" ]]; then
     ( cd "$1" ; pwd )

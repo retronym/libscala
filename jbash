@@ -10,9 +10,9 @@
 
 [[ "x${JBASH_DEBUG}" == "x" ]] || jbash_debug=1
 for arg; do
-  if [[ $arg == -d ]] || [[ $arg == -debug ]]; then
+  if [[ $arg == -d || $arg == -debug ]]; then
     jbash_debug=1;
-  elif [[ $arg == -q ]] || [[ $arg == -quiet ]]; then
+  elif [[ $arg == -q || $arg == -quiet ]]; then
     jbash_debug=0;
   fi
 done
@@ -45,7 +45,11 @@ declare -x jbash_sources="$jbash_home/jbash.d"
 
 jlog () {
   # avoid non-zero return hitting set -e with || true
-  (( $jbash_debug )) && printf "%s\n" "$@" 1>&2 || true
+  (( $jbash_debug )) && echo "$@" 1>&2 || true
+}
+eval-and-jlog () {
+  jlog "[eval]" "$@"
+  eval "$@"
 }
 
 # source everything in jbash.d

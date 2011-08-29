@@ -47,15 +47,12 @@ cp-expand-star () {
 
 cp-split () {
   local sep=$(pathSeparator)
-  local toSplit="$1"
   
-  [[ -z "$sep" ]] && { echoerr "No path separator!"; return; }
+  [[ -z "$sep" ]] && { echoerr "No path separator!"; return 1; }
   
-  ( IFS="$sep"
-    for arg in "$toSplit" ; do 
-      echo "$arg"
-    done
-  )
+  while IFS="$sep" read -r elem; do 
+    echo "$elem"
+  done <<< "$1"
 }
 
 cp-star () {
@@ -67,7 +64,7 @@ cp-join () {
 }
 
 cp-expand () {
-  for arg in $(cp-split); do
+  for arg in $(cp-split "$1"); do
     if contains "$arg" '*'; then
       ls $arg
     else
@@ -125,21 +122,26 @@ append-classpath () {
 # }
 # 
 
+# directory-classnames () {
+#   local dir="$1"
+#   local filter="$2"
+#   
+#   process () {
+#     path=${1%.class}
+#     [[ ! $filter && $path =~ $filter ]] && echo ${path#./} | tr '/' '.'
+#   }
+#   
+#   (
+#     cd "$dir" && 
+#       find . -name '*.class' | \
+#       while read file; do process "$file" ; done
+#   )
+# }
+
 directory-classnames () {
-  local dir="$1"
-  local filter="$2"
-  
-  process () {
-    path=${1%.class}
-    [[ ! $filter && $path =~ $filter ]] && echo ${path#./} | tr '/' '.'
-  }
-  
-  (
-    cd "$dir" && 
-      find . -name '*.class' | \
-      while read file; do process "$file" ; done
-  )
+  ( cd "$1" && find . -name '*.class' | foreach-stdin file-to-class %1 )
 }
+
 jar-classnames () {
   dir=$(mktemp -d -t jbash)
   jar="$1"
@@ -150,7 +152,11 @@ jar-classnames () {
 
 classnames () {
   for arg; do
-    directory-classnames "$arg"
+    if [[ $arg == *.jar ]]; then
+      jar-classnames "$arg"
+    else
+      directory-classnames "$arg"
+    fi
   done
 }
 

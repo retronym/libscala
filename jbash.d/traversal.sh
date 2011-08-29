@@ -33,9 +33,7 @@ bind-foreach () {
   local name="anon$RANDOM"
   local cmd=$(jbash-percent-substitution "$@")
 
-  jlog "[debug] eval $name() { ( "$cmd"; ) }"
-
-  eval "$name() { ( "$cmd"; ) }"
+  eval-and-jlog "$name() { ( "$cmd"; ) }"
   echo $name
 }
 
@@ -87,7 +85,7 @@ foreach-stdin () {
   # now we find out the name of the anonymous function
   local fxn=$(eval echo \$$fxnname)
 
-  while read arg; do
+  while read -r arg; do
     $fxn $arg
   done
 }

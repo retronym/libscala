@@ -1,44 +1,19 @@
 #
 
-# _run
-
-# saving-shell-settings () {
-#   local saved="$-"
-#   "$@"
-#   local retval=$?
-# }
-#   
-
 have()
 {
   unset -v have
   type $1 &>/dev/null && have="yes"
 }
 
-string-chars () {
-  local exprcmd i
-  
-  exprcmd=expr
-  have gexpr && exprcmd=gexpr
-
-  for str; do
-    i=1
-    while (( i <= ${#str} ))
-    do
-      char=$($exprcmd substr "$str" $i 1)
-      echo "$char"
-      (( i += 1 ))
-    done
-  done
-}
-
 # $1 is string with options to set, e.g. vx
 # Remainder is command to eval.
 # Original options will be restored.
-run-with-shell-option () {
+using-shopts () {
   local saved="$-"
-  local opts="$1"
-  shift
+  local enable="$1"
+  local disable="$2"
+  shift 2
 
   # set all the opts in the first arg
   for ch in $(string-chars $opts); do
@@ -54,17 +29,28 @@ run-with-shell-option () {
     done
   }
 }
+using-shopt-names () {
+  local saved=$(mktemp -t jbash)
+  local enable="$1"
+  local disable="$2"
+  shift 2
+
+  shopt -p >"$saved"
+  # enable/disable all the opts
+  for opt in $enable; do shopt -s $opt; done
+  for opt in $disable; do shopt -u $opt; done
   
-#   eval 
-# 
-# if [[ $- == *v* ]]; then
-#     BASH_COMPLETION_ORIGINAL_V_VALUE="-v"
-# else
-#     BASH_COMPLETION_ORIGINAL_V_VALUE="+v"
-# fi
-# 
-# if [[ -n $BASH_COMPLETION_DEBUG ]]; then
-#     set -v
-# else
-#     set +v
-# fi
+  # run and restore the original opts
+  eval "$@"
+  source "$saved"
+}
+
+using-extglob () {
+  using-shopt-names extglob "" "$@"
+}
+using-globstar () {
+  using-shopt-names extglob "" "$@"
+}
+trace () {
+  using-shopts "x" "" "$@"
+}
