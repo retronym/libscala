@@ -1,0 +1,23 @@
+map <string>  # stdin
+map-args <string> args
+filter
+filter-args
+mkString
+mkString-args
+etc
+
+class-signatures # argument is a classname or file
+jar-signatures
+cp-signatures
+
+class-methods
+class-inner-classes
+class-container
+
+jar-classfiles # argument is a jar: ./foo/bar/Baz.class
+jar-classnames # argument is a jar: foo.bar.Baz
+jar-signatures # ... 
+cp-classfiles  # argument is a classpath, fully expanded
+cp-classnames
+etc
+

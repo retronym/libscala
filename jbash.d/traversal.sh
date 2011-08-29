@@ -89,6 +89,41 @@ foreach-stdin () {
     $fxn $arg
   done
 }
+# 
+# map-split () {
+
+# set jbashSplitArgs to split the lines on something other than whitespace
+map () {
+  set -o noglob
+
+  local splitter="$IFS"
+  isSet jbashSplitArgs && splitter=$jbashSplitArgs
+
+  local cmd="echo \$1"
+  [[ $# -gt 0 ]] && cmd=$(jbash-percent-substitution "$@")
+
+  jlog "[map] splitter=$splitter cmd=$cmd"
+
+  while read -r line; do
+    jlog "[map] line=$line"
+    
+    
+    if [[ -z "$splitter" ]]; then
+      set -- $line
+    else
+      args=( $(split-string "$splitter" "$line") )
+      str=$(join-string " " $args)
+      set -- "$str"
+      # set -- "$(split-string "$splitter" "$line")"
+    fi
+
+    jlog "[map] $# args"
+    eval "$cmd"
+  done
+
+  unset jbashSplitArgs
+  unset noglob
+}
 
 # first argument is directory to run command in (or file, parent will be used)
 # remainder of arguments are command to run.

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #
+# bin/classes -cp /soft/jar/'*':/scala/inst/3/lib/'*'
+#
 
 source /r/jbash/jbash
 
@@ -9,16 +11,9 @@ Prints each class found on the given classpath.
 EOM
 )
 jbash-command "$0" "$@"
+class-names $(cp-expand "$jbashClasspath")
 
-# cp-split "$jbashClasspath"
-cp-expand "$jbashClasspath"
- # | foreach-stdin classnames %1
-# 
-# for arg in "${jbash_args[@]}"; do
-#   cp-find-class "$arg"
-# done
-# 
-# 
+
 # 
 # while getopts :c:g:p: opt; do
 #   case $opt in
@@ -29,6 +24,8 @@ cp-expand "$jbashClasspath"
 #     *) echo "Unrecognized argument $OPTARG" ; exit 1 ;;
 #   esac
 # done
+# 
+# shift $((OPTIND-1))
 # 
 # shift $((OPTIND-1))
 # targets="$@"

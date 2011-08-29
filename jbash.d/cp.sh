@@ -11,7 +11,7 @@ echoerr () {
 }
 
 # danger danger
-shopt -s nullglob
+# shopt -s nullglob
 
 # cp-signatures java.util.Map
 #
@@ -24,11 +24,22 @@ shopt -s nullglob
 # ()Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
 # <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/lang/Object;
 cp-signatures () {
-  local cp=$(cp-join "$jbashClasspath" "$jbash_home/.lib/javassist.jar" ".")
-  for arg; do
-    path=$(cp-find-class "$arg")
-    java -classpath "$cp" javassist.tools.Dump "$path" 2>&1 | grep ^signature: | sed 's/^signature: //;'
+  local jars=$(cp-expand "$1")
+  jbashClasspath="$jbash_home/.lib/javassist.jar:."
+  
+  for jar in "$jars"; do
+    jar-signatures "$jar"
   done
+}
+
+jar-signatures () {
+  ( cd "$(jbash-explode "$1")" && dir-class-files | foreach-stdin class-signatures %1 )
+}
+
+class-signatures () {
+  run-java javassist.tools.Dump "$1" 2>&1 | \
+    grep ^signature: | \
+    sed 's/^signature: //;'
 }
 
 cp-expand-star () {
@@ -41,7 +52,7 @@ cp-expand-star () {
 }
 
 cp-split () {
-  split-string $(pathSeparator) "$1"
+  split-string "$(pathSeparator)" "$1"
 }
 
 cp-star () {
@@ -109,7 +120,7 @@ append-classpath () {
 # }
 # 
 
-# directory-classnames () {
+# directory-classes () {
 #   local dir="$1"
 #   local filter="$2"
 #   
@@ -125,27 +136,29 @@ append-classpath () {
 #   )
 # }
 
-directory-classnames () {
-  ( cd "$1" && find . -name '*.class' | foreach-stdin file-to-class %1 )
+dir-class-files () {
+  ( cd "$1" && find . -name '*.class' )
 }
-
-jar-classnames () {
-  dir=$(mktemp -d -t jbash)
-  jar="$1"
-  [[ "$jar" == /* ]] || jar="$(pwd)/$1"
-  
-  ( cd "$dir" && jar xf "$jar" >/dev/null && directory-classnames . "$2" )
+dir-class-names () {
+  dir-class-files "$1" | xargs class-file-to-name
 }
-
-classnames () {
+cwd-class-names () {
+  dir-class-names .
+}
+jar-class-names () {
+  dir-class-names "$(jbash-explode "$1")"
+}
+class-names () {
   for arg; do
-    if [[ $arg == *.jar ]]; then
-      jar-classnames "$arg"
-    else
-      directory-classnames "$arg"
-    fi
+    dir-class-names "$(jbash-explode "$arg")"
   done
 }
+class-files () {
+  for arg; do
+    dir-class-files "$(jbash-explode "$arg")"
+  done
+}
+
 
 foreach-classname () {
   OPTIND=1
@@ -172,7 +185,7 @@ foreach-classname () {
   local args="$@"
 
   if [[ "$dir" != "" ]]; then
-    for name in $(directory-classnames "$dir" $grep)
+    for name in $(directory-classes "$dir" $grep)
     do
       $args $name
     done

@@ -10,6 +10,20 @@ _jbash_upvar() {
     fi
 }
 
+# pushIFS () {
+#   savedIFS[${#savedIFS[*]}]="$1"
+#   IFS="$1"
+# }
+# popIFS () {
+#   IFS=savedIFS[${#savedIFS[*]}-1]
+#   unset savedIFS[${#savedIFS[*]}-1]
+# }
+# while IFS=';' read -ra ADDR; do 
+#       for i in "${ADDR[@]}"; do
+#           # process "$i"
+#       done 
+#  done <<< "$IN"
+
 have()
 {
   unset -v have
@@ -24,12 +38,45 @@ args-into-lines () {
 }
 
 split-string () {
-  echo "$2" | tr $1 "\n"
+  local sep="$1" && shift
+  local string="$@"
+
+  while IFS="$sep" read -ra arr; do
+    for x in "${arr[@]}"; do
+      quote "$x"
+      # printf "%s\n" "$x"
+    done
+  done <<<"$string"
 }
+
+split-string-quoted () {
+  local sep="$1" && shift
+  while IFS="$sep" read -ra arr; do
+    for x in "${arr[@]}"; do
+      quote "$x"
+    done
+  done <<<"$@"
+  
+  # split-string "$@" | foreach-stdin jbash-quote "%1"
+  # 
+  # for x in $(split-string "$@"); do
+  #   jbash-quote "$x"
+  # done
+  # 
+  # local sep="$1" && shift
+  # while IFS="$sep" read -r line; do
+  #   jbash-quote "$x"
+  # done <<<"$@"
+}
+
 join-string () {
   local sep="$1"
   shift
-  ( IFS="$sep" && echo "$*" )
+  savedIFS="$IFS"
+  IFS="$sep" 
+  echo "$*"
+  IFS="$savedIFS"
+  # ( saved="$IFS" && IFS="$1" && shift && echo "$*" && IFS="$saved" )
 }
 
 map-args () {
@@ -42,7 +89,8 @@ contains () {
   grep -q "$2" <<<"$1"
 }
 containsWhitespace () {
-  contains "$1" " "
+  [[ "$1" != "${1% *}" ]]
+  # contains "$1" " "
 }
 maybeQuote () {
   local arg="$1"
@@ -53,3 +101,16 @@ maybeQuote () {
     printf "%s\n" "$arg"
   fi
 }
+
+# This function shell-quotes the argument
+jbash-quote ()
+{
+  echo \'${1//\'/\'\\\'\'}\' #'# Help vim syntax highlighting
+}
+
+# This function shell-dequotes the argument
+jbash-dequote()
+{
+  eval echo "$1" 2>/dev/null
+}
+
