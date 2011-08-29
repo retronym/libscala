@@ -36,38 +36,3 @@ jar-classes () {
 
   # ( cd "$dir" && cwd-files-ext class | foreach-stdin echo '$(quote %1)' '$(quote $(file-to-class %1))' )
 }
-
-# 
-#   for file in $(find . -name '*.class')
-#   do
-#     classname="$(file-to-class $file)"
-#     filename="$(absolute_path $file)"
-#     
-#     if [[ ! $grep ]] || [[ $classname =~ $grep ]]; then
-#       cmd=$(interpolate "$filename" "$classname" "$source")
-#       echo "% $cmd"
-#       eval "$cmd"
-#       echo ""
-#     fi
-#   done
-#   popd >/dev/null
-# }
-# 
-# while getopts :c:g:p: opt; do
-#   case $opt in
-#     c) command="$OPTARG" ;;
-#     g) grep="$OPTARG" ;;
-#     p) package="$OPTARG" ; packagepath=$(echo $package | tr '.' '/') ;;
-#     :) echo "Option -$OPTARG requires an argument." >&2 ; exit 1 ;;
-#     *) echo "Unrecognized argument $OPTARG" ; exit 1 ;;
-#   esac
-# done
-# 
-# shift $((OPTIND-1))
-# targets="$@"
-# 
-# for target in $targets;
-# do
-#   traverse-source $(absolute_path $target)
-# done
-# 

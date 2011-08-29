@@ -10,9 +10,8 @@ EOM
 )
 jbash-command "$0" "$@"
 
-echo "$jbashClasspath"
-cp-split "$jbashClasspath"
-# cp-expand "$jbashClasspath"
+# cp-split "$jbashClasspath"
+cp-expand "$jbashClasspath"
  # | foreach-stdin classnames %1
 # 
 # for arg in "${jbash_args[@]}"; do

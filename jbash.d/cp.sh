@@ -10,12 +10,6 @@ echoerr () {
   echo "$@" >&2
 }
 
-# "lazy vals"
-# lazyval pathSeparator java-property path.separator
-# lazyval javaClassPath java-property java.class.path
-# lazyval sunBootClassPath java-property sun.boot.class.path
-# 
-
 # danger danger
 shopt -s nullglob
 
@@ -38,38 +32,31 @@ cp-signatures () {
 }
 
 cp-expand-star () {
+  local sep=$(pathSeparator)
   if contains "$1" '*'; then
-    eval ls "$1" | mkString $(pathSeparator)
+    eval ls "$1" | mkString $sep
   else
     echo "$1"
   fi
 }
 
 cp-split () {
-  local sep=$(pathSeparator)
-  
-  [[ -z "$sep" ]] && { echoerr "No path separator!"; return 1; }
-  
-  while IFS="$sep" read -r elem; do 
-    echo "$elem"
-  done <<< "$1"
+  split-string $(pathSeparator) "$1"
 }
 
 cp-star () {
-  cp-join "$(find "$@" -name '*.jar')"
+  find "$@" -name '*.jar' | xargs cp-join
 }
 
 cp-join () {
-  mkString-args $(pathSeparator) "$@"
+  join-string $(pathSeparator) "$@"
 }
 
 cp-expand () {
-  for arg in $(cp-split "$1"); do
-    if contains "$arg" '*'; then
-      ls $arg
-    else
-      echo "$arg"
-    fi
+  local sep=$(pathSeparator)
+  
+  for elem in $(cp-split "$1"); do
+    cp-expand-star "$elem"
   done
 }
 

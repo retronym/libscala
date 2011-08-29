@@ -8,10 +8,13 @@ lazyval () {
   local name="$1"
   shift
   declare -a args=( $(map-args quote "$@") )
+  # set -x
   local fxn=$(cat <<EOM
 $name () {
-  [[ -z "\$${name}_value" ]] && ${name}_value="\$(eval "${args[@]}")"
-  readonly "${name}_value"
+  if [[ -z "\$${name}_value" ]]; then
+    ${name}_value="\$(${args[@]})"
+    readonly ${name}_value
+  fi
   echo "\$${name}_value"
 }
 EOM
@@ -20,13 +23,10 @@ EOM
   eval "$fxn"
 }
 
-lazyval pathSeparator java-property path.separator
-lazyval javaClassPath java-property java.class.path
-lazyval sunBootClassPath java-property sun.boot.class.path
-
-# jbash-lazyvals () {
-#   # "lazy vals"
-#   lazyval pathSeparator java-property path.separator
-#   lazyval javaClassPath java-property java.class.path
-#   lazyval sunBootClassPath java-property sun.boot.class.path
-# } && jbash-lazyvals
+[[ -n "$pathSeparator_value" ]] || {
+  pathSeparator () { echo ":"; }
+  # pathSeparator=":"
+  # lazyval pathSeparator java-property path.separator
+  lazyval javaClassPath java-property java.class.path
+  lazyval sunBootClassPath java-property sun.boot.class.path
+}

@@ -1,14 +1,14 @@
 # no dependencies
 # 
-# _jbash_upvar() {
-#     if unset -v "$1"; then           # Unset & validate varname
-#         if (( $# == 2 )); then
-#             eval $1=\"\$2\"          # Return single value
-#         else
-#             eval $1=\(\"\${@:2}\"\)  # Return array
-#         fi
-#     fi
-# }
+_jbash_upvar() {
+    if unset -v "$1"; then           # Unset & validate varname
+        if (( $# == 2 )); then
+            eval $1=\"\$2\"          # Return single value
+        else
+            eval $1=\(\"\${@:2}\"\)  # Return array
+        fi
+    fi
+}
 
 have()
 {
@@ -21,6 +21,15 @@ args-into-lines () {
   for arg in "$@"; do
     printf "%s\n" "$arg"
   done
+}
+
+split-string () {
+  echo "$2" | tr $1 "\n"
+}
+join-string () {
+  local sep="$1"
+  shift
+  ( IFS="$sep" && echo "$*" )
 }
 
 map-args () {
