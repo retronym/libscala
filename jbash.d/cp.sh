@@ -109,33 +109,6 @@ append-classpath () {
   jlog "[cp] append-classpath, now $jbashClasspath"
 }
 
-
-# 
-# path-to-classname () {
-#   local file="$1"
-#   
-#   path=${file%.class}
-#   name=$(echo ${path#./} | tr '/' '.')
-#   echo \'$name\'
-# }
-# 
-
-# directory-classes () {
-#   local dir="$1"
-#   local filter="$2"
-#   
-#   process () {
-#     path=${1%.class}
-#     [[ ! $filter && $path =~ $filter ]] && echo ${path#./} | tr '/' '.'
-#   }
-#   
-#   (
-#     cd "$dir" && 
-#       find . -name '*.class' | \
-#       while read file; do process "$file" ; done
-#   )
-# }
-
 dir-class-files () {
   ( cd "$1" && find . -name '*.class' )
 }

@@ -10,20 +10,6 @@ _jbash_upvar() {
     fi
 }
 
-# pushIFS () {
-#   savedIFS[${#savedIFS[*]}]="$1"
-#   IFS="$1"
-# }
-# popIFS () {
-#   IFS=savedIFS[${#savedIFS[*]}-1]
-#   unset savedIFS[${#savedIFS[*]}-1]
-# }
-# while IFS=';' read -ra ADDR; do 
-#       for i in "${ADDR[@]}"; do
-#           # process "$i"
-#       done 
-#  done <<< "$IN"
-
 have()
 {
   unset -v have
@@ -43,8 +29,7 @@ split-string () {
 
   while IFS="$sep" read -ra arr; do
     for x in "${arr[@]}"; do
-      quote "$x"
-      # printf "%s\n" "$x"
+      printf "%s\n" "$x"
     done
   done <<<"$string"
 }

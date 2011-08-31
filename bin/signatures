@@ -1,44 +1,19 @@
 #!/usr/bin/env bash
 #
-# bin/classes -cp /soft/jar/'*':/scala/inst/3/lib/'*'
+# bin/signatures -cp ...
 #
 
 source /r/jbash/jbash
-set -e
 
-jbash_usage=""
-jbash_help=$(cat <<EOM
-Prints each signature in the classes found on the given classpath.
-EOM
-)
-jbash-command "$0" "$@"
-cp-signatures "$jbashClasspath"
+_signatures_cmd()
+{
+  local jbash_flags jbash_args jbash_classpath="."
 
+  jbash_program=$(basename "$0")
+  jbash_help="Print each signature in the classes found on the given classpath."
+  _jbash_by_ref "$@"
 
-# 
-# tmpfile=$(mktemp -t sigs)
-# echo $tmpfile
-# for cp in $(cp-expand "$jbashClasspath"); do
-#   dir=$(jbash-explode $cp)
-#   ( cd "$dir" && find . -name '*.class' | \
-#     xargs 2>&1 -n 1 java -cp "$jbashClasspath:$jbash_home/.lib/javassist.jar" javassist.tools.Dump | \
-#     grep '^signature: ' | \
-#     perl -pe 's/^signature: //;'
-#   )
-# done
+  cp-signatures "$jbash_classpath"
+}
 
-# cp-expand "$jbashClasspath" | foreach-stdin classnames %1 >$tmpfile
-# append-classpath "$jbash_home/.lib/javassist.jar"
-# 
-# for line in $(cat $tmpfile); do
-#   echo java -cp "$jbashClasspath" javassist.tools.Dump "$line"
-#   
-#   run-java javassist.tools.Dump "$line" 2>&1 | \
-#   grep '^signature: ' | \
-#   perl -pe 's/^signature: //;'
-# done
-
-# 
-# while read -r line <$tmpfile; do
-#   echo java -cp "$jbashClasspath" javassist.tools.Dump "$line"
-# done
+_signatures_cmd "$@"
