@@ -6,7 +6,7 @@
 
 jbashHelp () {
   cat <<EOM
-Usage: $jbash_program [options...]
+Usage: $(basename "$0") [options...]
 $jbash_help
 
 Common options:

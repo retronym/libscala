@@ -7,9 +7,7 @@ source /r/jbash/jbash
 
 _signatures_cmd()
 {
-  local jbash_flags jbash_args jbash_classpath="."
-
-  jbash_program=$(basename "$0")
+  local jbash_flags jbash_args jbash_classpath
   jbash_help="Print each signature in the classes found on the given classpath."
   _jbash_by_ref "$@"
 
