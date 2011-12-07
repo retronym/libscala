@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#
+
+git log --pretty=format:'%h|%an|%s' | awk -F '|' '{ printf "%s %-20s %s\n", $1, $2, $3 }'

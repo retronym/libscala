@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+#
+
+set -e
+export GIT_PAGER=cat
+outdir=$(mktemp -d -t git-rebase-all)
+diffsBranch=${1:-git-rebase-all-diffs}
+
+echo "Creating branch $diffsBranch to store conflict diffs."
+
+git co master
+mastersha="$(git log -n1 --format=%H master)"
+if ! git branch | grep -q "^\s*$diffsBranch\s*$"; then
+  git branch $diffsBranch
+fi
+
+git fetch --all
+
+function onExit() {
+  echo "Running onExit handler."
+  set +e
+  git rebase --abort &>/dev/null
+  git checkout --force master &>/dev/null
+  git clean -fd .
+  echo "Done."
+  exit 127
+}
+
+trap onExit INT
+
+makeNote () {
+  [[ $# -eq 2 ]] || return
+
+  local branch="$1"
+  local conflictMsg="$2"
+  local tmpfile=$(mktemp -t makeNote)
+  
+  cat >$tmpfile <<EOM
+$conflictMsg
+
+$(git diff --stat=100,100 master...$branch)
+
+$(git status --short |grep ^U)
+
+$(git diff)
+EOM
+
+  echo $tmpfile
+}
+
+storeDiff () {
+  local branch="$1"
+  diffFile="$outdir/$(echo $branch | tr '/' '-').diff"
+  
+  cat &>$diffFile <<EOM
+git checkout -f $branch
+
+$(git diff)
+EOM
+
+}
+
+for branch in $(git branch | grep -v \*); do
+  if [[ $(git merge-base master $branch) == "$mastersha" ]]; then
+    echo "[      ok] $branch"
+  elif git notes list $branch &>/dev/null; then
+    conflictMessage="$(git notes show $branch |& head -1)"
+    echo "[previous] $branch ($conflictMessage)"
+  else
+    git checkout --force --quiet "$branch" &&
+    git rebase master &>/dev/null && echo "[ rebased] $branch" || {
+      git rebase --abort &>/dev/null && {
+        git merge master &>/dev/null && echo "[  merged] $branch" || {
+          conflicts=$(echo $(git diff |& grep '<<<<' | wc -l))
+          diffstat=$(git diff --stat master...$branch |& tail -1)
+          conflictMsg="$conflicts conflicts /$diffstat"
+          diffFile="$(echo $branch | tr '/' '-').diff"
+          note=$(makeNote $branch "$conflictMsg")
+          
+          echo "[   noted] $branch ($conflictMsg)" &&
+          git diff &>"$outdir/$diffFile" &&
+          git reset --hard &>/dev/null &&
+          git notes append -F $note -C $branch &&
+          git checkout -f $diffsBranch &&
+          mv "$outdir/$diffFile" . &&
+          git add -f "$diffFile" &&
+          git commit -m "$branch ($conflictMsg)"
+        }
+      }
+    }
+  fi
+done
+
+git checkout -f master
+

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Deletes all local tags and all tags off a remote
+# e.g. git-rm-remote-tags origin
+
+[[ $# -gt 0 ]] || { echo "Usage: $0 [--dry-run] <remote>"; exit 0; }
+
+unset dry_run
+[[ "$1" == "--dry-run" ]] && dry_run=true && shift
+
+remote="$1"
+
+tagrefs () {
+  git 2>/dev/null ls-remote --tags $remote | awk '{ print $2 }' | grep -v \{\}$
+}
+runner () {
+  echo % "$@"
+  echo ""
+  [[ -n "$dry_run" ]] || "$@"
+}
+
+runner git tag -d $(git tag -l)
+runner git push $remote $(
+  for ref in $(tagrefs); do
+    echo :$ref
+  done
+)

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# This is the git per-file merge script, called with
+#
+#   $1 - original file SHA1 (or empty)
+#   $2 - file in branch1 SHA1 (or empty)
+#   $3 - file in branch2 SHA1 (or empty)
+#   $4 - pathname in repository
+#   $5 - original file mode (or empty)
+#   $6 - file in branch1 mode (or empty)
+#   $7 - file in branch2 mode (or empty)
+#
+# Handle some trivial cases.. The _really_ trivial cases have
+# been handled already by git read-tree, but that one doesn't
+# do any merges that might change the tree layout.
+#
+
+BASE="$1"
+LOCAL="$2"
+REMOTE="$3"
+MERGED="$4"
+
+if [[ ! -e "$REMOTE" ]]; then
+  rm -f "$LOCAL"
+  rm -f "$MERGED"
+else
+  cp "$REMOTE" "$MERGED"
+fi
+
+# meld $LOCAL $BASE $REMOTE || exit $?
+# cp $BASE $MERGED
+exit 0

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+
+if [[ $# -eq 0 ]]; then
+  git rev-list --abbrev-commit HEAD
+else
+  git rev-list --abbrev-commit "$@"
+fi

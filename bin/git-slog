@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+# git slog -G'(module|signature)' 2.8.0-approximate...master -- src/compiler/scala/tools/nsc
+
+GIT_PAGER=cat \
+git log --date=short --abbrev=10 --pretty="%h %ad %an %s" "$@" | \
+  while read -r sha date author msg; do
+    printf "%10s %12s  %-12s  %s\n" "$sha" "$author"  "$date" "$msg"
+  done

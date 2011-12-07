@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Executes given command for each git branch, with the name of
+# the branch replacing %.
+
+git-ls-branches | xargs -L 1 -J % "$@"

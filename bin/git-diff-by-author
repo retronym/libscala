@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#
+
+REV=$1
+shift
+
+git format-patch --raw --cover-letter --committer=extempore --stdout $REV...master -- "$@"

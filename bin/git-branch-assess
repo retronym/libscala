@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+
+[[ $# -eq 1 ]] || { echo "Usage: $0 <dir>"; exit 1; }
+
+outdir="$1"
+[[ -d "$outdir" ]] || mkdir -p "$outdir" || { echo "Failed: $outdir"; }
+
+showbranch () {
+  local b="$1"
+  echo "--- $b ---"
+  git --no-pager log --abbrev-commit --abbrev=10 --date=relative --format="%h %ad %s" master..$b
+  git --no-pager diff --stat=100,100 -M90% -C90% master...$b -- src
+  echo ""
+  git --no-pager diff -M90% -C90% master...$b -- src
+  echo ""
+}
+
+stats () {
+  git --no-pager diff --shortstat master...$1 | words | egrep '^[0-9]+$' | mkString '+'
+}
+
+for b in $(git branch | egrep -v '(^\*| master$)'); do
+  bpath=$(echo "$b" | tr '/' '-')
+  bdate=$(git --no-pager log --max-count=1 --date=short --format="%ad" master..$b)
+  bstat=$(stats "$b")
+  outfile="$outdir/$bdate-$bstat-$bpath"
+  
+  echo "$outfile"
+  showbranch "$b" &> "$outfile"
+done

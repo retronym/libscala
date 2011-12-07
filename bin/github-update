@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+
+echo "Don't run this."
+exit 1
+
+set -e
+
+cd /repo/scala
+git fetch origin &>/dev/null
+git co xsbt
+git pull
+git co master
+git svn rebase
+git rebase origin/master
+git push origin --all
+git push origin --tags
+
+cd /repo/scala-full
+git svn fetch --all
+git co 2.9.x
+git rebase epfl/2.9.x
+git co 2.8.x
+git rebase epfl/2.8.x
+git co master
+git svn rebase
+git push origin --all
+git push origin --tags

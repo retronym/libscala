@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 <commit>";
+  exit 1;
+fi
+
+git cherry-pick $1 --strategy=recursive -Xtheirs

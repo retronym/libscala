@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+
+[ $# -eq 3 ] || { echo "Usage: $0 <branch> <branch> <PATTERN>"; exit 1; }
+
+git diff -U1 $1 $2 | grepdiff --output-matching=hunk "$3"
+

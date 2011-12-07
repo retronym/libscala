@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# Sums the added/deleted line counts output by diff --numstat.
+
+script=$(cat <<EOM
+NF==3 {
+  plus+=\$1
+  minus+=\$2
+}
+END {
+  if (plus - minus > 0) sign = "+"
+  else sign = ""
+  printf("+%d, -%d, net %s%d\n", plus, minus, sign, plus - minus)
+}
+EOM
+)
+
+awk "$script"

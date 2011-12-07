@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+
+set -e
+
+# git clone --no-hardlinks scala-ide-pristine scala-ide-3
+# 
+git clone https://github.com/scala-ide/scala-ide.git scala-ide-4
+cd scala-ide-4
+echo "Starting size: $(du -hs .)"
+echo ""
+
+git fetch . refs/remotes/*:refs/heads/*
+git co -b temphead master
+git branch -D master
+git fetch . refs/remotes/*:refs/heads/*
+git co -f master
+git branch -D temphead
+
+git filter-branch --force --index-filter \
+  'git rm -rf --cached --ignore-unmatch eclipse-lib aspects-libs' \
+  --tag-name-filter cat --prune-empty -- --all
+
+git for-each-ref --format="%(refname)" refs/original/ | \
+  xargs -n 1 git update-ref -d
+
+git reflog expire --verbose --expire=0 --all
+git gc --prune=0
+
+echo "Ending size: $(du -hs .)"
+echo ""

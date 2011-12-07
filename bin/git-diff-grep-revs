@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Looks for a string in the git history and tries to show
+# only the patch hunks involving it.
+
+[ $# -eq 1 ] || { echo "Usage: $0 <PATTERN>"; exit 1; }
+
+revs=`git-diff-find-revs "$1"`
+for rev in $revs
+do
+  # git log -1 --pretty=fuller $rev
+  git show -U1 --format="%b" $rev | grepdiff --annotate --output-matching=hunk "$1"
+done
+
+for rev in $revs
+do
+  git log -1 --pretty=fuller $rev
+done

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+
+r1=8a0777aec651f95cbac2a41a28b0e62b248d034c
+r2=head
+files=`find src/compiler/scala/tools/nsc -name '*.scala'`
+
+for file in $files
+do
+  git diff --quiet 8a0777aec651f95cbac2a41a28b0e62b248d034c head -- $file && echo $file
+  # if [[ $? ]]
+  # then
+  #   echo # echo $file
+  # else
+  #   echo $file
+  # fi
+done

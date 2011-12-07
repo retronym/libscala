@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+
+git log --format="%cn | %ci | %h | %s" \
+  --no-merges --all \
+  --not master \
+  --since=1.month.ago \
+  | sort 

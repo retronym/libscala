@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+
+du -hs .
+rm -rf .git/refs/original
+git reflog expire --expire=now --all
+git repack -ad
+du -hs .
+git gc --prune=now 
+du -hs .
+git gc --aggressive --prune=now 
+du -hs .

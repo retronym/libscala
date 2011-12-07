@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+
+set -e
+
+for b in $(git ls-branches); do
+  [[ $b != master ]] && {
+    git clean -fxd .
+    git checkout -f $b
+    git merge -s recursive -X patience -X ours master || {
+      git clean . && git add -f . && git commit -m "Merge failure during $0" && git clean -fxd .
+    }
+  }
+done

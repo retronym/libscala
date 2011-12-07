@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+
+pairs () {
+  git svn log --oneline --show-commit | cut -d '|' -f 1,2
+}
+svn-stamps () {
+  git --no-pager log --format="%ct | %h"
+}
+
+width=66
+lines () {
+  git --no-pager log --all --format="%h|%ct|%s"
+}
+
+# git svn log --show-commit --format="%ct" | cut -d '\''|'\'' -f 1,2
+# 
+# 
+# alias git-svn-sha-pairs='git svn log --oneline --show-commit | cut -d '\''|'\'' -f 1,2'
+
+
+while read line; do 
+  echo ${line:0:$width}
+done < <(lines)

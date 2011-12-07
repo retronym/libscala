@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+
+echo ">> This may take a while if you have many branches."
+echo ">> Files/Lines refers to the diff from master...<branch>"
+echo ">> Common is the merge base; time since is against that commit."
+echo ">> Current master: $(git describe --always master)"
+echo ""
+
+longest=$(for b in $(git ls-branches); do echo ${#b}; done | sort -nr |head -1)
+fmtprintf () {
+  local fmt="%-${longest}s %-15s %-35s %-15s\n"
+  printf "$fmt" "$@"
+}
+
+fmtprintf "Branch" "Files/Lines" "Common" "Time Since"
+fmtprintf "------" "-----------" "------" "----------"
+
+for b in $(git-ls-branches); do
+  [[ $b == master ]] && continue;
+
+  when=$(git-when-merge-base master $b)
+  what=$(git describe --always $(git merge-base master $b))
+  howmuch=$(printf "%s/%s" $(git diff -w --name-only master...$b | wc -l) $(git diff -w master...$b | wc -l))
+  
+  fmtprintf "$b" "$howmuch" "$what" "$when"
+done | \
+  sort -rnk2

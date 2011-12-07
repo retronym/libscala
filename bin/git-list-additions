@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#
+
+git log --name-only --diff-filter=A --format=oneline -- "$@"
