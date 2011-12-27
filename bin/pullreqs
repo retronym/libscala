@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
 
+set -e
+
 mkString () {
   local sep="$1"
   local first=1
@@ -17,7 +19,12 @@ mkString () {
   echo ""
 }
 
-cd $(dirname $0)/..
+script=$(readlink $0)
+dir=$(dirname $script)/..
+cd $dir
+
+[[ -d lib_managed ]] || sbt update
+[[ -d target/scala-2.9.1/classes ]] || sbt package
 cp=$(find lib_managed -name '*.jar' | mkString ':'):target/scala-2.9.1/classes
 
-scala29 -cp "$cp" improving.pullreq.Main "$@"
+scala29 -cp "$cp" improving.pullreq.Main "$@" 2>/dev/null
