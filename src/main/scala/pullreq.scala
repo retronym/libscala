@@ -8,91 +8,83 @@ import java.io.StringBufferInputStream
 import scala.sys.process._
 import java.net.URL
 
-// 
-// "user": {
-//   "name": "Ismael Juma",
-//   "company": "LikeCube",
-//   "gravatar_id": "0eb053bf15b0a3669c973bc50be45a7c",
-//   "location": "London, UK",
-//   "blog": "http://blog.juma.me.uk",
-//   "type": "User",
-//   "login": "ijuma",
-//   "email": "mlists@juma.me.uk"
-// },
-  // 
-  // company: Option[String],
-  // gravatar_id: Option[String],
-  // location: Option[String],
-  // // blog: URL,
-  // blog: Option[String],
-
 case class User(
   login: String,
   name: Option[String],
-  email: Option[String]
+  email: Option[String],
+  repository: Option[Repository]
 )
+
+case class Repository(
+  name: String,
+  owner: String,
+  url: String
+)
+
+case class Pull(
+  number: Int,
+  head: Commit,
+  user: User,
+  title: String,
+  updated_at: String,
+  mergeable: Boolean
+) extends Ordered[Pull] {
+  def compare(other: Pull): Int = number compare other.number
+  def sha10  = head.sha10
+  def ref    = head.ref
+  def branch = head.label.replace(':', '/')
+  def date   = updated_at takeWhile (_ != 'T')
+  def time   = updated_at drop (date.length + 1)
+}
+
+case class Commit(
+  sha: String,
+  label: String,
+  ref: String,
+  repository: Repository
+) {
+  def sha10 = sha take 10
+}
 
 object Main {
   implicit val formats = DefaultFormats // Brings in default date formats etc.
 
   val urlpath = "http://github.com/api/v2/json/pulls/scala/scala/open"
-  val url  = new java.net.URL(urlpath)
-  val req  = slurp(url)
-  val json = parse(slurp(url))
+  val url     = new java.net.URL(urlpath)
+  val req     = slurp(url)
+  val json    = parse(slurp(url))
 
-  def fields(key: String) = (
-    (json \\ "head" \\ key children) map (_.extract[String])
-  )
-  def shas = fields("sha")
-  def refs = fields("ref")
-  def users = (json \ "pulls" \ "user").extract[List[User]]
-  def branches = (users, refs).zipped map (_.login + "/" + _)
+  def pulls    = (json \ "pulls").extract[List[Pull]].sorted
+  def shas     = pulls map (_.sha10)
+  def refs     = pulls map (_.ref)
+  def users    = pulls map (_.user)
+  def branches = pulls map (_.branch)
+  // def fields(key: String) = (json \\ "head" \\ key children) map (_.extract[String])
   
   def pp() {
     Process("jsonpp") #< new StringBufferInputStream(req) !
   }
-  def pulls() {
+  def showPulls() {
+    pulls foreach {
+      case pull @ Pull(number, Commit(sha, label, ref, repository), user, title, updated_at, mergeable) =>
+        println("%3d  %10s  %8s  %-40s  %10s  %s".format(
+          number, sha take 10, user.login take 8, title take 40, pull.date, ref))
+    }
+    println("")
     println(branches.mkString("git merge ", " ", ""))
+    println("")
+    println(shas.mkString("git merge ", " ", ""))
   }
-
+      
   def main(args: Array[String]): Unit = {
-    if (args.isEmpty) pulls()
+    if (args.isEmpty) {
+      println("Usage: pullreqs <cmds>")
+      println("  Cmds: pp, pulls\n")
+      showPulls()
+    }
     else args foreach {
       case "pp"     => pp()
-      case "pulls"  => pulls()
+      case "pulls"  => showPulls()
     }
   }
 }
-
-
-// import scala.tools.nsc.io.Streamable.slurp
-// import com.codahale.jerkson.Json._
-// // type JMap[V] = java.util.LinkedHashMap[String, V]
-// type JMap[V] = Map[String, V]
-// type ListM   = List[JMap[Any]]
-// type MListM  = JMap[ListM]
-// 
-// def asListM(body: => String): ListM = parse[ListM](body)
-// def asMap[V](body: => Any): JMap[V] = body.asInstanceOf[JMap[V]]
-// def asSMap(body: => Any) = asMap[String](body)
-// def asMMap(body: => Any) = asMap[JMap[Any]](body)
-// 
-// def merge[T](items: List[Map[String, T]]): Map[String, List[T]] = {
-//   val keys = items flatMap (_.keys) distinct;
-//   
-//   keys map (k => (k, items flatMap (_ get k) distinct)) toMap
-// }
-// 
-// val url      = "http://github.com/api/v2/json/pulls/scala/scala/open"
-// val map      = parse[MListM](slurp(new java.net.URL(url)))
-// val pullMap  = merge(map("pulls"))
-// val headMap  = merge(pullMap("head"))
-// 
-// val pulls    = map("pulls")
-// val pullKeys = pulls flatMap (_.keys) distinct;
-// val pullMap  = pullKeys map (k => (k, pulls flatMap (_ get k))) toMap;
-// 
-// val heads = asMMap {
-//   
-// 
-// pullMap("head")
