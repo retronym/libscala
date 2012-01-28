@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 
-source $LIBSCALA_HOME/jrun/jrun
+source "$LIBSCALA_HOME/jrun/jrun"
 
 jrun_usage="[path]"
 jrun_help=$(cat <<EOM
@@ -20,4 +20,4 @@ jrunScalaHome=$(absolute_dirname "$program")/..
 jrunScalaOpts="-nobootcp -usejavacp"
 # jrunScalaPath="$program"
 
-run-scala-expr 'sys.props("java.class.path")'
+run-scala-expr 'println(sys.props("java.class.path"))'

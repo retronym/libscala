@@ -1,0 +1,33 @@
+#!bash
+#
+# bootstrap for libscala, here for libscala.sh tidiness
+
+findLibscalaRoot () {
+  if [[ -z "$LIBSCALA_HOME" ]]; then
+    export LIBSCALA_HOME=$( cd "$(dirname $BASH_SOURCE)/.." && pwd )
+  fi
+  echo "$LIBSCALA_HOME"
+}
+
+# source file(s) if possible; tries each arg as an
+# absolute path and a relative one.
+trySource () {
+  for arg in "$@"; do
+    if [[ -f "$arg" ]]; then
+      . "$arg"
+    elif [[ -f "$libscalaRoot/bash.d/$arg" ]]; then
+      . "$libscalaRoot/bash.d/$arg"
+    fi
+  done
+}
+
+[[ -d "$BASH_COMPLETION_DIR" ]] || [[ -d "$BASH_COMPLETION" ]] || {
+  echo "Can't find core bash completion (BASH_COMPLETION), completion won't function."
+}
+
+[[ -d "$SCALA_SRC_HOME" ]] || {
+  echo "Note: some features require \$SCALA_SRC_HOME be set to a checkout of scala trunk."
+}
+
+export libscalaHome=$(findLibscalaRoot)
+export PATH="$PATH:$libscalaHome/bin"
