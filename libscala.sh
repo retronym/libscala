@@ -15,6 +15,10 @@
   echo "Note: some features require \$SCALA_SRC_HOME be set to a checkout of scala trunk."
 }
 
+[[ -n "$LIBSCALA_HOME" ]] || export LIBSCALA_HOME="$(dirname $BASH_SOURCE)"
+
+export PATH="$PATH:$LIBSCALA_HOME/bin"
+
 export libscalaRoot="$(cd "$(dirname $BASH_SOURCE)" && pwd)"
 [[ -f "$libscalaRoot/bash.d/boot" ]] && . "$libscalaRoot/bash.d/boot"
 
