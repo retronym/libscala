@@ -16,6 +16,11 @@ have()
   type $1 &>/dev/null && have="yes"
 }
 
+#
+pathSeparator () {
+  echo ":" # todo
+}
+
 # print each arg on its own line, for pipelining
 args-into-lines () {
   for arg in "$@"; do
@@ -53,16 +58,16 @@ split-string-quoted () {
   #   jrun-quote "$x"
   # done <<<"$@"
 }
-
-join-string () {
-  local sep="$1"
-  shift
-  savedIFS="$IFS"
-  IFS="$sep" 
-  echo "$*"
-  IFS="$savedIFS"
-  # ( saved="$IFS" && IFS="$1" && shift && echo "$*" && IFS="$saved" )
-}
+# 
+# join-string () {
+#   local sep="$1"
+#   shift
+#   savedIFS="$IFS"
+#   IFS="$sep" 
+#   echo "$*"
+#   IFS="$savedIFS"
+#   # ( saved="$IFS" && IFS="$1" && shift && echo "$*" && IFS="$saved" )
+# }
 
 map-args () {
   local mapFn="$1"

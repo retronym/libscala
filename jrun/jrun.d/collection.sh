@@ -4,26 +4,6 @@
 # The elements of the collection are lines of output.
 # 
 
-class-file-to-name () {
-  for arg; do
-    if [[ "$arg" == *.class ]]; then
-      echo "${arg%.class}" | tr '/' '.' | sed -e 's/^[./]*//g'
-    else
-      echo "$arg"
-    fi
-  done
-}
-
-class-name-to-file () {
-  for arg; do
-    if [[ "$arg" == *.class ]]; then
-      echo "$arg"
-    else
-      echo "$arg.class" | tr '.' '/'
-    fi
-  done
-}
-
 cwd-files-escaped () {
   find . -type f -print | sed 's/ /\\ /g;'
 }

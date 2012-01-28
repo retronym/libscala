@@ -7,6 +7,8 @@
 #
 
 source "$(dirname $BASH_SOURCE)/etc/00boot"
+trySource "$libscalaHome/etc/00nodeps.sh"
+trySource "$libscalaHome/etc/lazy.sh"
 
 export scalaGitRepo="$SCALA_SRC_HOME"
 export scalaGitUrl="https://github.com/scala/scala"
@@ -15,7 +17,7 @@ export scalaSvnMap="$libscalaHome/data/scala-svn-to-sha1-map.txt"
 # Source all the completions, functions, etc.
 trySource "$libscalaHome/bash.d/"*
 trySource "$libscalaHome/completion.d/"*
-# trySource "$libscalaHome/jrun/jrun.d/"*
+trySource "$libscalaHome/jrun/jrun.d/"*
 
 # Adding -XX: flags to java
 complete -o default -F _java_with_jvm_opts java

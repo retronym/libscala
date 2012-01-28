@@ -10,8 +10,9 @@
 [[ -f "$libscalaHome/libscala.sh" ]] && source  "$libscalaHome/libscala.sh"
 [[ -n "$jrunHome" ]] || source "$(dirname $0)/../libscala.sh"
 
-trySource "$libscalaHome/etc/00nodeps.sh"
-trySource "$libscalaHome/etc/lazy.sh"
+# trySource "$libscalaHome/etc/00nodeps.sh"
+# trySource "$libscalaHome/etc/lazy.sh"
+# trySource "$jrunHome/jrun.d/"*
 
 declare -x jrun_sh="$BASH_SOURCE"
 declare -x jrun_sh_args="$@"

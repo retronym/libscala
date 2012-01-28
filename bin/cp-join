@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#
+
+# todo - path separator
+mkString ":" "$@"

@@ -58,10 +58,10 @@ cp-split () {
 cp-star () {
   find "$@" -name '*.jar' | xargs cp-join
 }
-
-cp-join () {
-  join-string $(pathSeparator) "$@"
-}
+# 
+# cp-join () {
+#   join-string $(pathSeparator) "$@"
+# }
 
 cp-expand () {
   local sep=$(pathSeparator)
@@ -113,7 +113,7 @@ dir-class-files () {
   ( cd "$1" && find . -name '*.class' )
 }
 dir-class-names () {
-  dir-class-files "$1" | xargs class-file-to-name
+  dir-class-files "$1" | xargs classfile-to-name.sh
 }
 cwd-class-names () {
   dir-class-names .

@@ -112,7 +112,7 @@ map () {
       set -- $line
     else
       args=( $(split-string "$splitter" "$line") )
-      str=$(join-string " " $args)
+      str=$(mkString " " $args)
       set -- "$str"
       # set -- "$(split-string "$splitter" "$line")"
     fi

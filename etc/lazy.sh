@@ -24,9 +24,9 @@ EOM
 }
 
 [[ -n "$pathSeparator_value" ]] || {
-  pathSeparator () { echo ":"; }
+  # pathSeparator () { echo ":"; }
   # pathSeparator=":"
-  # lazyval pathSeparator java-property path.separator
+  lazyval pathSeparator java-property path.separator
   lazyval javaClassPath java-property java.class.path
   lazyval sunBootClassPath java-property sun.boot.class.path
 }

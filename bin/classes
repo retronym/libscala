@@ -4,8 +4,13 @@
 #
 # 
 
-[[ -n "$jrunHome" ]] || jrunHome="$(dirname $0)/../jrun"
-source "$jrunHome/jrun"
+source "$libscalaHome/libscala.sh"
+trySource "$jrunHome/jrun"
+trySource "$jrunHome/jrun.d"/*
+
+# 
+# [[ -n "$jrunHome" ]] || jrunHome="$(dirname $0)/../jrun"
+# source "$jrunHome/jrun"
 
 jrun_usage=""
 jrun_help=$(cat <<EOM

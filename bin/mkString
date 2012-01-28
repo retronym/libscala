@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+
+make-string () {
+  local sep="$1"
+  shift
+  savedIFS="$IFS"
+  IFS="$sep" 
+  echo "$*"
+  IFS="$savedIFS"
+}
+
+make-string "$@"
