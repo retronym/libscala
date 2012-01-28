@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+
+basedir=${1:-.}
+outdir=${2:-.}
+
+for file in $(find "$basedir" -name '*.class' -print); do
+  base=${file/\.class/}
+  className=$(echo $base | tr '/' '.')
+  outName=${base}.javap
+
+  javap -private -verbose -c "$className" > "$outdir/$outName"
+done

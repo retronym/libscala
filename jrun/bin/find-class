@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# class name -> class file
+
+source $LIBSCALA_HOME/jrun/jrun
+
+jrun_usage="[class class ...]"
+jrun_help=$(cat <<EOM
+For each given class, prints the path to its classfile, which
+will be extracted from the jar if necessary.
+EOM
+)
+jrun-command "$0" "$@"
+
+for arg in "${jrun_args[@]}"; do
+  cp-find-class "$arg"
+done
+

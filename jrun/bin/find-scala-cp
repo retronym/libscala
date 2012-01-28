@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+
+source $LIBSCALA_HOME/jrun/jrun
+
+jrun_usage="[path]"
+jrun_help=$(cat <<EOM
+Prints the classpath used by the scala runner at the given path.
+If given no argument, uses the one found in the PATH, presently:
+  $(which scala)
+EOM
+)
+jrun-command "$0" "$@"
+program=$(jrun-arg 0)
+
+[[ -z "$program" ]] && program="$(which scala)"
+[[ -f "$program" ]] || { echo "No such file: $program" && exit 1; }
+
+jrunScalaHome=$(absolute_dirname "$program")/..
+jrunScalaOpts="-nobootcp -usejavacp"
+# jrunScalaPath="$program"
+
+run-scala-expr 'sys.props("java.class.path")'

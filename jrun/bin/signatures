@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# bin/signatures -cp ...
+#
+
+source "$LIBSCALA_HOME/jrun/jrun"
+
+_signatures_cmd()
+{
+  local jrun_flags jrun_args jrun_classpath
+  jrun_help="Print each signature in the classes found on the given classpath."
+  _jrun_by_ref "$@"
+
+  cp-signatures "$jrun_classpath"
+}
+
+_signatures_cmd "$@"
