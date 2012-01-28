@@ -1,9 +1,9 @@
 #
-# functional-bash.sh
+# jrun, trying to bring scala collections closer to the command line
 # Author: Paul Phillips <paulp@improving.org>
 #
 
-scalabash-help () {
+jrun-help () {
   cat <<EOM
 Illustrative examples hopefully suffice.
 

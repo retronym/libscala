@@ -3,7 +3,7 @@
 # bin/signatures -cp ...
 #
 
-source /r/jrun/jrun
+source "$LIBSCALA_HOME/jrun/jrun"
 
 _signatures_cmd()
 {

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 
-source /r/jrun/jrun
+source $LIBSCALA_HOME/jrun/jrun
 
 jrun_usage="[path]"
 jrun_help=$(cat <<EOM

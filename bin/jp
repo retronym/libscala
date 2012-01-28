@@ -4,10 +4,11 @@
 # Paul Phillips <paulp@improving.org>
 
 set -e
-script_dir=$(cd $(dirname $0) ; pwd)
-javassist="/soft/jar/javassist.jar"
-# scala="$script_dir/../bin/scala"
-# javassist="$script_dir/../lib/javassist.jar"
+
+source "$LIBSCALA_HOME/jrun/jrun"
+
+script_dir="$LIBSCALA_HOME/bin"
+javassist="$LIBSCALA_HOME/lib/javassist.jar"
 
 # declare some arrays
 declare -a classes

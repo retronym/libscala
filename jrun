@@ -6,9 +6,9 @@
 #   . /path/to/jrun -d   # debugging output
 #
 
-# If JBASH_DEBUG is non-empty, enable debugging
+# If JRUN_DEBUG is non-empty, enable debugging
 
-[[ "x${JBASH_DEBUG}" == "x" ]] || jrun_debug=1
+[[ "x${JRUN_DEBUG}" == "x" ]] || jrun_debug=1
 for arg; do
   if [[ $arg == -d || $arg == -debug ]]; then
     jrun_debug=1;
@@ -40,7 +40,7 @@ declare -x jrun_sh="$BASH_SOURCE"
 declare -x jrun_sh_args="$@"
 # changing directory will alter relative paths, so note script dir up front
 declare -x jrun_sh_dir=$(absolute_dirname "$jrun_sh")
-declare -x jrun_home="${JBASH_HOME:-$jrun_sh_dir}"
+declare -x jrun_home="${LIBSCALA_HOME:-$jrun_sh_dir/..}/jrun"
 declare -x jrun_sources="$jrun_home/jrun.d"
 
 jlog () {

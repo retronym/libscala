@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #
 
-source /r/jrun/jrun && echo "$@" && "$@"
+source $LIBSCALA_HOME/jrun/jrun && echo "$@" && "$@"
