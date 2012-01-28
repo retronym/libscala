@@ -16,5 +16,4 @@ _scala_svn_rev_completion () {
   else
     COMPREPLY=( 'r<number>' '(will complete once three digits are present)' )
   fi
-} && \
-  complete -o default -F _scala_svn_rev_completion gh-commit gh-svn
+}
