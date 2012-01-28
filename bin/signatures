@@ -3,15 +3,15 @@
 # bin/signatures -cp ...
 #
 
-source /r/jbash/jbash
+source /r/jrun/jrun
 
 _signatures_cmd()
 {
-  local jbash_flags jbash_args jbash_classpath
-  jbash_help="Print each signature in the classes found on the given classpath."
-  _jbash_by_ref "$@"
+  local jrun_flags jrun_args jrun_classpath
+  jrun_help="Print each signature in the classes found on the given classpath."
+  _jrun_by_ref "$@"
 
-  cp-signatures "$jbash_classpath"
+  cp-signatures "$jrun_classpath"
 }
 
 _signatures_cmd "$@"

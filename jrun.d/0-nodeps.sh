@@ -1,6 +1,6 @@
 # no dependencies
 # 
-_jbash_upvar() {
+_jrun_upvar() {
     if unset -v "$1"; then           # Unset & validate varname
         if (( $# == 2 )); then
             eval $1=\"\$2\"          # Return single value
@@ -42,15 +42,15 @@ split-string-quoted () {
     done
   done <<<"$@"
   
-  # split-string "$@" | foreach-stdin jbash-quote "%1"
+  # split-string "$@" | foreach-stdin jrun-quote "%1"
   # 
   # for x in $(split-string "$@"); do
-  #   jbash-quote "$x"
+  #   jrun-quote "$x"
   # done
   # 
   # local sep="$1" && shift
   # while IFS="$sep" read -r line; do
-  #   jbash-quote "$x"
+  #   jrun-quote "$x"
   # done <<<"$@"
 }
 
@@ -88,13 +88,13 @@ maybeQuote () {
 }
 
 # This function shell-quotes the argument
-jbash-quote ()
+jrun-quote ()
 {
   echo \'${1//\'/\'\\\'\'}\' #'# Help vim syntax highlighting
 }
 
 # This function shell-dequotes the argument
-jbash-dequote()
+jrun-dequote()
 {
   eval echo "$1" 2>/dev/null
 }

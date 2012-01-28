@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
 
-# jbash_auto_args=1
-. jbash.sh
-jbash-init-args "$@"
-set -- "${jbash_args[@]}"
+# jrun_auto_args=1
+. jrun.sh
+jrun-init-args "$@"
+set -- "${jrun_args[@]}"
 
-# for arg in "$jbash_args"; do
-for arg in "${jbash_args[@]}"; do
+# for arg in "$jrun_args"; do
+for arg in "${jrun_args[@]}"; do
 # for arg; do  
   cp-find-class "$arg"
 done

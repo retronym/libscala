@@ -2,8 +2,8 @@
 #
 
 _jlog_init () {
-  jlog "[init] command line is $jbash_sh $jbash_sh_args"
-  jlog "[init] jbash_home is $jbash_home"
+  jlog "[init] command line is $jrun_sh $jrun_sh_args"
+  jlog "[init] jrun_home is $jrun_home"
 } && _jlog_init
 
 isSetButEmpty () {
@@ -20,5 +20,5 @@ isSet () {
 }
 
 for arg in 0-nodeps lazy; do
-  . "$jbash_sources/$arg.sh"
+  . "$jrun_sources/$arg.sh"
 done

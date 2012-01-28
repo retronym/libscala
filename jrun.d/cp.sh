@@ -1,9 +1,9 @@
 # classpath functions.
 #
 
-jbashClasspath=""
-jbashClasspathArg () {
-  [[ -n "$jbashClasspath" ]] && echo "-classpath $jbashClasspath"
+jrunClasspath=""
+jrunClasspathArg () {
+  [[ -n "$jrunClasspath" ]] && echo "-classpath $jrunClasspath"
 }
 
 echoerr () {
@@ -25,7 +25,7 @@ echoerr () {
 # <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/lang/Object;
 cp-signatures () {
   local jars=$(cp-expand "$1")
-  jbashClasspath="$jbash_home/.lib/javassist.jar:."
+  jrunClasspath="$jrun_home/.lib/javassist.jar:."
   
   for jar in "$jars"; do
     jar-signatures "$jar"
@@ -33,7 +33,7 @@ cp-signatures () {
 }
 
 jar-signatures () {
-  ( cd "$(jbash-explode "$1")" && dir-class-files | foreach-stdin class-signatures %1 )
+  ( cd "$(jrun-explode "$1")" && dir-class-files | foreach-stdin class-signatures %1 )
 }
 
 class-signatures () {
@@ -72,11 +72,11 @@ cp-expand () {
 }
 
 cp-find-jar () {
-  jbashExtraJavaSource=$(whereClassSource)
-  # jbashClasspath="$(cp-boot-classpath)"
+  jrunExtraJavaSource=$(whereClassSource)
+  # jrunClasspath="$(cp-boot-classpath)"
   run-java-expr "new WhereClass().findAll(\"$1\")"
   
-  jbashExtraJavaSource=""
+  jrunExtraJavaSource=""
 }
 
 cp-find-class () {
@@ -85,7 +85,7 @@ cp-find-class () {
   [[ -f "$1" ]] && echo "$1" && return
   
   local container=$(cp-find-jar "$1")
-  local dir=$(mktemp -d -t jbash)
+  local dir=$(mktemp -d -t jrun)
   local path="$(echo "$1" | tr '.' '/' ).class"
   
   cp-extract "$container" "$path"
@@ -99,14 +99,14 @@ cp-extract () {
 append-classpath () {
   for arg in "$@"; do
     if [[ -n "$arg" ]]; then
-      if [[ -n "$jbashClasspath" ]]; then
-        jbashClasspath="$jbashClasspath$(pathSeparator)"
+      if [[ -n "$jrunClasspath" ]]; then
+        jrunClasspath="$jrunClasspath$(pathSeparator)"
       fi
-      jbashClasspath="$jbashClasspath${arg}"
+      jrunClasspath="$jrunClasspath${arg}"
     fi
   done
     
-  jlog "[cp] append-classpath, now $jbashClasspath"
+  jlog "[cp] append-classpath, now $jrunClasspath"
 }
 
 dir-class-files () {
@@ -119,16 +119,16 @@ cwd-class-names () {
   dir-class-names .
 }
 jar-class-names () {
-  dir-class-names "$(jbash-explode "$1")"
+  dir-class-names "$(jrun-explode "$1")"
 }
 class-names () {
   for arg; do
-    dir-class-names "$(jbash-explode "$arg")"
+    dir-class-names "$(jrun-explode "$arg")"
   done
 }
 class-files () {
   for arg; do
-    dir-class-files "$(jbash-explode "$arg")"
+    dir-class-files "$(jrun-explode "$arg")"
   done
 }
 

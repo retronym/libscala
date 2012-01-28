@@ -31,13 +31,13 @@ EOM
 # both sides.  See foreach-stdin for examples.
 bind-foreach () {
   local name="anon$RANDOM"
-  local cmd=$(jbash-percent-substitution "$@")
+  local cmd=$(jrun-percent-substitution "$@")
 
   eval-and-jlog "$name() { ( "$cmd"; ) }"
   echo $name
 }
 
-jbash-percent-substitution () {
+jrun-percent-substitution () {
   local cmd=""
 
   for arg in $@; do
@@ -92,15 +92,15 @@ foreach-stdin () {
 # 
 # map-split () {
 
-# set jbashSplitArgs to split the lines on something other than whitespace
+# set jrunSplitArgs to split the lines on something other than whitespace
 map () {
   set -o noglob
 
   local splitter="$IFS"
-  isSet jbashSplitArgs && splitter=$jbashSplitArgs
+  isSet jrunSplitArgs && splitter=$jrunSplitArgs
 
   local cmd="echo \$1"
-  [[ $# -gt 0 ]] && cmd=$(jbash-percent-substitution "$@")
+  [[ $# -gt 0 ]] && cmd=$(jrun-percent-substitution "$@")
 
   jlog "[map] splitter=$splitter cmd=$cmd"
 
@@ -121,7 +121,7 @@ map () {
     eval "$cmd"
   done
 
-  unset jbashSplitArgs
+  unset jrunSplitArgs
   unset noglob
 }
 

@@ -2,17 +2,17 @@
 #
 # class name -> class file
 
-source /r/jbash/jbash
+source /r/jrun/jrun
 
-jbash_usage="[class class ...]"
-jbash_help=$(cat <<EOM
+jrun_usage="[class class ...]"
+jrun_help=$(cat <<EOM
 For each given class, prints the path to its classfile, which
 will be extracted from the jar if necessary.
 EOM
 )
-jbash-command "$0" "$@"
+jrun-command "$0" "$@"
 
-for arg in "${jbash_args[@]}"; do
+for arg in "${jrun_args[@]}"; do
   cp-find-class "$arg"
 done
 

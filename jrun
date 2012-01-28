@@ -1,19 +1,19 @@
 #!bash
 #
-# jbash - bash functions for use with the jvm
+# jrun - bash functions for use with the jvm
 #
-#   . /path/to/jbash      # normal way
-#   . /path/to/jbash -d   # debugging output
+#   . /path/to/jrun      # normal way
+#   . /path/to/jrun -d   # debugging output
 #
 
 # If JBASH_DEBUG is non-empty, enable debugging
 
-[[ "x${JBASH_DEBUG}" == "x" ]] || jbash_debug=1
+[[ "x${JBASH_DEBUG}" == "x" ]] || jrun_debug=1
 for arg; do
   if [[ $arg == -d || $arg == -debug ]]; then
-    jbash_debug=1;
+    jrun_debug=1;
   elif [[ $arg == -q || $arg == -quiet ]]; then
-    jbash_debug=0;
+    jrun_debug=0;
   fi
 done
 
@@ -34,25 +34,25 @@ absolute_path () {
 }
 
 # only source once; disabled
-# [[ "x${jbash_dollar0}" == "x" ]] || { jlog "Already set: $jbash_dollar0"; return; }
+# [[ "x${jrun_dollar0}" == "x" ]] || { jlog "Already set: $jrun_dollar0"; return; }
 
-declare -x jbash_sh="$BASH_SOURCE"
-declare -x jbash_sh_args="$@"
+declare -x jrun_sh="$BASH_SOURCE"
+declare -x jrun_sh_args="$@"
 # changing directory will alter relative paths, so note script dir up front
-declare -x jbash_sh_dir=$(absolute_dirname "$jbash_sh")
-declare -x jbash_home="${JBASH_HOME:-$jbash_sh_dir}"
-declare -x jbash_sources="$jbash_home/jbash.d"
+declare -x jrun_sh_dir=$(absolute_dirname "$jrun_sh")
+declare -x jrun_home="${JBASH_HOME:-$jrun_sh_dir}"
+declare -x jrun_sources="$jrun_home/jrun.d"
 
 jlog () {
   # avoid non-zero return hitting set -e with || true
-  (( $jbash_debug )) && echo "$@" 1>&2 || true
+  (( $jrun_debug )) && echo "$@" 1>&2 || true
 }
 eval-and-jlog () {
   jlog "[eval]" "$@"
   eval "$@"
 }
 
-# source everything in jbash.d
-for arg in $jbash_sources/*.sh; do
+# source everything in jrun.d
+for arg in $jrun_sources/*.sh; do
   jlog "[init] source $arg" && . "$arg"
 done

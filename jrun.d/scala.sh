@@ -1,16 +1,16 @@
 # running scala
 #
 
-jbashScalaOpts=""
-jbashScalaHome=""
-# jbashScalaPath="$jbashScalaHome/bin/scala"
+jrunScalaOpts=""
+jrunScalaHome=""
+# jrunScalaPath="$jrunScalaHome/bin/scala"
 # lazyval sunBootClassPath java-property sun.boot.class.path
 
 # set-scala-opts () {
-#   jbashScalaOpts="$@"
+#   jrunScalaOpts="$@"
 # }
 # set-scala-path () {
-#   jbashScalaPath="$1"
+#   jrunScalaPath="$1"
 # }
 
 scala-home () {
@@ -24,11 +24,11 @@ scala-property () {
 
 run-scalac () {
   jlog "[run-scalac] scalac $@"
-  $jbashScalaHome/bin/scalac "$@"
+  $jrunScalaHome/bin/scalac "$@"
 }
 run-scala () {
   jlog "[run-scala] scala $@"
-  $jbashScalaHome/bin/scala "$@"
+  $jrunScalaHome/bin/scala "$@"
 }
 
 run-scala-expr () {
@@ -40,15 +40,15 @@ run-scala-expr () {
   jlog "[run-scala-expr] $name in $dirname"
 
   ( builtin cd "$dirname" &&
-      run-scalac $jbashScalacOpts $(jbashClasspathArg) "$file" &&
-      run-scala $jbashScalaOpts $(jbashClasspathArg) "$name"
+      run-scalac $jrunScalacOpts $(jrunClasspathArg) "$file" &&
+      run-scala $jrunScalaOpts $(jrunClasspathArg) "$name"
   )
 }
 
 # Creates a java program and returns the name of the source file.
 wrap-scala-expr () {
-  local dir=$(mktemp -dt jbash)
-  local name="jbash$RANDOM"
+  local dir=$(mktemp -dt jrun)
+  local name="jrun$RANDOM"
   local file="$dir/$name.scala"
   jlog "[wrap-scala-expr] file $file"
   

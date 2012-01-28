@@ -30,7 +30,7 @@ using-shopts () {
   }
 }
 using-shopt-names () {
-  local saved=$(mktemp -t jbash)
+  local saved=$(mktemp -t jrun)
   local enable="$1"
   local disable="$2"
   shift 2

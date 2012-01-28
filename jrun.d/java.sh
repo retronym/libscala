@@ -1,10 +1,10 @@
 # running java
 #
 
-jbashJavaHome=""
-jbashJavaOpts=""
-jbashJavaPath="java"
-jbashExtraJavaSource=""
+jrunJavaHome=""
+jrunJavaOpts=""
+jrunJavaPath="java"
+jrunExtraJavaSource=""
 
 java-home () {
      [[ -n "$JAVA_HOME" ]] && echo "$JAVA_HOME" \
@@ -16,14 +16,14 @@ java-property () {
 }
 
 run-javac () {
-  jlog "[run-javac] javac -d . -cp $jbashClasspath $jbashJavacOpts" "$@"
+  jlog "[run-javac] javac -d . -cp $jrunClasspath $jrunJavacOpts" "$@"
 
-  javac -d . -cp $jbashClasspath $jbashJavacOpts "$@"
+  javac -d . -cp $jrunClasspath $jrunJavacOpts "$@"
 }
 run-java () {
-  jlog "[run-java] java -cp $jbashClasspath $jbashJavaOpts" "$@"
+  jlog "[run-java] java -cp $jrunClasspath $jrunJavaOpts" "$@"
 
-  java -cp $jbashClasspath $jbashJavaOpts "$@" 
+  java -cp $jrunClasspath $jrunJavaOpts "$@" 
 }
 
 # Wraps the expression, compiles, runs.
@@ -39,20 +39,20 @@ run-java-method () {
   local base=$(basename "$file")
   local name="${base%%.java}"
 
-  ( cd "$dir" && append-classpath "$dir" && run-javac "$file" && run-java "jbash.$name" )
+  ( cd "$dir" && append-classpath "$dir" && run-javac "$file" && run-java "jrun.$name" )
 }
 
 wrap-java-method () {
-  local dir=$(mktemp -d -t jbash)
-  local name="jbash$RANDOM"
+  local dir=$(mktemp -d -t jrun)
+  local name="jrun$RANDOM"
   local file="$dir/$name.java"
   jlog "[wrap-java-expr] $file"
 
   cat >"$dir/${name}.java" <<EOM
-package jbash;
+package jrun;
 import java.io.File;
 
-$jbashExtraJavaSource
+$jrunExtraJavaSource
 
 public class $name {
   private static String apply() throws Throwable {

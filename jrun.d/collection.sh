@@ -28,7 +28,7 @@ cwd-files-escaped () {
   find . -type f -print | sed 's/ /\\ /g;'
 }
 cwd-files-quoted () {
-  find . -type f -print | sed 's#^./##;' | map jbash-quote %1
+  find . -type f -print | sed 's#^./##;' | map jrun-quote %1
 }
 
 # Use %1 for the current file
@@ -38,7 +38,7 @@ cwd-foreach-file () {
   # if [[ $# -eq 0 ]]; then
   #   local cmd="echo \$1"
   # else
-  #   local cmd=$(jbash-percent-substitution "$@")
+  #   local cmd=$(jrun-percent-substitution "$@")
   # fi
   # 
   # find . -type f -print0 | while IFS= read -r -d '' file; do set -- "$file"; eval $cmd; done
