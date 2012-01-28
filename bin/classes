@@ -3,7 +3,10 @@
 # bin/classes -cp /soft/jar/'*':/scala/inst/3/lib/'*'
 #
 # 
-# source "$libscalaHome/jrun/jrun"
+
+[[ -n "$jrunHome" ]] || source "$(dirname $0)/../jrun/jrun"
+
+source "$jrunHome/jrun"
 
 jrun_usage=""
 jrun_help=$(cat <<EOM

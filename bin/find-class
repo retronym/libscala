@@ -2,7 +2,7 @@
 #
 # class name -> class file
 
-source $LIBSCALA_HOME/jrun/jrun
+source "$jrunHome/jrun"
 
 jrun_usage="[class class ...]"
 jrun_help=$(cat <<EOM

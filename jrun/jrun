@@ -6,6 +6,22 @@
 #   . /path/to/jrun -d   # debugging output
 #
 
+# . "$libscalaHome/libscala.sh"
+[[ -n "$jrunHome" ]] || source "$(dirname $0)/../libscala.sh"
+
+trySource "$libscalaHome/etc/00nodeps.sh"
+trySource "$jrunHome/jrun.d/lazy.sh"
+
+declare -x jrun_sh="$BASH_SOURCE"
+declare -x jrun_sh_args="$@"
+# changing directory will alter relative paths, so note script dir up front
+declare -x jrun_sh_dir=$(absolute_dirname "$jrun_sh")
+
+
+
+# declare -x jrunHome="${LIBSCALA_HOME:-$jrun_sh_dir/..}/jrun"
+# declare -x jrun_sources="$jrunHome/jrun.d"
+
 # If JRUN_DEBUG is non-empty, enable debugging
 # 
 # [[ "x${JRUN_DEBUG}" == "x" ]] || jrunDebug=1

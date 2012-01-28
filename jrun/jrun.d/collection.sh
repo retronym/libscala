@@ -28,7 +28,7 @@ cwd-files-escaped () {
   find . -type f -print | sed 's/ /\\ /g;'
 }
 cwd-files-quoted () {
-  find . -type f -print | sed 's#^./##;' | map jrun-quote %1
+  find . -type f -print | sed 's#^./##;' | map quote %1
 }
 
 # Use %1 for the current file

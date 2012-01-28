@@ -87,15 +87,17 @@ maybeQuote () {
   fi
 }
 
+#### These are from bash-completion to avoid the dependency.
+
 # This function shell-quotes the argument
-jrun-quote ()
+quote()
 {
-  echo \'${1//\'/\'\\\'\'}\' #'# Help vim syntax highlighting
+    echo \'${1//\'/\'\\\'\'}\' #'# Help vim syntax highlighting
 }
 
 # This function shell-dequotes the argument
-jrun-dequote()
+dequote()
 {
-  eval echo "$1" 2>/dev/null
+    eval echo "$1" 2> /dev/null
 }
 
