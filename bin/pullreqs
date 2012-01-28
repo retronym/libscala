@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Run in a github repository to see a pretty chart with
+# open pull requests.
+
+set -e
+
+die () {
+  echo "$@"
+  exit 1
+}
+
+libscala=${LIBSCALA_HOME:-$(dirname $BASH_SOURCE)/..}
+
+scala=$(which scala 2>/dev/null)
+[[ -x "$scala" ]] || scala="$SCALA_HOME/bin/scala"
+[[ -x "$scala" ]] || die "Can't find scala."
+
+mkString () {
+  local sep="$1"
+  local first=1
+
+  while read line; do
+    if (( $first )); then
+      first=0
+      printf "%s" "$line"
+    else
+      printf "${sep}%s" "$line"
+    fi
+  done
+
+  echo ""
+}
+
+dir="$libscala/github-api"
+cd $dir || die "Can't find $dir"
+
+which sbt &>/dev/null || die "Can't find sbt in your path."
+[[ -d lib_managed ]] || sbt update
+[[ -d target/scala-2.9.1/classes ]] || sbt package
+cp=$(find lib_managed -name '*.jar' | mkString ':'):target/scala-2.9.1/classes
+
+"$scala" -cp "$cp" improving.pullreq.Main "$@" 2>/dev/null
