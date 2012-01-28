@@ -13,8 +13,9 @@ export scalaGitUrl="https://github.com/scala/scala"
 export scalaSvnMap="$libscalaHome/data/scala-svn-to-sha1-map.txt"
 
 # Source all the completions and helpers.
-trySource bash.d/*
-trySource completion.d/*
+trySource "$libscalaHome/bash.d/"*
+trySource "$libscalaHome/completion.d/"*
+trySource "$libscalaHome/jrun/jrun"
 
 # Adding -XX: flags to java
 complete -o default -F _java_with_jvm_opts java
@@ -30,6 +31,3 @@ complete -F _git_branch_local_only gbr gco
 
 # Delete the cached bytecode disassemblies
 alias git-javap-clean='git update-ref -d refs/notes/textconv/javap'
-
-# jrun
-[[ -f "$LIBSCALA_HOME/jrun/jrun" ]] && source "$LIBSCALA_HOME/jrun/jrun" 
