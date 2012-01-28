@@ -4,7 +4,15 @@
 # to certain options (especially, -cp/-classpath)
 #
 
-jrunHelp () {
+requireFunction () {
+  type "$1" &> /dev/null || {
+    echo "Required function '$1' not found! Aborting."
+    declare
+    exit 1
+  }
+}
+
+jrun_help () {
   cat <<EOM
 Usage: $(basename "$0") [options...]
 $jrun_help
@@ -49,7 +57,7 @@ _jrun_by_ref()
 
   while [ $# -gt 0 ]; do
     case "$1" in
-          -h|-help) jrunHelp && exit 1 ;;
+          -h|-help) jrun_help && exit 1 ;;
          -d|-debug) addFlag d && shift ;;
          -q|-quiet) addFlag q && shift ;;
        -v|-verbose) addFlag v && shift ;;
@@ -72,6 +80,7 @@ _jrun_by_ref()
 
 # handles standard args; sets jrun_args with residuals.
 jrun-command () {
+  jlog "[jrun-command] $@"
   # _jrun_upvar jrun_program $(basename "$1")
   jrun_program=$(basename "$1")
   shift
@@ -79,8 +88,8 @@ jrun-command () {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-          -h|-help) _jrun_help && exit 1 ;;
-         -d|-debug) _jrunDebug=1 && shift ;;
+          -h|-help) requireFunction "jrun_help" && jrun_help && exit 1 ;;
+         -d|-debug) jrunDebug=1 && shift ;;
     -cp|-classpath) append-classpath "$2" && shift 2 ;;
                  *)
         jlog "[args] passing through argument $1" &&

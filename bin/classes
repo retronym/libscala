@@ -4,8 +4,7 @@
 #
 # 
 
-[[ -n "$jrunHome" ]] || source "$(dirname $0)/../jrun/jrun"
-
+[[ -n "$jrunHome" ]] || jrunHome="$(dirname $0)/../jrun"
 source "$jrunHome/jrun"
 
 jrun_usage=""

@@ -69,14 +69,14 @@ absolute_path () {
 }
 
 [[ -d "$BASH_COMPLETION_DIR" ]] || [[ -d "$BASH_COMPLETION" ]] || {
-  echo "Can't find core bash completion (BASH_COMPLETION), completion won't function."
+  jlog "[init] Can't find core bash completion (BASH_COMPLETION), completion won't function."
 }
 
 [[ -d "$SCALA_SRC_HOME" ]] || {
-  echo "Note: some features require \$SCALA_SRC_HOME be set to a checkout of scala trunk."
+  jlog "[init] Note: some features require \$SCALA_SRC_HOME be set to a checkout of scala trunk."
 }
 
-jlog "[init] command line is $BASH_SOURCE $@"
+jlog "[init] command line is $0 $@"
 jlog "[init] jrunHome is $jrunHome"
 
 export libscalaHome=$(findLibscalaRoot)

@@ -14,8 +14,8 @@ export scalaSvnMap="$libscalaHome/data/scala-svn-to-sha1-map.txt"
 
 # Source all the completions, functions, etc.
 trySource "$libscalaHome/bash.d/"*
-trySource "$libscalaHome/jrun/jrun.d/"*
 trySource "$libscalaHome/completion.d/"*
+# trySource "$libscalaHome/jrun/jrun.d/"*
 
 # Adding -XX: flags to java
 complete -o default -F _java_with_jvm_opts java
