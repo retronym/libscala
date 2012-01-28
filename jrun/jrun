@@ -7,52 +7,52 @@
 #
 
 # If JRUN_DEBUG is non-empty, enable debugging
-
-[[ "x${JRUN_DEBUG}" == "x" ]] || jrun_debug=1
-for arg; do
-  if [[ $arg == -d || $arg == -debug ]]; then
-    jrun_debug=1;
-  elif [[ $arg == -q || $arg == -quiet ]]; then
-    jrun_debug=0;
-  fi
-done
-
-absolute_dirname () {
-  local d=$(dirname "$1")
-  
-  ( [[ "$d" = /* ]] && echo "$d" ) ||
-  ( [[ -d "$d" ]] && cd "$d" && pwd ) || 
-  echo "$(pwd)/${1#./}"
-}
-
-absolute_path () {
-  if [[ "$1" = /* ]]; then
-    echo "$1"
-  else
-    echo "$(absolute_dirname "$1")/$(basename "$1")"
-  fi
-}
+# 
+# [[ "x${JRUN_DEBUG}" == "x" ]] || jrunDebug=1
+# for arg; do
+#   if [[ $arg == -d || $arg == -debug ]]; then
+#     jrunDebug=1;
+#   elif [[ $arg == -q || $arg == -quiet ]]; then
+#     jrunDebug=0;
+#   fi
+# done
+# 
+# absolute_dirname () {
+#   local d=$(dirname "$1")
+#   
+#   ( [[ "$d" = /* ]] && echo "$d" ) ||
+#   ( [[ -d "$d" ]] && cd "$d" && pwd ) || 
+#   echo "$(pwd)/${1#./}"
+# }
+# 
+# absolute_path () {
+#   if [[ "$1" = /* ]]; then
+#     echo "$1"
+#   else
+#     echo "$(absolute_dirname "$1")/$(basename "$1")"
+#   fi
+# }
 
 # only source once; disabled
 # [[ "x${jrun_dollar0}" == "x" ]] || { jlog "Already set: $jrun_dollar0"; return; }
 
-declare -x jrun_sh="$BASH_SOURCE"
-declare -x jrun_sh_args="$@"
+# declare -x jrun_sh="$BASH_SOURCE"
+# declare -x jrun_sh_args="$@"
 # changing directory will alter relative paths, so note script dir up front
-declare -x jrun_sh_dir=$(absolute_dirname "$jrun_sh")
-declare -x jrun_home="${LIBSCALA_HOME:-$jrun_sh_dir/..}/jrun"
-declare -x jrun_sources="$jrun_home/jrun.d"
-
-jlog () {
-  # avoid non-zero return hitting set -e with || true
-  (( $jrun_debug )) && echo "$@" 1>&2 || true
-}
-eval-and-jlog () {
-  jlog "[eval]" "$@"
-  eval "$@"
-}
-
-# source everything in jrun.d
-for arg in $jrun_sources/*.sh; do
-  jlog "[init] source $arg" && . "$arg"
-done
+# declare -x jrun_sh_dir=$(absolute_dirname "$jrun_sh")
+# declare -x jrunHome="${LIBSCALA_HOME:-$jrun_sh_dir/..}/jrun"
+# declare -x jrun_sources="$jrunHome/jrun.d"
+# 
+# jlog () {
+#   # avoid non-zero return hitting set -e with || true
+#   (( $jrunDebug )) && echo "$@" 1>&2 || true
+# }
+# eval-and-jlog () {
+#   jlog "[eval]" "$@"
+#   eval "$@"
+# }
+# 
+# # source everything in jrun.d
+# for arg in $jrun_sources/*.sh; do
+#   jlog "[init] source $arg" && . "$arg"
+# done

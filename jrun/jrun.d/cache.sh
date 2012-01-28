@@ -1,8 +1,8 @@
 # cache
 #
 
-[[ -n "$jrun_home" ]] && {
-  jrun_cache="$jrun_home/.cache"
+[[ -n "$jrunHome" ]] && {
+  jrun_cache="$jrunHome/.cache"
   jrun_make_cachedir () {
     local dir="$jrun_cache/classes/$1"
     mkdir -p "$dir"

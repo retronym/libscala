@@ -30,7 +30,7 @@ _jrun_by_ref()
   addFlag () {
     jrun_flags="${jrun_flags}$1"
     case "$1" in
-      d) jrun_debug=1 ;;
+      d) jrunDebug=1 ;;
       q) jrun_quiet=1 ;;
       v) jrun_verbose=1 ;;
     esac
@@ -80,7 +80,7 @@ jrun-command () {
   while [ $# -gt 0 ]; do
     case "$1" in
           -h|-help) _jrun_help && exit 1 ;;
-         -d|-debug) _jrun_debug=1 && shift ;;
+         -d|-debug) _jrunDebug=1 && shift ;;
     -cp|-classpath) append-classpath "$2" && shift 2 ;;
                  *)
         jlog "[args] passing through argument $1" &&

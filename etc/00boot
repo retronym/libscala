@@ -2,6 +2,18 @@
 #
 # bootstrap for libscala, here for libscala.sh tidiness
 
+unset jrunDebug
+[[ -n "$JRUN_DEBUG" ]] && jrunDebug="$JRUN_DEBUG"
+for arg; do
+  [[ $arg == -d || $arg == -debug ]] && jrunDebug=true
+  [[ $arg == -q || $arg == -quiet ]] && unset jrunDebug
+done
+
+jlog () {
+  # avoid non-zero return hitting set -e with || true
+  (( $jrunDebug )) && echo "$@" 1>&2 || true
+}
+
 findLibscalaRoot () {
   if [[ -z "$LIBSCALA_HOME" ]]; then
     export LIBSCALA_HOME=$( cd "$(dirname $BASH_SOURCE)/.." && pwd )
@@ -13,12 +25,47 @@ findLibscalaRoot () {
 # absolute path and a relative one.
 trySource () {
   for arg in "$@"; do
+    jlog "[boot] source $arg" && . "$arg"
     if [[ -f "$arg" ]]; then
       . "$arg"
     elif [[ -f "$libscalaRoot/bash.d/$arg" ]]; then
       . "$libscalaRoot/bash.d/$arg"
     fi
   done
+}
+
+eval-and-jlog () {
+  jlog "[eval]" "$@"
+  eval "$@"
+}
+
+isSetButEmpty () {
+  [[ "${!1+x}" = x && -z "${!1}" ]]
+}
+isUnset () {
+  [[ "${!1+x}" != x ]] # && -z "${!1}" ]]
+}
+isSet () {
+  [[ $# -eq 1 ]] && {
+    jlog "$(caller 0)   => isSet($1)"
+    [[ "x${!1}" != "x" ]]
+  }
+}
+
+absolute_dirname () {
+  local d=$(dirname "$1")
+  
+  ( [[ "$d" = /* ]] && echo "$d" ) ||
+  ( [[ -d "$d" ]] && cd "$d" && pwd ) || 
+  echo "$(pwd)/${1#./}"
+}
+
+absolute_path () {
+  if [[ "$1" = /* ]]; then
+    echo "$1"
+  else
+    echo "$(absolute_dirname "$1")/$(basename "$1")"
+  fi
 }
 
 [[ -d "$BASH_COMPLETION_DIR" ]] || [[ -d "$BASH_COMPLETION" ]] || {
@@ -29,5 +76,9 @@ trySource () {
   echo "Note: some features require \$SCALA_SRC_HOME be set to a checkout of scala trunk."
 }
 
+jlog "[init] command line is $BASH_SOURCE $@"
+jlog "[init] jrunHome is $jrunHome"
+
 export libscalaHome=$(findLibscalaRoot)
+export jrunHome="$libscalaHome/jrun"
 export PATH="$PATH:$libscalaHome/bin"

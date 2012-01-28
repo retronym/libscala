@@ -25,7 +25,7 @@ echoerr () {
 # <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/lang/Object;
 cp-signatures () {
   local jars=$(cp-expand "$1")
-  jrunClasspath="$jrun_home/.lib/javassist.jar:."
+  jrunClasspath="$jrunHome/.lib/javassist.jar:."
   
   for jar in "$jars"; do
     jar-signatures "$jar"

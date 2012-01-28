@@ -2,8 +2,8 @@
 #
 # bin/classes -cp /soft/jar/'*':/scala/inst/3/lib/'*'
 #
-
-source "$LIBSCALA_HOME/jrun/jrun"
+# 
+# source "$libscalaHome/jrun/jrun"
 
 jrun_usage=""
 jrun_help=$(cat <<EOM
