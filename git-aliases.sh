@@ -1,6 +1,10 @@
 #!/bin/sh
 #
 
+# These are some of my "workhorse" aliases.
+# There are a lot of fancier ones which come up less frequently
+# which I'll put somewhere else eventually.
+
 alias g='git'
 
 # branching, committing
@@ -20,7 +24,10 @@ alias gra='git rebase --abort'
 
 # log/info
 alias glog-nm='git log --no-merges ^master'
+alias glog-this='git log --no-merges ^master HEAD'
 alias glog..='git log --no-merges master.. -- src'
+alias glog2="git log --simplify-by-decoration --date-order --format='%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --graph --decorate --date=relative"
+alias glog3="git log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Creset %m - %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --date=relative"
 alias gdesc='git describe --always'
 
 # diff
@@ -32,7 +39,8 @@ alias gdh='git diff HEAD^ HEAD'
 alias gdm...='git diff master... -- src'
 alias gdsm...='git diff -w --stat master... -- src'
 
-# fancy but useful things
+# obscurer but useful things
 alias git-checkout-all='git fetch . refs/remotes/*:refs/HEADs/*'
 alias git-local-checkout-all='git co HEAD^ && git fetch . refs/remotes/origin/*:refs/HEADs/* && git co master && git branch -D HEAD'
 alias git-show-blobs='git verify-pack -v .git/objects/pack/pack-*.idx | sort -k3n'
+alias git-ls-remote-tags='git ls-remote --tags origin'
