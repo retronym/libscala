@@ -29,7 +29,7 @@ export scalaGitUrl="https://github.com/scala/scala"
 export scalaSvnMap="$libscalaEtc/scala-svn-to-sha1-map.txt"
 
 # Source the extra completion and helper functions.
-trySource scala-291 scala java github git
+trySource scala-291 scala java github git-aliases git
 
 # Adding -XX: flags to java
 complete -o default -F _java_with_jvm_opts java

@@ -13,6 +13,14 @@ If you're lucky, that's it.  Examples of available things:
     scala -J-XX:        # also completes on -J-XX: options
     gco <tab>           # a git checkout which completes on local branches only
     gh-find Global      # open a browser to those files in trunk matching Global
+
+There are a number of git-XXX wrappers in ~/bin, e.g.
+
+    git-diff-grep b1 b2 Bippy     # Show a diff between b1 and b2 - but only the hunks containing "Bippy"
+
+If you have a lot of git branches tied to a non-canonical version of the
+scala repository, you might want to look at git-remaster, which can fix that
+all up for you.
     
 There is an sbt project in github-api which provides the basis for "pullreqs",
 a command you can run from (any project's) github clone to see something like this:
