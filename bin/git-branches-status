@@ -7,7 +7,7 @@ echo ">> Common is the merge base; time since is against that commit."
 echo ">> Current master: $(git describe --always master)"
 echo ""
 
-longest=$(for b in $(git ls-branches); do echo ${#b}; done | sort -nr |head -1)
+longest=$(for b in $(git branch | cut -c 3-); do echo ${#b}; done | sort -nr |head -1)
 fmtprintf () {
   local fmt="%-${longest}s %-15s %-35s %-15s\n"
   printf "$fmt" "$@"
@@ -16,7 +16,7 @@ fmtprintf () {
 fmtprintf "Branch" "Files/Lines" "Common" "Time Since"
 fmtprintf "------" "-----------" "------" "----------"
 
-for b in $(git-ls-branches); do
+for b in $(git branch | cut -c 3-); do
   [[ $b == master ]] && continue;
 
   when=$(git-when-merge-base master $b)

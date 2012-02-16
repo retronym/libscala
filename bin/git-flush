@@ -1,12 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
+# Tries to purge everything possible from a git repository except things
+# directly referenced from branch heads.
+#
+# This is extremely destructive: destruction is the point.
 
 du -hs .
 rm -rf .git/refs/original
 git reflog expire --expire=now --all
 git repack -ad
-du -hs .
-git gc --prune=now 
 du -hs .
 git gc --aggressive --prune=now 
 du -hs .

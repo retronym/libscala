@@ -1,8 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Deletes the currently checked out branch,
 # after switching to master.
 
-CURRENT=$(git symbolic-ref HEAD)
-git checkout -f master || exit 1
-git branch -D ${CURRENT##refs/heads/}
+current=$(git symbolic-ref HEAD)
+[[ $current != master ]] && git checkout -f master && git branch -D ${current##refs/heads/}

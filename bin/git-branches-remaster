@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 
 set -e
 
-for b in $(git ls-branches); do
+for b in $(git branch | cut -c 3-); do
   [[ $b != master ]] && {
     git clean -fxd .
     git checkout -f $b

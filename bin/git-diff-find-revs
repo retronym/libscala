@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Prints the hashes of commits which match the given string
+# (in the same way git log -S<string> does.)
+
+[ $# -eq 1 ] || { echo "Usage: $0 <string>" && exit 0; }
+
+git --no-pager log --abbrev=10 --reverse --diff-filter=AM --format="%h" -S"$1"
