@@ -1,6 +1,0 @@
-#!/bin/sh
-#
-
-[ $# -eq 1 ] || { echo "Usage: $0 <pattern>" ; exit 1; }
-
-git log --reverse --diff-filter=AM --format="%H" -S"$1"

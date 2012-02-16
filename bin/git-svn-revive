@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-#
-
-git svn init "$1"
-git update-ref refs/remotes/git-svn refs/remotes/origin/master
-git svn fetch

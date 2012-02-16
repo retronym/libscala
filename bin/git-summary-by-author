@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#
-
-git log --format="%B" --since=9.months.ago --author=extempore \
-  -- "$@" |grep -v ^git-svn-id

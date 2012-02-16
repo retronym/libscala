@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#
-# checkout all origin branches as tracking branches.
-
-git checkout master^ &&
-git fetch . refs/remotes/origin/*:refs/heads/* &&
-git checkout master &&
-git branch -D HEAD

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-#
-
-for b in $(git branch |grep -v \*) ; do 
-  git --no-pager notes show $b
-  git notes remove $b &>/dev/null
-done

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-#
-
-git diff --stat --summary master...$1 -- src | \
-  
-
