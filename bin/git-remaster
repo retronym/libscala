@@ -6,8 +6,15 @@
 
 set -e
 
+masterurl=${1:-https://github.com/scala/scala}
+
 # rewrite origin to github
-git remote set-url origin https://github.com/scala/scala
+if git remote show | grep -q ^origin; then
+  git remote set-url origin "$masterurl"
+else
+  git remote add origin "$masterurl"
+fi
+
 git fetch origin
 
 # create temporary branch, merge/discard original master,
