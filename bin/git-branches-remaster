@@ -1,5 +1,10 @@
 #!/bin/sh
 #
+# Goes through every branch in a repository except for master,
+# and merges master into it using the recursive/ours strategy
+# for conflict resolution.  In essence, it's attempting to hang
+# onto all branch-specific changes while reconnecting with the
+# history of master.
 
 set -e
 
