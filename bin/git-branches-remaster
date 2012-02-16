@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Goes through every branch in a repository except for master,
+# and merges master into it using the recursive/ours strategy
+# for conflict resolution.  In essence, it's attempting to hang
+# onto all branch-specific changes while reconnecting with the
+# history of master.
+
+set -e
+
+for b in $(git branch | cut -c 3-); do
+  [[ $b != master ]] && {
+    git clean -fxd .
+    git checkout -f $b
+    git merge -s recursive -X patience -X ours master || {
+      git clean . && git add -f . && git commit -m "Merge failure during $0" && git clean -fxd .
+    }
+  }
+done

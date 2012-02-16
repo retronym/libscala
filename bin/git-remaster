@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# Subsumes current "master" under branch at origin/master.
+# This inflicts great changes on a repo, don't run it unless
+# you like what you see.
+
+set -e
+
+# rewrite origin to github
+git remote set-url origin https://github.com/scala/scala
+git fetch origin
+
+# create temporary branch, merge/discard original master,
+# make temporary branch the new master.
+git checkout -b remastering-master origin/master
+git merge -s ours master
+git checkout -f master
+git reset --hard remastering-master
+git branch -D remastering-master
+
+echo "Now run git-branches-remaster to bring forward all the branches."

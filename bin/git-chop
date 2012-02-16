@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Deletes the currently checked out branch,
+# after switching to master.
+
+current=$(git symbolic-ref HEAD)
+[[ $current != master ]] && git checkout -f master && git branch -D ${current##refs/heads/}

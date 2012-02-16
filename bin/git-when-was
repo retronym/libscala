@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+git --no-pager log --format="%cd" --date=relative -n 1 "$@"

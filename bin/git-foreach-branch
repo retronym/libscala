@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Executes given command for each git branch, with the name of
+# the branch replacing a single `%` in the command.
+
+[[ $# -gt 0 ]] || {
+  cat <<EOM
+Usage: $0 <cmd>
+Place a single % in the command to represent the branch.
+Example: $0 git diff --no-pager master...%
+EOM
+  exit 0
+}
+
+git branch | cut -c 3- | xargs -L 1 -J % "$@"
