@@ -25,6 +25,7 @@ alias gra='git rebase --abort'
 # log/info
 alias glog-nm='git log --no-merges ^master'
 alias glog-this='git log --no-merges ^master HEAD'
+alias glog-dump='git --no-pager log --format=%B master..'
 alias glog..='git log --no-merges master.. -- src'
 alias glog2="git log --simplify-by-decoration --date-order --format='%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --graph --decorate --date=relative"
 alias glog3="git log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Creset %m - %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --date=relative"
@@ -44,3 +45,40 @@ alias git-checkout-all='git fetch . refs/remotes/*:refs/HEADs/*'
 alias git-local-checkout-all='git co HEAD^ && git fetch . refs/remotes/origin/*:refs/HEADs/* && git co master && git branch -D HEAD'
 alias git-show-blobs='git verify-pack -v .git/objects/pack/pack-*.idx | sort -k3n'
 alias git-ls-remote-tags='git ls-remote --tags origin'
+
+# Merge with sane options, resolving conflicts for ours or theirs
+gm-ours () {
+  git-merge-with-opts -X ours ${1:-master}
+}
+gm-theirs () {
+  git-merge-with-opts -X theirs ${1:-master}
+}
+gsquash-ours () {
+  gsquash -X ours ${1:-master}
+}
+gsquash-theirs () {
+  gsquash -X theirs ${1:-master}
+}
+git-merge-with-opts () {
+  git merge -s recursive -X patience -X ignore-space-change "$@"
+}
+gsquash () {
+  [[ $# -gt 0 ]] || {
+    echo "Don't run this directly: run gsquash-ours or gsquash-theirs."
+    echo "Or, supply the branch you want to merge from."
+    return
+  }
+  local desc=$(git describe --always)
+  echo "Squashing all non-master commits into one.  If something"
+  echo "goes wrong, revert to initial state by running:"
+  echo "  git reset --hard $desc"
+  echo ""
+  
+  git-merge-with-opts --quiet "$@" || return
+  local files=$(git diff --name-only master..)
+  echo "New/changed files: $files"
+  echo ""
+  git reset master && 
+  git add $files &&
+  git commit -F <(git --no-pager log --no-merges --format=%B master..$desc)
+}
