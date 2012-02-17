@@ -32,11 +32,11 @@ alias gdesc='git describe --always'
 
 # diff
 alias gdm='git diff master'
-alias gds='git diff --stat=150,150'
-alias gdsh='git diff --stat=150,150 HEAD^'
-alias gdsm='git diff --stat=150,150 master'
 alias gdh='git diff HEAD^ HEAD'
-alias gdm...='git diff master... -- src'
+alias gds='git diff -w --stat=150,150'
+alias gdsh='git diff -w --stat=150,150 HEAD^'
+alias gdsm='git diff -w --stat=150,150 master'
+alias gdm...='git diff -w master... -- src'
 alias gdsm...='git diff -w --stat master... -- src'
 
 # obscurer but useful things
