@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+
+set -e
+
+[[ $# -gt 0 ]] || {
+  cat <<EOM
+Usage: $0 <ref>
+
+** Warning! This utterly destroys the current branch AND
+deletes every file in the tree which is not checked in by
+virtue of calling git clean -fxd. You have been warned.
+
+Calculates a linear path from <ref> to the current HEAD and
+rewrites the current branch such that all commits since
+<ref> are applied linearly. It does this by first attempting
+to cherry-pick each commit, and if that fails, resetting
+the state of the tree to that of the commit it is trying to
+cherry-pick.
+
+Commits which cherry-pick cleanly are rewritten:
+  (Was <ref>)
+Commits for which a hard reset must be issued are rewritten:
+  (Reset <ref>)
+
+This means that a "Was" commit accurately reproduces the
+change in the original patch, but not necessarily the same
+tree.  Conversely, a "Reset" commit accurately reproduces
+the original tree at that point, but does not reproduce the
+original patch.
+
+Example usage:
+
+    git checkout -b my-destroyable-branch master
+    git log --oneline --graph # for comparison purposes
+    $0 HEAD~20
+    <twiddle thumbs>
+    git log --oneline --graph
+EOM
+  exit 0
+}
+
+start=$1
+
+commits=$(git rev-list --no-merges --abbrev=10 --abbrev-commit --topo-order --reverse $start..master)
+# commits=$(git log --reverse --no-merges --topo-order --format=%h $1..HEAD)
+git reset --hard $start
+
+commit () {
+  local label=$1
+  local sha=$2
+  local desc=$(git describe --always $sha)
+  local timestamp=$(git log --format="%at" -n 1 $sha)
+  
+  ( printf "($label $desc) " && git --no-pager log --format=%B -n 1 $sha ) | git commit --allow-empty --date=$timestamp --amend -F -
+}
+
+for sha in $commits; do
+  desc=$(git describe --always $sha)
+  git clean -fxd .
+  if git cherry-pick --strategy=recursive -Xignore-space-change $sha; then
+    git add -A . &&
+    commit Was $desc
+  else
+    git cherry-pick --abort &&
+    git checkout -f $sha -- . &&
+    git clean -fxd . &&
+    git add -A . &&
+    commit Reset $desc
+  fi
+done
