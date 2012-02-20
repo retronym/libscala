@@ -6,6 +6,8 @@
 # which I'll put somewhere else eventually.
 
 alias g='git'
+alias gd='git diff'
+alias gl='git log --abbrev=10 --abbrev-commit --date=relative'
 
 # branching, committing
 alias gbgrep='git branch -a | grep $*'
