@@ -40,11 +40,10 @@ EOM
   exit 0
 }
 
-start=$1
-
-commits=$(git rev-list --no-merges --abbrev=10 --abbrev-commit --topo-order --reverse $start..master)
-# commits=$(git log --reverse --no-merges --topo-order --format=%h $1..HEAD)
-git reset --hard $start
+start=$(git describe --always $(git merge-base $1 master))
+echo "[start] linearizing $start..master"
+commits=$(git log --format="%h" --no-merges --reverse --ancestry-path $start..master)
+git reset -q --hard $start
 
 commit () {
   local label=$1
@@ -52,20 +51,37 @@ commit () {
   local desc=$(git describe --always $sha)
   local timestamp=$(git log --format="%at" -n 1 $sha)
   
-  ( printf "($label $desc) " && git --no-pager log --format=%B -n 1 $sha ) | git commit --allow-empty --date=$timestamp --amend -F -
+  ( printf "($label $desc) " && git --no-pager log --format=%B -n 1 $sha ) | git commit --quiet --all --allow-empty --date=$timestamp --amend -F -
 }
+
+remove_files () {
+  git diff --name-only --diff-filter=R "${1}^" HEAD | xargs git rm -q
+}
+
+reset_for () {
+  local sha=$1
+  git reset -q --hard
+  remove_files $sha
+  git checkout --quiet ${sha}^ -- .
+  commit Reset "${sha}^"
+}
+
+cpick () {
+  git cherry-pick --strategy=recursive -Xignore-space-change $1 &>/dev/null
+}
+  
 
 for sha in $commits; do
   desc=$(git describe --always $sha)
-  git clean -fxd .
-  if git cherry-pick --strategy=recursive -Xignore-space-change $sha; then
-    git add -A . &&
-    commit Was $desc
+  git clean -q -fxd .
+  if cpick $sha; then
+    echo "[   ok] $desc"
   else
-    git cherry-pick --abort &&
-    git checkout -f $sha -- . &&
-    git clean -fxd . &&
-    git add -A . &&
-    commit Reset $desc
+    git --no-pager status
+    reset_for $sha
+    cpick $sha
+    echo "[reset] $desc $(git --no-pager log --format=%h -n 1 HEAD)"
   fi
+  remove_files $sha
+  commit Was $desc
 done
