@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+
+current=$(basename $(git symbolic-ref HEAD))
+
+for b in $(git branch | cut -c 3-); do
+  git checkout $b && git pull
+done
+
+git checkout $current

@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+basename $(git symbolic-ref HEAD)

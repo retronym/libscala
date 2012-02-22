@@ -11,6 +11,7 @@ alias gl='git log --abbrev=10 --abbrev-commit --date=relative'
 
 # branching, committing
 alias gbgrep='git branch -a | grep $*'
+alias gpwb='basename $(git symbolic-ref HEAD)'  # i.e. "git print-working-branch"
 alias gco='git checkout $*'
 alias gup='git checkout master && git pull && git remote update -p'
 alias gupd='git commit -a --amend -C HEAD'
