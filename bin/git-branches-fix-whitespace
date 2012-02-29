@@ -5,7 +5,7 @@ saved=$(git-current-branch)
 
 for b in $(git-ls-branches); do
   git checkout $b && {
-    git rebase --whitespace=fix $(git merge-base $b master) || git rebase --abort
+    git-fix-whitespace $(git merge-base $b master) || git rebase --abort
   }
 done
 
