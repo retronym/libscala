@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+
+# TODO - figure out when they change the repo name, somehow
+git remote add $1 https://github.com/$1/scala &&
+git config remote.$1.tagopt --no-tags &&
+git fetch $1
