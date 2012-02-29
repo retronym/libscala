@@ -3,16 +3,37 @@
 # Uses git stash and apply to fix a merge's whitespace errors
 # without involving non-git tools.
 
-opts="-s recursive -X ignore-space-change -X patience"
+count_branches () {
+  branch_count=0
+  tmpfile=$(mktemp -t $(basename $0))
+  git-ls-branches -a > $tmpfile
+
+  for arg in "$@"; do
+    grep -q ^"$arg"$ $tmpfile && branch_count=$((branch_count + 1))
+  done
+
+  echo $branch_count
+}
+
+branches=$(count_branches "$@")
+if (( branches > 1 )); then
+  opts="" # octopus
+else
+  opts="-s recursive -X ignore-space-change -X patience"
+fi
+
 args="$@"
 msgfile=$(mktemp -t $(basename $0))
 
 run () {
   echo >&2 "% $@"
-  "$@" 2>/dev/null || exit $?
+  "$@" 2>$msgfile.log || { 
+    cat $msgfile.log
+    exit 1
+  }
 }
 
-run git merge --quiet --no-commit $opts $args >/dev/null
+run git merge --quiet --no-commit $opts $args
 run git --no-pager diff --stat --cached && echo ""
 cp .git/MERGE_MSG $msgfile
 

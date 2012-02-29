@@ -14,7 +14,8 @@ alias gbgrep='git branch -a | grep $*'
 alias gpwb='basename $(git symbolic-ref HEAD)'  # i.e. "git print-working-branch"
 alias gco='git checkout $*'
 alias gup='git checkout master && git pull && git remote update -p'
-alias gupd='git commit -a --amend -C HEAD'
+alias gupd='git commit -a --amend --reuse-message=HEAD'
+alias gca='git commit -a --amend --reedit-message=HEAD'
 alias gam='git commit -a -m'
 
 # merging, rebasing, modifying the tree
