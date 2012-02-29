@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+git branch |grep ^\* |cut -c 3-

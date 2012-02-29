@@ -1,4 +1,6 @@
 #!/bin/sh
 #
+# print the name of the currently checked out branch.
 
-basename $(git symbolic-ref HEAD)
+ref=$(git symbolic-ref HEAD)
+echo ${ref##refs/heads/}

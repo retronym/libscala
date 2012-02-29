@@ -1,10 +1,28 @@
 #!/bin/sh
 #
 
-current=$(basename $(git symbolic-ref HEAD))
+git diff --quiet || { echo "Tree is dirty, cannot run." && exit 1; }
+
+current=$(git-print-working-branch)
+echo "Will return to $current on completion."
+git fetch --all
+
+tracking_branch () { 
+  ref=$(git config --get branch.$1.merge)
+  [[ -n "$ref" ]] || return
+
+  remote=$(git config --get branch.$1.remote)
+  branch="${remote:-origin}/${ref##refs/heads/}"
+  exists=$(git branch -a --list $branch)
+  
+  [[ -n $exists ]] && echo "$branch"
+}
 
 for b in $(git branch | cut -c 3-); do
-  git checkout $b && git pull
+  track=$(tracking_branch $b)
+  if [[ -n $track ]]; then
+    echo "[$b] $(git checkout -q $b && git rebase $track || git rebase --abort)"
+  fi
 done
 
-git checkout $current
+git checkout -q $current
