@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+
+SED=$(
+  if which gsed &>/dev/null; then
+    echo gsed
+  else
+    echo sed
+  fi
+)
+
+$SED "$@"

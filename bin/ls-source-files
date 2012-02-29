@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+
+for arg in "$@"; do
+  if [[ -d "$arg" ]]; then
+    for file in $(find "$arg" -type f -name '*.scala'); do
+      echo "$file"
+    done
+  elif [[ -f "$arg" ]]; then
+    echo "$arg"
+  fi
+done

@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Uses git stash and apply to fix a merge's whitespace errors
+# without involving non-git tools.
+
+opts="-s recursive -X ignore-space-change -X patience"
+args="$@"
+msgfile=$(mktemp -t $(basename $0))
+
+run () {
+  echo >&2 "% $@"
+  "$@" 2>/dev/null || exit $?
+}
+
+run git merge --quiet --no-commit $opts $args >/dev/null
+run git --no-pager diff --stat --cached && echo ""
+cp .git/MERGE_MSG $msgfile
+
+run git stash save --quiet
+run git stash show -p stash@{0} | run git apply --index --whitespace=fix -
+cp "$msgfile" .git/COMMIT_MSG
+run git commit --quiet -F .git/COMMIT_MSG
+git --no-pager diff stash@{0} >"$msgfile.diff"
+
+echo ""
+echo "#   full whitespace diff saved"
+echo "#   cat $msgfile.diff"
+run git --no-pager diff --stat stash@{0}
+echo ""
+
+run git stash drop --quiet

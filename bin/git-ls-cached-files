@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+git diff-index --name-only --cached ${1:-HEAD}
