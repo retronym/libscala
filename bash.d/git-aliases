@@ -79,10 +79,9 @@ gsquash () {
   echo ""
   
   git-merge-with-opts --quiet "$@" || return
-  local files=$(git diff --name-only master..)
-  echo "New/changed files: $files"
+  echo "New/changed files: $(git diff --name-only master..)"
   echo ""
   git reset master && 
-  git add $files &&
+  for f in "$(git diff --name-only master..)"; do git add "$f"; done &&
   git commit -F <(git --no-pager log --no-merges --format=%B master..$desc)
 }

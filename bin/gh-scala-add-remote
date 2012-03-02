@@ -1,7 +1,14 @@
 #!/bin/sh
 #
 
+set -e
+
+if [[ $# -eq 0 ]]; then
+  echo "Usage: $0 <github username>"
+  exit 0
+fi
+
 # TODO - figure out when they change the repo name, somehow
-git remote add $1 https://github.com/$1/scala &&
-git config remote.$1.tagopt --no-tags &&
+git remote add $1 https://github.com/$1/scala
+git config remote.$1.tagopt --no-tags
 git fetch $1
