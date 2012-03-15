@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+git --no-pager log --since="$*" --format=%h --reverse | head -n1
