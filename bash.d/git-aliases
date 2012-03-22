@@ -91,7 +91,19 @@ gsquash () {
   git commit -F <(git --no-pager log --no-merges --format=%B master..$desc)
 }
 
-# completing on branches
-complete -F _git_branch gb gc gl grh
-complete -F _git_branch_local_only gds gdm.. gdsm..
-complete -F _git_branch_local_only gll gmad gm-ours gm-theirs gsquash gsquash-ours gsquash-theirs
+# completing on branches only, no paths
+complete -F _git_branch gb grh
+complete -F _git_branch_local_only gds gmad gm-ours gm-theirs gsquash gsquash-ours gsquash-theirs
+
+# branches and paths
+complete -o default -F _git_branch gc gl
+
+for cmd in $(cat <<EOM
+gll
+gdm..
+gdsm..
+git-diff-find-revs
+git-diff-grep
+git-diff-grep-revs
+EOM
+) ; do complete -o default -F _git_branch_local_only $cmd ; done
