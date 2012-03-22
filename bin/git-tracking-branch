@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+
+tracking_branch () {
+  ref=$(git config --get branch.$1.merge)
+  [[ -n "$ref" ]] || return
+
+  remote=$(git config --get branch.$1.remote)
+  branch="${remote:-origin}/${ref##refs/heads/}"
+  exists=$(git branch -a --list $branch)
+
+  [[ -n $exists ]] && echo "$branch"
+}
+
+if [[ $# -eq 0 ]]; then
+  tracking_branch $(git print-working-branch)
+else
+  tracking_branch "$@"
+fi

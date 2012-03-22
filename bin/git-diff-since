@@ -4,4 +4,4 @@
 since=$1
 shift
 
-git diff "$@" $(git-closest-sha $since)
+git diff $(git-closest-sha $since) "$@"

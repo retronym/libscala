@@ -38,11 +38,5 @@ complete -o default -F _scala_with_jvm_opts fsc scalac scala pscalac pscala qsca
 # Adding rXXXX svn revision completion to some gh- commands
 complete -F _scala_svn_rev_completion gh-commit gh-svn
 
-# Complete on local git branches
-alias gbr='git branch'
-alias gco='git checkout'
-complete -F _git_branch_local_only gbr gco
-complete -F _git_branch gmad
-
 # Delete the cached bytecode disassemblies
 alias git-javap-clean='git update-ref -d refs/notes/textconv/javap'

@@ -9,9 +9,5 @@ git fetch --all
 
 for b in $(git branch | cut -c 3-); do
   track=$(git tracking-branch $b)
-  if [[ -n $track ]]; then
-    echo "[$b] $(git checkout -q $b && git rebase $track || git rebase --abort)"
-  fi
+  [[ -n $track ]] && git checkout -f $b && git reset --hard $track
 done
-
-git checkout -q $current

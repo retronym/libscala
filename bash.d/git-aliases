@@ -6,13 +6,18 @@
 # which I'll put somewhere else eventually.
 
 alias g='git'
+alias gb='git branch'
+alias gc='git checkout'
+alias gcl='git clone'
 alias gd='git diff'
+
+# gl and gll differ only in completion - gll is local branches only
 alias gl='git log --abbrev=10 --abbrev-commit --date=relative'
+alias gll='git log --abbrev=10 --abbrev-commit --date=relative'
 
 # branching, committing
 alias gbgrep='git branch -a | grep $*'
 alias gpwb='basename $(git symbolic-ref HEAD)'  # i.e. "git print-working-branch"
-alias gco='git checkout $*'
 alias gup='git checkout master && git pull && git remote update -p'
 alias gupd='git commit -a --amend --reuse-message=HEAD'
 alias gca='git commit -a --amend --reedit-message=HEAD'
@@ -41,8 +46,8 @@ alias gdh='git diff HEAD^ HEAD'
 alias gds='git diff -w --stat=150,150'
 alias gdsh='git diff -w --stat=150,150 HEAD^'
 alias gdsm='git diff -w --stat=150,150 master'
-alias gdm...='git diff -w master... -- src'
-alias gdsm...='git diff -w --stat master... -- src'
+alias gdm..='git diff -w master..'
+alias gdsm..='git diff -w --stat master..'
 
 # obscurer but useful things
 alias git-checkout-all='git fetch . refs/remotes/*:refs/HEADs/*'
@@ -85,3 +90,8 @@ gsquash () {
   for f in "$(git diff --name-only master..)"; do git add "$f"; done &&
   git commit -F <(git --no-pager log --no-merges --format=%B master..$desc)
 }
+
+# completing on branches
+complete -F _git_branch gb gc gl grh
+complete -F _git_branch_local_only gds gdm.. gdsm..
+complete -F _git_branch_local_only gll gmad gm-ours gm-theirs gsquash gsquash-ours gsquash-theirs
