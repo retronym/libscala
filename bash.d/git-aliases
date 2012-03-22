@@ -41,13 +41,14 @@ alias glog3="git log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Cre
 alias gdesc='git describe --always'
 
 # diff
-alias gdm='git diff master'
-alias gdh='git diff HEAD^ HEAD'
+alias gdm='git diff -w master'
+alias gdh='git diff -w HEAD^ HEAD'
+alias gdm..='git diff -w master..'
+alias gdsm..='git diff -w --stat master..'
+
 alias gds='git diff -w --stat=150,150'
 alias gdsh='git diff -w --stat=150,150 HEAD^'
 alias gdsm='git diff -w --stat=150,150 master'
-alias gdm..='git diff -w master..'
-alias gdsm..='git diff -w --stat master..'
 
 # obscurer but useful things
 alias git-checkout-all='git fetch . refs/remotes/*:refs/HEADs/*'
