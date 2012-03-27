@@ -7,8 +7,9 @@
 
 alias g='git'
 alias gb='git branch'
-alias gc='git checkout'
+alias gch='git checkout'
 alias gcl='git clone'
+alias gco='git commit'
 alias gd='git diff'
 
 # gl and gll differ only in completion - gll is local branches only
@@ -41,10 +42,11 @@ alias glog3="git log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%an%Cre
 alias gdesc='git describe --always'
 
 # diff
-alias gdm='git diff -w master'
 alias gdh='git diff -w HEAD^ HEAD'
-alias gdm..='git diff -w master..'
-alias gdsm..='git diff -w --stat master..'
+alias gdm='git diff -w master'
+alias gdm...='git diff -w master...HEAD --'
+alias gdsm='git --no-pager diff -w --stat-name-width=160 master --'
+alias gdsm...='git --no-pager diff -w --stat-name-width=160 master...HEAD --'
 
 alias gds='git diff -w --stat=150,150'
 alias gdsh='git diff -w --stat=150,150 HEAD^'
