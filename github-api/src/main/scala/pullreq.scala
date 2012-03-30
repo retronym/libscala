@@ -56,6 +56,7 @@ object Main {
 
   def pulls    = (json \ "pulls").extract[List[Pull]].sorted
   def shas     = pulls map (_.sha10)
+  def numbers  = pulls map (_.number)
   def refs     = pulls map (_.ref)
   def users    = pulls map (_.user)
   def branches = pulls map (_.branch)
@@ -67,13 +68,11 @@ object Main {
   def showPulls() {
     pulls foreach {
       case pull @ Pull(number, Commit(sha, label, ref, repository), user, title, updated_at, mergeable) =>
-        println("%3d  %10s  %8s  %-40s  %10s  %s".format(
-          number, sha take 10, user.login take 8, title take 40, pull.date, ref))
+        println("%3d  %10s  %-15s  %-60s".format(number, pull.date, user.login, title take 60))
     }
-    println("")
-    println(branches.mkString("git merge ", " ", ""))
-    println("")
-    println(shas.mkString("git merge ", " ", ""))
+    println(branches.mkString("\ngit merge ", " ", ""))
+    println(numbers map ("refs/pull/" + _ + "/head") mkString ("\ngit merge ", " ", ""))
+    // println(shas.mkString("\ngit merge ", " ", ""))
   }
       
   def main(args: Array[String]): Unit = {

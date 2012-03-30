@@ -8,9 +8,10 @@
 alias g='git'
 alias gb='git branch'
 alias gch='git checkout'
-alias gcl='git clone'
 alias gco='git commit'
 alias gd='git diff'
+
+gcl () { git clone "$1" && cd "$(basename ${1%%.git};)" && pwd; }
 
 # gl and gll differ only in completion - gll is local branches only
 alias gl='git log --abbrev=10 --abbrev-commit --date=relative'
