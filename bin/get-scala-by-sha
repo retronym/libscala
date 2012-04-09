@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+
+[[ -n $SCALA_SRC_HOME ]] && cd "$SCALA_SRC_HOME" || {
+  echo "SCALA_SRC_HOME must point to a repository."
+  exit 1
+}
+
+mkUrl () {
+  echo "http://scalabuilds.herokuapp.com/rev/$1/artifacts/jenkins-artifacts/pack.tgz"
+}
+
+mkSha () {
+  local hash=$(git log --since="$@" --format=%H master | tail -n1)
+  git show --stat $hash 1>&2
+  echo $hash
+}
+
+url=$(mkUrl $(mkSha "$@"))
+echo ""
+echo "$url"
+echo ""
+wget "$url"
