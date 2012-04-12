@@ -31,7 +31,7 @@ export scalaSvnMap="$libscalaEtc/scala-svn-to-sha1-map.txt"
 # thanks for the easy transition git
 # Can't use --no-edit because it isn't understood by anything
 # prior to the version which changed merge behavior.
-export GIT_MERGE_AUTOEDIT
+export GIT_MERGE_AUTOEDIT=no
 
 # Source the extra completion and helper functions.
 trySource scala-291 scala java github git-aliases git
