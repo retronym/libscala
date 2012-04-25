@@ -62,21 +62,22 @@ alias git-ls-remote-tags='git ls-remote --tags origin'
 
 # Merge with sane options, resolving conflicts for ours or theirs
 gm-ours () {
-  git-merge-with-opts -X ours ${1:-master}
+  gm-run git-merge-with-opts -X ours ${1:-master}
 }
 gm-theirs () {
-  git-merge-with-opts -X theirs ${1:-master}
+  gm-run git-merge-with-opts -X theirs ${1:-master}
 }
 gsquash-ours () {
-  gsquash -X ours ${1:-master}
+  gm-run gsquash -X ours ${1:-master}
 }
 gsquash-theirs () {
-  gsquash -X theirs ${1:-master}
+  gm-run gsquash -X theirs ${1:-master}
 }
 git-merge-with-opts () {
-  git merge -s recursive -X patience -X ignore-space-change "$@"
+  gm-run git merge -s recursive -X patience -X ignore-space-change "$@"
 }
 gsquash () {
+  export GIT_MERGE_AUTOEDIT=no
   [[ $# -gt 0 ]] || {
     echo "Don't run this directly: run gsquash-ours or gsquash-theirs."
     echo "Or, supply the branch you want to merge from."
@@ -88,12 +89,18 @@ gsquash () {
   echo "  git reset --hard $desc"
   echo ""
   
-  git-merge-with-opts --quiet "$@" || return
+  gm-run git-merge-with-opts --quiet "$@" && return
   echo "New/changed files: $(git diff --name-only master..)"
   echo ""
-  git reset master && 
-  for f in "$(git diff --name-only master..)"; do git add "$f"; done &&
-  git commit -F <(git --no-pager log --no-merges --format=%B master..$desc)
+
+  gm-run git reset master &&  \
+    for f in "$(git diff --name-only master..)"; do git add "$f"; done && \
+    gm-run git commit -F <(git --no-pager log --no-merges --format=%B master..$desc)
+}
+
+gm-run () {
+  echo "$@"
+  "$@"
 }
 
 # completing on branches only, no paths
