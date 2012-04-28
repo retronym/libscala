@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+
+printf "%10s  %-30s  %7s  %s\n" "  latest  " "branch" "commits" "changed"
+printf "%10s  %-30s  %7s  %s\n" "----------" "------" "-------" "-------"
+
+( for b in $(git-ls-branches); do
+  printf "%10s  %-30s  %7s  %s\n" \
+    $(git log --format="%cd" --date=short -n1 $b) \
+    $b \
+    $(git log --oneline master..$b | wc -l) \
+    "$(git diff --shortstat master...$b | sed 's/,.*//')"
+done
+) | sort -r
