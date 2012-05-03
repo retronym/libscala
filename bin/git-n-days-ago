@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+
+for arg in "$@"; do
+  git --no-pager log --format=%h --date-order --reverse  --since=${arg}.days.ago | head -n1
+done

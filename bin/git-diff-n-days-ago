@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+[[ $# -eq 3 ]] && git diff -w {$(git-n-days-ago $1),$(git-n-days-ago $2)}:$3
