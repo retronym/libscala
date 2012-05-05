@@ -4,7 +4,7 @@
 do_file () {
   echo "Rewriting $1 ..."
   libscala-sed -i 's/[[:space:]]*$//' "$1"
-  # libscala-sed -i 's/\t/  /g' "$1"
+  # libscala-sed -i 's/\t/        /g' "$1"
 }
 
 for arg in $(ls-source-files "$@"); do

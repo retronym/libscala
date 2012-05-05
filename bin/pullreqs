@@ -32,6 +32,9 @@ mkString () {
   echo ""
 }
 
+repository=$(pwd)
+userAndRepo=$(git config --local --get remote.origin.url | perl -pe 's/^.*?github\.com\/(.*)/$1/')
+
 dir="$libscala/github-api"
 cd $dir || die "Can't find $dir"
 
@@ -40,4 +43,5 @@ which sbt &>/dev/null || die "Can't find sbt in your path."
 [[ -d target/scala-2.9.1/classes ]] || sbt package
 cp=$(find lib_managed -name '*.jar' | mkString ':'):target/scala-2.9.1/classes
 
-"$scala" -cp "$cp" improving.pullreq.Main "$@" 2>/dev/null
+"$scala" -cp "$cp" improving.pullreq.Main "$userAndRepo" "$@"
+# 2>/dev/null
