@@ -1,806 +1,1750 @@
-{
-  "pulls": [
-    {
-      "updated_at": "2012-01-23T19:15:48Z",
-      "issue_updated_at": "2012-01-23T19:15:48Z",
-      "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-      "position": 1.0,
-      "number": 129,
-      "votes": 0,
-      "user": {
-        "name": "Aleksandar Prokopec",
-        "company": "EPFL",
-        "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-        "type": "User",
-        "login": "axel22"
-      },
-      "comments": 0,
-      "body": "SI 5262 was fixed by the fix to SI 5374. These are the test files.",
-      "title": "Issue/5262",
-      "html_url": "https://github.com/scala/scala/pull/129",
-      "diff_url": "https://github.com/scala/scala/pull/129.diff",
-      "created_at": "2012-01-23T19:15:48Z",
-      "issue_user": {
-        "name": "Aleksandar Prokopec",
-        "company": "EPFL",
-        "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-        "type": "User",
-        "login": "axel22"
-      },
-      "head": {
-        "sha": "b5a813e76d0827cf5f4f36d77f5523b09cc7a249",
-        "label": "axel22:issue/5262",
-        "user": {
-          "name": "Aleksandar Prokopec",
-          "company": "EPFL",
-          "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-          "type": "User",
-          "login": "axel22"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/12 07:31:27 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/23 11:14:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 1,
-          "forks": 0,
-          "size": 1328,
-          "private": false,
-          "name": "scala-github",
-          "owner": "axel22",
-          "url": "https://github.com/axel22/scala-github",
-          "open_issues": 0,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop"
-        },
-        "ref": "issue/5262"
-      },
-      "patch_url": "https://github.com/scala/scala/pull/129.patch",
-      "base": {
-        "sha": "5cbd7d06eb8fe81bc3812ee99de05b1f4bd820fe",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
-          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
-      },
-      "mergeable": true,
-      "issue_created_at": "2012-01-23T19:15:48Z",
-      "labels": [],
-      "state": "open"
+[
+  {
+    "user": {
+      "login": "paulp",
+      "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+      "url": "https://api.github.com/users/paulp",
+      "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 9135
     },
-    {
-      "updated_at": "2012-01-23T17:59:29Z",
-      "issue_updated_at": "2012-01-23T17:59:29Z",
-      "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-      "position": 1.0,
-      "number": 128,
-      "votes": 0,
-      "user": {
-        "name": "Aleksandar Prokopec",
-        "company": "EPFL",
-        "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-        "type": "User",
-        "login": "axel22"
-      },
-      "comments": 0,
-      "body": "Lists are now serialized so that the entire list structure is serialized, including list nodes.\r\nThis is different from the previous behaviour where only the elements were serialized.\r\nList buffers are now optimized so that only the elements of the list are serialized, and\r\nnot the nodes of the internally maintained list.",
-      "title": "Fix for SI-5374.",
-      "html_url": "https://github.com/scala/scala/pull/128",
-      "diff_url": "https://github.com/scala/scala/pull/128.diff",
-      "created_at": "2012-01-23T17:59:29Z",
-      "issue_user": {
-        "name": "Aleksandar Prokopec",
-        "company": "EPFL",
-        "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-        "type": "User",
-        "login": "axel22"
-      },
-      "head": {
-        "sha": "a6fcd70b6047ab56cb3415f378ffc8d72a524a8d",
-        "label": "axel22:issue/5374",
-        "user": {
-          "name": "Aleksandar Prokopec",
-          "company": "EPFL",
-          "gravatar_id": "e9bdb4fada7e635fffb5e6f26e70cd1d",
-          "type": "User",
-          "login": "axel22"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/12 07:31:27 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/23 11:14:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 1,
-          "forks": 0,
-          "size": 1328,
-          "private": false,
-          "name": "scala-github",
-          "owner": "axel22",
-          "url": "https://github.com/axel22/scala-github",
-          "open_issues": 0,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop"
-        },
-        "ref": "issue/5374"
-      },
-      "patch_url": "https://github.com/scala/scala/pull/128.patch",
-      "base": {
-        "sha": "ec3438c28987a38a3c03ebb5fe084709384b485a",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
           "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
         },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
+        "name": "scala",
+        "id": 2888818
       },
-      "mergeable": true,
-      "issue_created_at": "2012-01-23T17:59:29Z",
-      "labels": [],
-      "state": "open"
+      "user": null,
+      "sha": "4c6522bab70ce8588f5688c9b4c01fe3ff8d24fc",
+      "ref": "master",
+      "label": "scala:master"
     },
-    {
-      "updated_at": "2012-01-23T14:07:14Z",
-      "issue_updated_at": "2012-01-23T14:07:14Z",
+    "patch_url": "https://github.com/scala/scala/pull/725.patch",
+    "html_url": "https://github.com/scala/scala/pull/725",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/paulp/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/paulp/scala",
+        "html_url": "https://github.com/paulp/scala",
+        "pushed_at": "2012-06-15T14:48:03Z",
+        "full_name": "paulp/scala",
+        "fork": true,
+        "created_at": "2011-12-04T23:36:15Z",
+        "url": "https://api.github.com/repos/paulp/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 240,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/paulp/scala.git",
+        "ssh_url": "git@github.com:paulp/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:48:04Z",
+        "owner": {
+          "login": "paulp",
+          "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+          "url": "https://api.github.com/users/paulp",
+          "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 9135
+        },
+        "name": "scala",
+        "id": 2913061
+      },
+      "user": {
+        "login": "paulp",
+        "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+        "url": "https://api.github.com/users/paulp",
+        "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 9135
+      },
+      "sha": "52c08914ed751a2d9e39fa6365c4f2b3b9ee8d12",
+      "ref": "issue/arrayops",
+      "label": "paulp:issue/arrayops"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-15T14:48:39Z",
+    "body": "There should probably be a warning about non-overriding methods\nwhich have unreferenced type parameters.",
+    "diff_url": "https://github.com/scala/scala/pull/725.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/725",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/725"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/725"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/725/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/725/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/725"
+      }
+    },
+    "updated_at": "2012-06-15T14:59:17Z",
+    "number": 725,
+    "issue_url": "https://github.com/scala/scala/issues/725",
+    "id": 1575498,
+    "title": "Remove unused type parameter."
+  },
+  {
+    "user": {
+      "login": "xeno-by",
       "gravatar_id": "69e339fd10a5ad804c45e22c819c67ad",
-      "position": 1.0,
-      "number": 127,
-      "votes": 0,
-      "user": {
-        "name": "Eugene Burmako",
-        "company": "EPFL",
-        "gravatar_id": "69e339fd10a5ad804c45e22c819c67ad",
-        "location": "Lausanne, Switzerland",
-        "blog": "xeno.by",
-        "type": "User",
-        "login": "xeno-by",
-        "email": "xeno.by@gmail.com"
-      },
-      "comments": 0,
-      "body": "",
-      "title": "Temporarily disabling debug traces in macro tests",
-      "html_url": "https://github.com/scala/scala/pull/127",
-      "diff_url": "https://github.com/scala/scala/pull/127.diff",
-      "created_at": "2012-01-23T14:07:14Z",
-      "issue_user": {
-        "name": "Eugene Burmako",
-        "company": "EPFL",
-        "gravatar_id": "69e339fd10a5ad804c45e22c819c67ad",
-        "location": "Lausanne, Switzerland",
-        "blog": "xeno.by",
-        "type": "User",
-        "login": "xeno-by",
-        "email": "xeno.by@gmail.com"
-      },
-      "head": {
-        "sha": "6c5d561834b4bd7a84f12f69e282119ce7903d94",
-        "label": "scalamacros:topic/macros",
-        "user": {
-          "gravatar_id": "898e5cfe2871dc510e98a3a167f57419",
-          "blog": "scalamacros.org",
-          "type": "User",
-          "login": "scalamacros",
-          "email": "dev@scalamacros.org"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/01 05:07:26 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/23 06:06:04 -0800",
-          "description": "Project Kepler: Compile-Time Metaprogramming for Scala",
-          "has_wiki": false,
-          "watchers": 10,
-          "forks": 0,
-          "size": 580,
-          "private": false,
-          "name": "kepler",
-          "owner": "scalamacros",
-          "url": "https://github.com/scalamacros/kepler",
-          "open_issues": 0,
-          "master_branch": "develop",
-          "homepage": "http://scalamacros.org"
-        },
-        "ref": "topic/macros"
-      },
-      "patch_url": "https://github.com/scala/scala/pull/127.patch",
-      "base": {
-        "sha": "9a20086495e7734b636c5ee625d305a3fbaea476",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
-          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
-      },
-      "mergeable": true,
-      "issue_created_at": "2012-01-23T14:07:14Z",
-      "labels": [],
-      "state": "open"
+      "url": "https://api.github.com/users/xeno-by",
+      "avatar_url": "https://secure.gravatar.com/avatar/69e339fd10a5ad804c45e22c819c67ad?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 609152
     },
-    {
-      "updated_at": "2012-01-23T13:24:52Z",
-      "issue_updated_at": "2012-01-23T13:24:52Z",
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "4c6522bab70ce8588f5688c9b4c01fe3ff8d24fc",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/724.patch",
+    "html_url": "https://github.com/scala/scala/pull/724",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": false,
+        "has_issues": false,
+        "forks": 1,
+        "git_url": "git://github.com/scalamacros/kepler.git",
+        "open_issues": 1,
+        "language": "Scala",
+        "description": "Project Kepler: Compile-Time Metaprogramming for Scala",
+        "svn_url": "https://github.com/scalamacros/kepler",
+        "html_url": "https://github.com/scalamacros/kepler",
+        "pushed_at": "2012-06-15T15:56:58Z",
+        "full_name": "scalamacros/kepler",
+        "fork": true,
+        "created_at": "2011-12-01T13:07:26Z",
+        "url": "https://api.github.com/repos/scalamacros/kepler",
+        "has_downloads": true,
+        "watchers": 31,
+        "size": 484,
+        "homepage": "http://scalamacros.org",
+        "clone_url": "https://github.com/scalamacros/kepler.git",
+        "ssh_url": "git@github.com:scalamacros/kepler.git",
+        "private": false,
+        "master_branch": "develop",
+        "updated_at": "2012-06-15T15:56:58Z",
+        "owner": {
+          "login": "scalamacros",
+          "gravatar_id": "898e5cfe2871dc510e98a3a167f57419",
+          "url": "https://api.github.com/users/scalamacros",
+          "avatar_url": "https://secure.gravatar.com/avatar/898e5cfe2871dc510e98a3a167f57419?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 1175983
+        },
+        "name": "kepler",
+        "id": 2891159
+      },
+      "user": null,
+      "sha": "4a6ed4589089da89d13a221d4cb7bfe0c46ca7c7",
+      "ref": "ticket/5912",
+      "label": "scalamacros:ticket/5912"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-15T09:34:48Z",
+    "body": "",
+    "diff_url": "https://github.com/scala/scala/pull/724.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/724",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/724"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/724"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/724/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/724/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/724"
+      }
+    },
+    "updated_at": "2012-06-15T14:59:16Z",
+    "number": 724,
+    "issue_url": "https://github.com/scala/scala/issues/724",
+    "id": 1573376,
+    "title": "fixes SI-5912"
+  },
+  {
+    "user": {
+      "login": "paulp",
+      "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+      "url": "https://api.github.com/users/paulp",
+      "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 9135
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "4c6522bab70ce8588f5688c9b4c01fe3ff8d24fc",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/723.patch",
+    "html_url": "https://github.com/scala/scala/pull/723",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/paulp/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/paulp/scala",
+        "html_url": "https://github.com/paulp/scala",
+        "pushed_at": "2012-06-15T14:48:03Z",
+        "full_name": "paulp/scala",
+        "fork": true,
+        "created_at": "2011-12-04T23:36:15Z",
+        "url": "https://api.github.com/repos/paulp/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 240,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/paulp/scala.git",
+        "ssh_url": "git@github.com:paulp/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:48:04Z",
+        "owner": {
+          "login": "paulp",
+          "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+          "url": "https://api.github.com/users/paulp",
+          "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 9135
+        },
+        "name": "scala",
+        "id": 2913061
+      },
+      "user": {
+        "login": "paulp",
+        "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+        "url": "https://api.github.com/users/paulp",
+        "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 9135
+      },
+      "sha": "5a8b937510094d4e92f37dba113c231ec2e69705",
+      "ref": "topic/5910",
+      "label": "paulp:topic/5910"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-15T00:09:45Z",
+    "body": "Empty statements are A-OK.  Closes SI-5910.  Review by @dragos.",
+    "diff_url": "https://github.com/scala/scala/pull/723.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/723",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/723"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/723"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/723/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/723/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/723"
+      }
+    },
+    "updated_at": "2012-06-15T14:59:18Z",
+    "number": 723,
+    "issue_url": "https://github.com/scala/scala/issues/723",
+    "id": 1571272,
+    "title": "Fix for java parser edge case."
+  },
+  {
+    "user": {
+      "login": "patrickxia",
+      "gravatar_id": "3ac855ccca7e0465af9921ce2165352e",
+      "url": "https://api.github.com/users/patrickxia",
+      "avatar_url": "https://secure.gravatar.com/avatar/3ac855ccca7e0465af9921ce2165352e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 1173501
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "5f4c59a7d05ed5330cb1ba21d2cea2a2675b18fa",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/722.patch",
+    "html_url": "https://github.com/scala/scala/pull/722",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/patrickxia/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/patrickxia/scala",
+        "html_url": "https://github.com/patrickxia/scala",
+        "pushed_at": "2012-06-14T22:08:44Z",
+        "full_name": "patrickxia/scala",
+        "fork": true,
+        "created_at": "2012-06-14T03:35:14Z",
+        "url": "https://api.github.com/repos/patrickxia/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 120,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/patrickxia/scala.git",
+        "ssh_url": "git@github.com:patrickxia/scala.git",
+        "private": false,
+        "updated_at": "2012-06-14T22:08:50Z",
+        "owner": {
+          "login": "patrickxia",
+          "gravatar_id": "3ac855ccca7e0465af9921ce2165352e",
+          "url": "https://api.github.com/users/patrickxia",
+          "avatar_url": "https://secure.gravatar.com/avatar/3ac855ccca7e0465af9921ce2165352e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 1173501
+        },
+        "name": "scala",
+        "id": 4658959
+      },
+      "user": {
+        "login": "patrickxia",
+        "gravatar_id": "3ac855ccca7e0465af9921ce2165352e",
+        "url": "https://api.github.com/users/patrickxia",
+        "avatar_url": "https://secure.gravatar.com/avatar/3ac855ccca7e0465af9921ce2165352e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 1173501
+      },
+      "sha": "b55423c5d3e358d257f048617d4d320eb6d2e4f3",
+      "ref": "master",
+      "label": "patrickxia:master"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-14T22:10:26Z",
+    "body": "This was missing, causing compiler crashes in various examples whenever\na BoundedWildcardType got here.\n\nAn example of code that would crash the compiler before now is this:\n\n```\nabstract class Foo[T] extends Seq[T] {\n  def f[T2](a : T => T2) : T2\n}\n\nabstract class Bar[T] (collections : Iterable[Foo[_ <: T]] ) {\n  val lol = {\n    collections.zipWithIndex.foreach {\n      case (foo: Foo[_], i: Int) => {\n        foo.f((t:T) => Unit)\n      }\n    }\n  }\n}\n```",
+    "diff_url": "https://github.com/scala/scala/pull/722.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/722",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/722"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/722"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/722/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/722/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/722"
+      }
+    },
+    "updated_at": "2012-06-15T01:30:10Z",
+    "number": 722,
+    "issue_url": "https://github.com/scala/scala/issues/722",
+    "id": 1570474,
+    "title": "fix compiler crash on BoundedWildcardType variance check"
+  },
+  {
+    "user": {
+      "login": "viktorklang",
+      "gravatar_id": "4f674b2e79f1663864ff78e07ce4c8a8",
+      "url": "https://api.github.com/users/viktorklang",
+      "avatar_url": "https://secure.gravatar.com/avatar/4f674b2e79f1663864ff78e07ce4c8a8?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 10871
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "5f4c59a7d05ed5330cb1ba21d2cea2a2675b18fa",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/721.patch",
+    "html_url": "https://github.com/scala/scala/pull/721",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/viktorklang/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/viktorklang/scala",
+        "html_url": "https://github.com/viktorklang/scala",
+        "pushed_at": "2012-06-14T21:44:31Z",
+        "full_name": "viktorklang/scala",
+        "fork": true,
+        "created_at": "2012-05-09T09:50:41Z",
+        "url": "https://api.github.com/repos/viktorklang/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 144,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/viktorklang/scala.git",
+        "ssh_url": "git@github.com:viktorklang/scala.git",
+        "private": false,
+        "updated_at": "2012-06-14T21:44:38Z",
+        "owner": {
+          "login": "viktorklang",
+          "gravatar_id": "4f674b2e79f1663864ff78e07ce4c8a8",
+          "url": "https://api.github.com/users/viktorklang",
+          "avatar_url": "https://secure.gravatar.com/avatar/4f674b2e79f1663864ff78e07ce4c8a8?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 10871
+        },
+        "name": "scala",
+        "id": 4270327
+      },
+      "user": {
+        "login": "viktorklang",
+        "gravatar_id": "4f674b2e79f1663864ff78e07ce4c8a8",
+        "url": "https://api.github.com/users/viktorklang",
+        "avatar_url": "https://secure.gravatar.com/avatar/4f674b2e79f1663864ff78e07ce4c8a8?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 10871
+      },
+      "sha": "a2b0c264306e28623185f8faa064fef9ee5727dc",
+      "ref": "wip-sensible-deprecation-msgs-√",
+      "label": "viktorklang:wip-sensible-deprecation-msgs-√"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-14T21:47:27Z",
+    "body": "This is the new, improved one. Found overzealous backticking to be the cause earlier, although with a less than stellar failure message.",
+    "diff_url": "https://github.com/scala/scala/pull/721.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/721",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/721"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/721"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/721/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/721/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/721"
+      }
+    },
+    "updated_at": "2012-06-15T11:10:14Z",
+    "number": 721,
+    "issue_url": "https://github.com/scala/scala/issues/721",
+    "id": 1570269,
+    "title": "Wip sensible deprecation msgs √"
+  },
+  {
+    "user": {
+      "login": "phaller",
+      "gravatar_id": "0fc2a17752ba6379ed53bf4cdb2b1c8d",
+      "url": "https://api.github.com/users/phaller",
+      "avatar_url": "https://secure.gravatar.com/avatar/0fc2a17752ba6379ed53bf4cdb2b1c8d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 289943
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "4448e7a530626105776997fde04b4af76bf13de1",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/720.patch",
+    "html_url": "https://github.com/scala/scala/pull/720",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": true,
+        "forks": 2,
+        "git_url": "git://github.com/phaller/scala.git",
+        "open_issues": 12,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/phaller/scala",
+        "html_url": "https://github.com/phaller/scala",
+        "pushed_at": "2012-06-15T15:13:50Z",
+        "full_name": "phaller/scala",
+        "fork": true,
+        "created_at": "2011-12-05T11:06:20Z",
+        "url": "https://api.github.com/repos/phaller/scala",
+        "has_downloads": true,
+        "watchers": 10,
+        "size": 504,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/phaller/scala.git",
+        "ssh_url": "git@github.com:phaller/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T15:13:58Z",
+        "owner": {
+          "login": "phaller",
+          "gravatar_id": "0fc2a17752ba6379ed53bf4cdb2b1c8d",
+          "url": "https://api.github.com/users/phaller",
+          "avatar_url": "https://secure.gravatar.com/avatar/0fc2a17752ba6379ed53bf4cdb2b1c8d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 289943
+        },
+        "name": "scala",
+        "id": 2915944
+      },
+      "user": {
+        "login": "phaller",
+        "gravatar_id": "0fc2a17752ba6379ed53bf4cdb2b1c8d",
+        "url": "https://api.github.com/users/phaller",
+        "avatar_url": "https://secure.gravatar.com/avatar/0fc2a17752ba6379ed53bf4cdb2b1c8d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 289943
+      },
+      "sha": "0ada0706746c9c603bf5bc8a0e6780e5783297cf",
+      "ref": "cps-ticket-1681",
+      "label": "phaller:cps-ticket-1681"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-14T15:56:32Z",
+    "body": "Adds a stack of context trees to AnnotationChecker(s). Here, it is used to\nadapt the annotation of a return expression if the expected type is a CPS type.\n\nThe remove-tail-return transform is reasonably general, covering cases such as\ntry-catch-finally. Moreover, an error is thrown if, in a CPS method, a return\nis encountered which is not in a tail position such that it will be removed\nsubsequently.\n\nReview by @adriaanm or @TiarkRompf\n",
+    "diff_url": "https://github.com/scala/scala/pull/720.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/720",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/720"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/720"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/720/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/720/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/720"
+      }
+    },
+    "updated_at": "2012-06-15T15:54:17Z",
+    "number": 720,
+    "issue_url": "https://github.com/scala/scala/issues/720",
+    "id": 1566742,
+    "title": "CPS: enable return expressions in CPS code if they are in tail position"
+  },
+  {
+    "user": {
+      "login": "jsuereth",
+      "gravatar_id": "5ed293320c06809a24812f56861201ad",
+      "url": "https://api.github.com/users/jsuereth",
+      "avatar_url": "https://secure.gravatar.com/avatar/5ed293320c06809a24812f56861201ad?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 29006
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "4448e7a530626105776997fde04b4af76bf13de1",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/719.patch",
+    "html_url": "https://github.com/scala/scala/pull/719",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 1,
+        "git_url": "git://github.com/jsuereth/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/jsuereth/scala",
+        "html_url": "https://github.com/jsuereth/scala",
+        "pushed_at": "2012-06-14T13:26:04Z",
+        "full_name": "jsuereth/scala",
+        "fork": true,
+        "created_at": "2011-12-01T14:31:20Z",
+        "url": "https://api.github.com/repos/jsuereth/scala",
+        "has_downloads": true,
+        "watchers": 3,
+        "size": 208,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/jsuereth/scala.git",
+        "ssh_url": "git@github.com:jsuereth/scala.git",
+        "private": false,
+        "updated_at": "2012-06-14T13:26:04Z",
+        "owner": {
+          "login": "jsuereth",
+          "gravatar_id": "5ed293320c06809a24812f56861201ad",
+          "url": "https://api.github.com/users/jsuereth",
+          "avatar_url": "https://secure.gravatar.com/avatar/5ed293320c06809a24812f56861201ad?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 29006
+        },
+        "name": "scala",
+        "id": 2891600
+      },
+      "user": {
+        "login": "jsuereth",
+        "gravatar_id": "5ed293320c06809a24812f56861201ad",
+        "url": "https://api.github.com/users/jsuereth",
+        "avatar_url": "https://secure.gravatar.com/avatar/5ed293320c06809a24812f56861201ad?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 29006
+      },
+      "sha": "6dd90d349da6471c0a105c584798979f136d7d55",
+      "ref": "jdk7-friendly-build",
+      "label": "jsuereth:jdk7-friendly-build"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-14T13:20:45Z",
+    "body": "* When running in JDK 7 issues a warning.\n* New partialdist, partialdist-opt tasks allow creating a distribution with no source/docs.\n\nreview/use by @paulp,  THIS TIME FOR REALZ.  ",
+    "diff_url": "https://github.com/scala/scala/pull/719.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/719",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/719"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/719"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/719/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/719/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/719"
+      }
+    },
+    "updated_at": "2012-06-14T15:02:45Z",
+    "number": 719,
+    "issue_url": "https://github.com/scala/scala/issues/719",
+    "id": 1565061,
+    "title": "Adding JDK7 friendly build with new partialdist(-opt) tasks."
+  },
+  {
+    "user": {
+      "login": "VladUreche",
+      "gravatar_id": "456d1d6154efe50e950b65f966f63a50",
+      "url": "https://api.github.com/users/VladUreche",
+      "avatar_url": "https://secure.gravatar.com/avatar/456d1d6154efe50e950b65f966f63a50?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 428706
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "4448e7a530626105776997fde04b4af76bf13de1",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/718.patch",
+    "html_url": "https://github.com/scala/scala/pull/718",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/damienobrist/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/damienobrist/scala",
+        "html_url": "https://github.com/damienobrist/scala",
+        "pushed_at": "2012-06-14T08:44:15Z",
+        "full_name": "damienobrist/scala",
+        "fork": true,
+        "created_at": "2012-02-27T09:08:29Z",
+        "url": "https://api.github.com/repos/damienobrist/scala",
+        "has_downloads": true,
+        "watchers": 2,
+        "size": 368,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/damienobrist/scala.git",
+        "ssh_url": "git@github.com:damienobrist/scala.git",
+        "private": false,
+        "updated_at": "2012-06-14T08:44:16Z",
+        "owner": {
+          "login": "damienobrist",
+          "gravatar_id": "9fb7a274456c67f76f9d8dd778f59b18",
+          "url": "https://api.github.com/users/damienobrist",
+          "avatar_url": "https://secure.gravatar.com/avatar/9fb7a274456c67f76f9d8dd778f59b18?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 1469167
+        },
+        "name": "scala",
+        "id": 3558865
+      },
+      "user": null,
+      "sha": "556065151c10685240dd907691dab5e094c87efc",
+      "ref": "feature/diagrams-dev-final",
+      "label": "damienobrist:feature/diagrams-dev-final"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-14T12:34:49Z",
+    "body": "Damien's semester project on displaying diagrams in scaladoc. Big thanks fly out to Damien, for his wonderful work, to Ken McDonald for putting the project on the right track when we started out and to Heather for her great feedback and suggestions each time we discussed diagrams!\n\nEach commit was checked:\nhttps://scala-webapps.epfl.ch/jenkins/job/scala-checkin-manual/115/console\nhttps://scala-webapps.epfl.ch/jenkins/job/scala-checkin-manual/116/console\nhttps://scala-webapps.epfl.ch/jenkins/job/scala-checkin-manual/117/console\n\nReview by @kzys, @heathermiller and @pedrofurla. (there are changes in different parts of scaladoc, so please look at individual commits)",
+    "diff_url": "https://github.com/scala/scala/pull/718.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/718",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/718"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/718"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/718/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/718/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/718"
+      }
+    },
+    "updated_at": "2012-06-14T16:46:57Z",
+    "number": 718,
+    "issue_url": "https://github.com/scala/scala/issues/718",
+    "id": 1564702,
+    "title": "Diagrams in Scaladoc"
+  },
+  {
+    "user": {
+      "login": "paulp",
+      "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+      "url": "https://api.github.com/users/paulp",
+      "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 9135
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "1c2d466804b22f388ab4d66a034327539ac2e50f",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/714.patch",
+    "html_url": "https://github.com/scala/scala/pull/714",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/paulp/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/paulp/scala",
+        "html_url": "https://github.com/paulp/scala",
+        "pushed_at": "2012-06-15T14:48:03Z",
+        "full_name": "paulp/scala",
+        "fork": true,
+        "created_at": "2011-12-04T23:36:15Z",
+        "url": "https://api.github.com/repos/paulp/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 240,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/paulp/scala.git",
+        "ssh_url": "git@github.com:paulp/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:48:04Z",
+        "owner": {
+          "login": "paulp",
+          "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+          "url": "https://api.github.com/users/paulp",
+          "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 9135
+        },
+        "name": "scala",
+        "id": 2913061
+      },
+      "user": {
+        "login": "paulp",
+        "gravatar_id": "c25d674f69bb9c155f265a7482712be4",
+        "url": "https://api.github.com/users/paulp",
+        "avatar_url": "https://secure.gravatar.com/avatar/c25d674f69bb9c155f265a7482712be4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 9135
+      },
+      "sha": "50902cedd4746f99e0330fc7dc3417515563b79e",
+      "ref": "topic/scalacheck",
+      "label": "paulp:topic/scalacheck"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-13T23:43:41Z",
+    "body": "",
+    "diff_url": "https://github.com/scala/scala/pull/714.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/714",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/714"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/714"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/714/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/714/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/714"
+      }
+    },
+    "updated_at": "2012-06-14T12:47:45Z",
+    "number": 714,
+    "issue_url": "https://github.com/scala/scala/issues/714",
+    "id": 1561061,
+    "title": "scalacheck and partest"
+  },
+  {
+    "user": {
+      "login": "dragos",
+      "gravatar_id": "fbd384e9626d28d1648f023a5e22672f",
+      "url": "https://api.github.com/users/dragos",
+      "avatar_url": "https://secure.gravatar.com/avatar/fbd384e9626d28d1648f023a5e22672f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 133742
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "885d64dce1c3a34b01f4ffcbd2132838d3c60443",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/712.patch",
+    "html_url": "https://github.com/scala/scala/pull/712",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/dragos/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/dragos/scala",
+        "html_url": "https://github.com/dragos/scala",
+        "pushed_at": "2012-06-13T17:26:18Z",
+        "full_name": "dragos/scala",
+        "fork": true,
+        "created_at": "2011-12-06T09:29:09Z",
+        "url": "https://api.github.com/repos/dragos/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 2956,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/dragos/scala.git",
+        "ssh_url": "git@github.com:dragos/scala.git",
+        "private": false,
+        "updated_at": "2012-06-13T17:26:18Z",
+        "owner": {
+          "login": "dragos",
+          "gravatar_id": "fbd384e9626d28d1648f023a5e22672f",
+          "url": "https://api.github.com/users/dragos",
+          "avatar_url": "https://secure.gravatar.com/avatar/fbd384e9626d28d1648f023a5e22672f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 133742
+        },
+        "name": "scala",
+        "id": 2923657
+      },
+      "user": {
+        "login": "dragos",
+        "gravatar_id": "fbd384e9626d28d1648f023a5e22672f",
+        "url": "https://api.github.com/users/dragos",
+        "avatar_url": "https://secure.gravatar.com/avatar/fbd384e9626d28d1648f023a5e22672f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 133742
+      },
+      "sha": "eaa3dd57f1a56151d0d6abe82f196e92aadaa843",
+      "ref": "issue/hardening-compiling-with-newer-sources",
+      "label": "dragos:issue/hardening-compiling-with-newer-sources"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-13T17:28:38Z",
+    "body": "A bunch of changes to make the compiler more robust when sources in the Scala library are newer than the corresponding classfiles.\n\nMost changes affect the presentation compiler, but they would help in normal builds as well. I broke it down in several small self-contained commits.\n\nreview by @odersky.",
+    "diff_url": "https://github.com/scala/scala/pull/712.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/712",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/712"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/712"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/712/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/712/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/712"
+      }
+    },
+    "updated_at": "2012-06-13T19:45:42Z",
+    "number": 712,
+    "issue_url": "https://github.com/scala/scala/issues/712",
+    "id": 1557435,
+    "title": "Issue/hardening compiling with newer sources"
+  },
+  {
+    "user": {
+      "login": "dragos",
+      "gravatar_id": "fbd384e9626d28d1648f023a5e22672f",
+      "url": "https://api.github.com/users/dragos",
+      "avatar_url": "https://secure.gravatar.com/avatar/fbd384e9626d28d1648f023a5e22672f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 133742
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
+      },
+      "user": null,
+      "sha": "885d64dce1c3a34b01f4ffcbd2132838d3c60443",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/711.patch",
+    "html_url": "https://github.com/scala/scala/pull/711",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/dragos/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/dragos/scala",
+        "html_url": "https://github.com/dragos/scala",
+        "pushed_at": "2012-06-13T17:26:18Z",
+        "full_name": "dragos/scala",
+        "fork": true,
+        "created_at": "2011-12-06T09:29:09Z",
+        "url": "https://api.github.com/repos/dragos/scala",
+        "has_downloads": true,
+        "watchers": 1,
+        "size": 2956,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/dragos/scala.git",
+        "ssh_url": "git@github.com:dragos/scala.git",
+        "private": false,
+        "updated_at": "2012-06-13T17:26:18Z",
+        "owner": {
+          "login": "dragos",
+          "gravatar_id": "fbd384e9626d28d1648f023a5e22672f",
+          "url": "https://api.github.com/users/dragos",
+          "avatar_url": "https://secure.gravatar.com/avatar/fbd384e9626d28d1648f023a5e22672f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 133742
+        },
+        "name": "scala",
+        "id": 2923657
+      },
+      "user": {
+        "login": "dragos",
+        "gravatar_id": "fbd384e9626d28d1648f023a5e22672f",
+        "url": "https://api.github.com/users/dragos",
+        "avatar_url": "https://secure.gravatar.com/avatar/fbd384e9626d28d1648f023a5e22672f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 133742
+      },
+      "sha": "120766fa33adbbb13bc21d5622a6a30ed6b2b230",
+      "ref": "issue/no-crash-missing-cpsParam",
+      "label": "dragos:issue/no-crash-missing-cpsParam"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-13T17:26:39Z",
+    "body": "When checking if a piece of code needs the continuations plugin, the cpsParam classes may not be on the class path. Assume it does not need it in that case.",
+    "diff_url": "https://github.com/scala/scala/pull/711.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/711",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/711"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/711"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/711/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/711/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/711"
+      }
+    },
+    "updated_at": "2012-06-13T19:45:42Z",
+    "number": 711,
+    "issue_url": "https://github.com/scala/scala/issues/711",
+    "id": 1557419,
+    "title": "Don't crash if cpsParam is not on the classpath."
+  },
+  {
+    "user": {
+      "login": "xeno-by",
       "gravatar_id": "69e339fd10a5ad804c45e22c819c67ad",
-      "position": 1.0,
-      "number": 126,
-      "votes": 0,
-      "user": {
-        "name": "Eugene Burmako",
-        "company": "EPFL",
-        "gravatar_id": "69e339fd10a5ad804c45e22c819c67ad",
-        "location": "Lausanne, Switzerland",
-        "blog": "xeno.by",
-        "type": "User",
-        "login": "xeno-by",
-        "email": "xeno.by@gmail.com"
+      "url": "https://api.github.com/users/xeno-by",
+      "avatar_url": "https://secure.gravatar.com/avatar/69e339fd10a5ad804c45e22c819c67ad?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 609152
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
+          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
+        },
+        "name": "scala",
+        "id": 2888818
       },
-      "comments": 0,
-      "body": "This patch brings support for specialized and scalacheck tests,\r\nand finally makes it possible to run partest for locker.\r\n\r\nTo do that, you need to write your own partest script: http://bit.ly/wl9HaH,\r\nand keep another clone of your repository that would provide the classes\r\nfor running partest. That clone should then be build normally (ant build),\r\nand be used to transplant the stuff that isn't built by locker, namely:\r\npartest, actors, scalacheck, forkjoin, fjbg, msil and jline.\r\nFor more information take a look at my scavenger: http://bit.ly/AjMiud.",
-      "title": "Made partest fully support locker-based distribs",
-      "html_url": "https://github.com/scala/scala/pull/126",
-      "diff_url": "https://github.com/scala/scala/pull/126.diff",
-      "created_at": "2012-01-23T13:24:52Z",
-      "issue_user": {
-        "name": "Eugene Burmako",
-        "company": "EPFL",
-        "gravatar_id": "69e339fd10a5ad804c45e22c819c67ad",
-        "location": "Lausanne, Switzerland",
-        "blog": "xeno.by",
-        "type": "User",
-        "login": "xeno-by",
-        "email": "xeno.by@gmail.com"
-      },
-      "head": {
-        "sha": "2c4c36997a3fc2a69c9a2408b30027cbf24f73fb",
-        "label": "scalamacros:topic/partest",
-        "user": {
-          "gravatar_id": "898e5cfe2871dc510e98a3a167f57419",
-          "blog": "scalamacros.org",
-          "type": "User",
+      "user": null,
+      "sha": "4c6522bab70ce8588f5688c9b4c01fe3ff8d24fc",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/708.patch",
+    "html_url": "https://github.com/scala/scala/pull/708",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": false,
+        "has_issues": false,
+        "forks": 1,
+        "git_url": "git://github.com/scalamacros/kepler.git",
+        "open_issues": 1,
+        "language": "Scala",
+        "description": "Project Kepler: Compile-Time Metaprogramming for Scala",
+        "svn_url": "https://github.com/scalamacros/kepler",
+        "html_url": "https://github.com/scalamacros/kepler",
+        "pushed_at": "2012-06-15T15:56:58Z",
+        "full_name": "scalamacros/kepler",
+        "fork": true,
+        "created_at": "2011-12-01T13:07:26Z",
+        "url": "https://api.github.com/repos/scalamacros/kepler",
+        "has_downloads": true,
+        "watchers": 31,
+        "size": 484,
+        "homepage": "http://scalamacros.org",
+        "clone_url": "https://github.com/scalamacros/kepler.git",
+        "ssh_url": "git@github.com:scalamacros/kepler.git",
+        "private": false,
+        "master_branch": "develop",
+        "updated_at": "2012-06-15T15:56:58Z",
+        "owner": {
           "login": "scalamacros",
-          "email": "dev@scalamacros.org"
+          "gravatar_id": "898e5cfe2871dc510e98a3a167f57419",
+          "url": "https://api.github.com/users/scalamacros",
+          "avatar_url": "https://secure.gravatar.com/avatar/898e5cfe2871dc510e98a3a167f57419?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 1175983
         },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/01 05:07:26 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/23 06:06:04 -0800",
-          "description": "Project Kepler: Compile-Time Metaprogramming for Scala",
-          "has_wiki": false,
-          "watchers": 10,
-          "forks": 0,
-          "size": 580,
-          "private": false,
-          "name": "kepler",
-          "owner": "scalamacros",
-          "url": "https://github.com/scalamacros/kepler",
-          "open_issues": 0,
-          "master_branch": "develop",
-          "homepage": "http://scalamacros.org"
-        },
-        "ref": "topic/partest"
+        "name": "kepler",
+        "id": 2891159
       },
-      "patch_url": "https://github.com/scala/scala/pull/126.patch",
-      "base": {
-        "sha": "9a20086495e7734b636c5ee625d305a3fbaea476",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
-          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
-      },
-      "mergeable": true,
-      "issue_created_at": "2012-01-23T13:24:52Z",
-      "labels": [],
-      "state": "open"
+      "user": null,
+      "sha": "17d35b4d4a6008901d8434fbf26a132f5e3e1233",
+      "ref": "topic/fastlocker",
+      "label": "scalamacros:topic/fastlocker"
     },
-    {
-      "updated_at": "2012-01-23T10:12:04Z",
-      "issue_updated_at": "2012-01-23T10:12:04Z",
-      "gravatar_id": "0cd46aa475288438b0b7f214b74321e3",
-      "position": 1.0,
-      "number": 125,
-      "votes": 0,
-      "user": {
-        "name": "Kota Mizushima",
-        "gravatar_id": "0cd46aa475288438b0b7f214b74321e3",
-        "location": "Tokyo, Japan",
-        "blog": "http://d.hatena.ne.jp/kmizushima/",
-        "type": "User",
-        "login": "kmizu",
-        "email": "mizukota at gmail.com"
+    "merged_at": null,
+    "created_at": "2012-06-13T16:09:30Z",
+    "body": "doesn't build msil in locker.comp",
+    "diff_url": "https://github.com/scala/scala/pull/708.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/708",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/708"
       },
-      "comments": 0,
-      "body": "",
-      "title": "Fixed SI-4835 (scala.collection.immutable.StreamIterator[+A] has O(n) memory consumption) problem.",
-      "html_url": "https://github.com/scala/scala/pull/125",
-      "diff_url": "https://github.com/scala/scala/pull/125.diff",
-      "created_at": "2012-01-23T10:12:04Z",
-      "issue_user": {
-        "name": "Kota Mizushima",
-        "gravatar_id": "0cd46aa475288438b0b7f214b74321e3",
-        "location": "Tokyo, Japan",
-        "blog": "http://d.hatena.ne.jp/kmizushima/",
-        "type": "User",
-        "login": "kmizu",
-        "email": "mizukota at gmail.com"
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/708"
       },
-      "head": {
-        "sha": "39a837c8357e78c949613db881bd060d176f3279",
-        "label": "kmizu:pullrequest-fix-SI-4835",
-        "user": {
-          "name": "Kota Mizushima",
-          "gravatar_id": "0cd46aa475288438b0b7f214b74321e3",
-          "location": "Tokyo, Japan",
-          "blog": "http://d.hatena.ne.jp/kmizushima/",
-          "type": "User",
-          "login": "kmizu",
-          "email": "mizukota at gmail.com"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2012/01/14 10:29:19 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/23 02:10:54 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 1,
-          "forks": 0,
-          "size": 792,
-          "private": false,
-          "name": "scala",
-          "owner": "kmizu",
-          "url": "https://github.com/kmizu/scala",
-          "open_issues": 0,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop"
-        },
-        "ref": "pullrequest-fix-SI-4835"
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/708/comments"
       },
-      "patch_url": "https://github.com/scala/scala/pull/125.patch",
-      "base": {
-        "sha": "9a20086495e7734b636c5ee625d305a3fbaea476",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
-          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/708/comments"
       },
-      "mergeable": true,
-      "issue_created_at": "2012-01-23T10:12:04Z",
-      "labels": [],
-      "state": "open"
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/708"
+      }
     },
-    {
-      "updated_at": "2012-01-22T01:14:45Z",
-      "issue_updated_at": "2012-01-22T01:14:45Z",
-      "gravatar_id": "b12ead92306a438050ef9001cf8247c0",
-      "position": 1.0,
-      "number": 124,
-      "votes": 0,
-      "user": {
-        "name": "Stephen Judkins",
-        "gravatar_id": "b12ead92306a438050ef9001cf8247c0",
-        "location": "Portland, OR",
-        "type": "User",
-        "login": "stephenjudkins",
-        "email": "stephen.judkins@gmail.com"
-      },
-      "comments": 0,
-      "body": "Also fixes potential issue with Parsers.phrase not being reentrant; however, I was unable to actually reproduce this issue in practice. (The order in which lastNoSuccess was being set and compared seemed to guarantee that it would never actually be a problem).",
-      "title": "Fixes SI-4929, with a test to verify.",
-      "html_url": "https://github.com/scala/scala/pull/124",
-      "diff_url": "https://github.com/scala/scala/pull/124.diff",
-      "created_at": "2012-01-22T01:14:45Z",
-      "issue_user": {
-        "name": "Stephen Judkins",
-        "gravatar_id": "b12ead92306a438050ef9001cf8247c0",
-        "location": "Portland, OR",
-        "type": "User",
-        "login": "stephenjudkins",
-        "email": "stephen.judkins@gmail.com"
-      },
-      "head": {
-        "sha": "dce6b34c38a6d774961ca6f9fd50b11300ecddd6",
-        "label": "stephenjudkins:SI-4929-2",
-        "user": {
-          "name": "Stephen Judkins",
-          "gravatar_id": "b12ead92306a438050ef9001cf8247c0",
-          "location": "Portland, OR",
-          "type": "User",
-          "login": "stephenjudkins",
-          "email": "stephen.judkins@gmail.com"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/14 00:28:32 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/21 17:12:25 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 1,
-          "forks": 0,
-          "size": 2372,
-          "private": false,
-          "name": "scala",
-          "owner": "stephenjudkins",
-          "url": "https://github.com/stephenjudkins/scala",
-          "open_issues": 0,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop"
-        },
-        "ref": "SI-4929-2"
-      },
-      "patch_url": "https://github.com/scala/scala/pull/124.patch",
-      "base": {
-        "sha": "8051740e1be3b33081b2179d1d1fd35a4c8b5c84",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
-          "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
-      },
-      "mergeable": true,
-      "issue_created_at": "2012-01-22T01:14:45Z",
-      "labels": [],
-      "state": "open"
+    "updated_at": "2012-06-15T14:53:39Z",
+    "number": 708,
+    "issue_url": "https://github.com/scala/scala/issues/708",
+    "id": 1556607,
+    "title": "fastlocker target for ant"
+  },
+  {
+    "user": {
+      "login": "retronym",
+      "gravatar_id": "5df8faf17a57ccab478a9b8056862fc3",
+      "url": "https://api.github.com/users/retronym",
+      "avatar_url": "https://secure.gravatar.com/avatar/5df8faf17a57ccab478a9b8056862fc3?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 65551
     },
-    {
-      "updated_at": "2012-01-23T08:48:21Z",
-      "issue_updated_at": "2012-01-23T08:48:21Z",
-      "gravatar_id": "71373de50d7a8ebe64d1d55be166acb3",
-      "position": 1.0,
-      "number": 82,
-      "votes": 0,
-      "user": {
-        "name": "Erik Rozendaal",
-        "company": "Zilverline",
-        "gravatar_id": "71373de50d7a8ebe64d1d55be166acb3",
-        "location": "Amsterdam",
-        "type": "User",
-        "login": "erikrozendaal"
-      },
-      "comments": 22,
-      "body": "As discussed on the scala-internals mailing list. There are some further improvements related to performance and code.\r\n\r\nNote: This breaks test/files/run/t2873.scala, since it uses RedBlack#Empty for testing for the absence of a compiler bug. I don't know how to fix this test so that it still tests for the same compiler bug.",
-      "title": "Immutable TreeMap/TreeSet performance (SI-5331)",
-      "html_url": "https://github.com/scala/scala/pull/82",
-      "diff_url": "https://github.com/scala/scala/pull/82.diff",
-      "created_at": "2011-12-28T12:21:43Z",
-      "issue_user": {
-        "name": "Erik Rozendaal",
-        "company": "Zilverline",
-        "gravatar_id": "71373de50d7a8ebe64d1d55be166acb3",
-        "location": "Amsterdam",
-        "type": "User",
-        "login": "erikrozendaal"
-      },
-      "head": {
-        "sha": "00b5cb84df493aace270674054d2f6ddf3721131",
-        "label": "erikrozendaal:SI-5331",
-        "user": {
-          "name": "Erik Rozendaal",
-          "company": "Zilverline",
-          "gravatar_id": "71373de50d7a8ebe64d1d55be166acb3",
-          "location": "Amsterdam",
-          "type": "User",
-          "login": "erikrozendaal"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/17 09:08:51 -0800",
-          "fork": true,
-          "pushed_at": "2012/01/15 05:42:23 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 2,
-          "forks": 0,
-          "size": 1592,
-          "private": false,
-          "name": "scala",
-          "owner": "erikrozendaal",
-          "url": "https://github.com/erikrozendaal/scala",
-          "open_issues": 0,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop"
-        },
-        "ref": "SI-5331"
-      },
-      "patch_url": "https://github.com/scala/scala/pull/82.patch",
-      "base": {
-        "sha": "99c5d831613bf49afc702dc6aca7ce47b30eab7b",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
           "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
         },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
+        "name": "scala",
+        "id": 2888818
       },
-      "mergeable": true,
-      "issue_created_at": "2011-12-28T12:21:43Z",
-      "labels": [],
-      "state": "open"
+      "user": null,
+      "sha": "30ef129f322687cbc885d344ca73dd4877fbedd6",
+      "ref": "master",
+      "label": "scala:master"
     },
-    {
-      "updated_at": "2012-01-09T14:56:46Z",
-      "issue_updated_at": "2012-01-09T14:56:45Z",
-      "gravatar_id": "6e4171314f4704b1e82aa4e5d9067e92",
-      "position": 1.0,
-      "number": 49,
-      "votes": 0,
+    "patch_url": "https://github.com/scala/scala/pull/697.patch",
+    "html_url": "https://github.com/scala/scala/pull/697",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/retronym/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/retronym/scala",
+        "html_url": "https://github.com/retronym/scala",
+        "pushed_at": "2012-06-14T20:22:52Z",
+        "full_name": "retronym/scala",
+        "fork": true,
+        "created_at": "2011-12-02T23:04:11Z",
+        "url": "https://api.github.com/repos/retronym/scala",
+        "has_downloads": true,
+        "watchers": 2,
+        "size": 608,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/retronym/scala.git",
+        "ssh_url": "git@github.com:retronym/scala.git",
+        "private": false,
+        "updated_at": "2012-06-14T20:22:52Z",
+        "owner": {
+          "login": "retronym",
+          "gravatar_id": "5df8faf17a57ccab478a9b8056862fc3",
+          "url": "https://api.github.com/users/retronym",
+          "avatar_url": "https://secure.gravatar.com/avatar/5df8faf17a57ccab478a9b8056862fc3?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 65551
+        },
+        "name": "scala",
+        "id": 2902104
+      },
       "user": {
-        "gravatar_id": "6e4171314f4704b1e82aa4e5d9067e92",
-        "type": "User",
-        "login": "soc"
+        "login": "retronym",
+        "gravatar_id": "5df8faf17a57ccab478a9b8056862fc3",
+        "url": "https://api.github.com/users/retronym",
+        "avatar_url": "https://secure.gravatar.com/avatar/5df8faf17a57ccab478a9b8056862fc3?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 65551
       },
-      "comments": 2,
-      "body": "Don't show migration messages from 2.7 for people needing migration\r\nadvice for their 2.9 -> 2.10 move, but keep all the information\r\nfor developers needing it.\r\n\r\nXmigration accepts a specific version like -Xmigration:2.8 now.\r\nThis will show only migration warnings since that version.\r\n\r\nDefault for -Xmigration is \"2.9\".\r\n\r\nAdjusted tests, added some new. All tests pass.\r\n\r\nFixes SI-4990.",
-      "title": "Migration improvements",
-      "html_url": "https://github.com/scala/scala/pull/49",
-      "diff_url": "https://github.com/scala/scala/pull/49.diff",
-      "created_at": "2011-12-08T15:37:56Z",
-      "issue_user": {
-        "gravatar_id": "6e4171314f4704b1e82aa4e5d9067e92",
-        "type": "User",
-        "login": "soc"
+      "sha": "d3393306e3899e638b1c5ebe577f3fe1b2729cbd",
+      "ref": "ticket/4270-3",
+      "label": "retronym:ticket/4270-3"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-10T07:45:02Z",
+    "body": "If an expression wouldn't type check explicitly, it shouldn't be\nallowed implicitly.\n\nEmploys `typedIdent`, which already does this sort of thing rather well,\ninstead of continuing to reimplement it in `Implicits`.\n\nRemove check for non-implicit synonym, which is subsumed by typing an `Ident`.\n\nAlso fixes SI-5376.\n\nTyping the `Ident` will be a touch slower, but I don't get consistent build times for `quick.comp` on my laptop at the best of times, so I couldn't determine if is a problem.\n\nResubmission of #692 that accommodates Scaladoc's usage of implicit search.\n\nReview by @adriaanm. ",
+    "diff_url": "https://github.com/scala/scala/pull/697.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/697",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/697"
       },
-      "head": {
-        "sha": "365c9bb1634f48b2814dadf21ec783d5ab1a5ca9",
-        "label": "soc:SI-4990#2",
-        "user": {
-          "gravatar_id": "6e4171314f4704b1e82aa4e5d9067e92",
-          "type": "User",
-          "login": "soc"
-        },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/12/01 16:40:27 -0800",
-          "fork": true,
-          "pushed_at": "2011/12/08 13:03:07 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 2,
-          "forks": 1,
-          "size": 268,
-          "private": false,
-          "name": "scala",
-          "owner": "soc",
-          "url": "https://github.com/soc/scala",
-          "open_issues": 0,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop"
-        },
-        "ref": "SI-4990#2"
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/697"
       },
-      "patch_url": "https://github.com/scala/scala/pull/49.patch",
-      "base": {
-        "sha": "fd95db6b12f53bb54a446c3d8e27d991989b874b",
-        "label": "scala:master",
-        "user": {
-          "name": "The Scala Programming Language",
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/697/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/697/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/697"
+      }
+    },
+    "updated_at": "2012-06-14T19:11:18Z",
+    "number": 697,
+    "issue_url": "https://github.com/scala/scala/issues/697",
+    "id": 1530572,
+    "title": "SI-4270 Disqualify in scope implicits that are shadowed."
+  },
+  {
+    "user": {
+      "login": "retronym",
+      "gravatar_id": "5df8faf17a57ccab478a9b8056862fc3",
+      "url": "https://api.github.com/users/retronym",
+      "avatar_url": "https://secure.gravatar.com/avatar/5df8faf17a57ccab478a9b8056862fc3?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+      "id": 65551
+    },
+    "state": "open",
+    "base": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 140,
+        "git_url": "git://github.com/scala/scala.git",
+        "open_issues": 14,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/scala/scala",
+        "html_url": "https://github.com/scala/scala",
+        "pushed_at": "2012-06-14T23:44:38Z",
+        "full_name": "scala/scala",
+        "fork": false,
+        "created_at": "2011-12-01T05:02:34Z",
+        "url": "https://api.github.com/repos/scala/scala",
+        "has_downloads": true,
+        "watchers": 574,
+        "size": 69620,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/scala/scala.git",
+        "ssh_url": "git@github.com:scala/scala.git",
+        "private": false,
+        "updated_at": "2012-06-15T14:05:56Z",
+        "owner": {
+          "login": "scala",
           "gravatar_id": "c0713d6f34649ef9a7358de2ef25379a",
-          "blog": "http://www.scala-lang.org/",
-          "type": "Organization",
-          "login": "scala"
+          "url": "https://api.github.com/users/scala",
+          "avatar_url": "https://secure.gravatar.com/avatar/c0713d6f34649ef9a7358de2ef25379a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+          "id": 57059
         },
-        "repository": {
-          "has_issues": false,
-          "has_downloads": true,
-          "language": "Scala",
-          "created_at": "2011/11/30 21:02:34 -0800",
-          "fork": false,
-          "pushed_at": "2012/01/23 10:12:33 -0800",
-          "description": "The Scala programming language",
-          "has_wiki": true,
-          "watchers": 237,
-          "forks": 65,
-          "size": 43598,
-          "private": false,
-          "name": "scala",
-          "owner": "scala",
-          "url": "https://github.com/scala/scala",
-          "open_issues": 8,
-          "homepage": "http://www.scala-lang.org/",
-          "integrate_branch": "develop",
-          "organization": "scala"
-        },
-        "ref": "master"
+        "name": "scala",
+        "id": 2888818
       },
-      "mergeable": true,
-      "issue_created_at": "2011-12-08T15:37:56Z",
-      "labels": [],
-      "state": "open"
-    }
-  ]
-}
+      "user": null,
+      "sha": "59f0214e5d8603572f50514666ec24e274747369",
+      "ref": "master",
+      "label": "scala:master"
+    },
+    "patch_url": "https://github.com/scala/scala/pull/687.patch",
+    "html_url": "https://github.com/scala/scala/pull/687",
+    "head": {
+      "repo": {
+        "mirror_url": null,
+        "has_wiki": true,
+        "has_issues": false,
+        "forks": 0,
+        "git_url": "git://github.com/retronym/scala.git",
+        "open_issues": 0,
+        "language": "Scala",
+        "description": "The Scala programming language",
+        "svn_url": "https://github.com/retronym/scala",
+        "html_url": "https://github.com/retronym/scala",
+        "pushed_at": "2012-06-14T20:22:52Z",
+        "full_name": "retronym/scala",
+        "fork": true,
+        "created_at": "2011-12-02T23:04:11Z",
+        "url": "https://api.github.com/repos/retronym/scala",
+        "has_downloads": true,
+        "watchers": 2,
+        "size": 608,
+        "homepage": "http://www.scala-lang.org/",
+        "clone_url": "https://github.com/retronym/scala.git",
+        "ssh_url": "git@github.com:retronym/scala.git",
+        "private": false,
+        "updated_at": "2012-06-14T20:22:52Z",
+        "owner": {
+          "login": "retronym",
+          "gravatar_id": "5df8faf17a57ccab478a9b8056862fc3",
+          "url": "https://api.github.com/users/retronym",
+          "avatar_url": "https://secure.gravatar.com/avatar/5df8faf17a57ccab478a9b8056862fc3?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+          "id": 65551
+        },
+        "name": "scala",
+        "id": 2902104
+      },
+      "user": {
+        "login": "retronym",
+        "gravatar_id": "5df8faf17a57ccab478a9b8056862fc3",
+        "url": "https://api.github.com/users/retronym",
+        "avatar_url": "https://secure.gravatar.com/avatar/5df8faf17a57ccab478a9b8056862fc3?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "id": 65551
+      },
+      "sha": "f7a81e933b344ec54f520c047540f2d84c40a6fc",
+      "ref": "ticket/5892",
+      "label": "retronym:ticket/5892"
+    },
+    "merged_at": null,
+    "created_at": "2012-06-08T20:18:46Z",
+    "body": " - Abuse `Context#inSelfSuperCall` for this purpose.\n - Inline `createNamer` into `completerOf(tree, typeParams)`, remove impossible case,\n   and tweak inSelfSuperCall.\n\nI originally tried this change in `Typers#typedClassDef`. Perhaps that also needs\nto be addressed, but I couldn't motivate that with a failing test.\n\nThis problem can lead to cyclic inheritance errors, as was seen in Scalala.\n\nReview by @lrytz",
+    "diff_url": "https://github.com/scala/scala/pull/687.diff",
+    "closed_at": null,
+    "url": "https://api.github.com/repos/scala/scala/pulls/687",
+    "_links": {
+      "html": {
+        "href": "https://github.com/scala/scala/pull/687"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/687"
+      },
+      "review_comments": {
+        "href": "https://api.github.com/repos/scala/scala/pulls/687/comments"
+      },
+      "comments": {
+        "href": "https://api.github.com/repos/scala/scala/issues/687/comments"
+      },
+      "issue": {
+        "href": "https://api.github.com/repos/scala/scala/issues/687"
+      }
+    },
+    "updated_at": "2012-06-11T07:27:13Z",
+    "number": 687,
+    "issue_url": "https://github.com/scala/scala/issues/687",
+    "id": 1526297,
+    "title": "SI-5892 Don't apply implicit class members in class type param annots"
+  }
+]

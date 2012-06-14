@@ -10,6 +10,11 @@ die () {
   exit 1
 }
 
+run () {
+  # echo "$@"
+  "$@"
+}
+
 libscala=${LIBSCALA_HOME:-$(dirname $BASH_SOURCE)/..}
 
 scala=$(which scala 2>/dev/null)
@@ -40,8 +45,8 @@ cd $dir || die "Can't find $dir"
 
 which sbt &>/dev/null || die "Can't find sbt in your path."
 [[ -d lib_managed ]] || sbt update
-[[ -d target/scala-2.9.1/classes ]] || sbt package
-cp=$(find lib_managed -name '*.jar' | mkString ':'):target/scala-2.9.1/classes
+[[ -d target/scala-2.9.2/classes ]] || sbt package
+cp=$(find $(pwd)/lib_managed -name '*.jar' | mkString ':'):$(ls -d $(pwd)/target/scala*/classes)
 
-"$scala" -cp "$cp" improving.pullreq.Main "$userAndRepo" "$@"
+run "$scala" -cp "$cp" improving.pullreq.Main "$userAndRepo" "$@"
 # 2>/dev/null

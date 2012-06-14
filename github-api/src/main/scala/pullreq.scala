@@ -8,66 +8,92 @@ import java.io.StringBufferInputStream
 import scala.sys.process._
 import java.net.URL
 
+trait HasSha {
+  def sha: String
+  def sha10: String = sha take 10
+}
+
+case class Commit(
+  url: String,
+  sha: String,
+  author: User,
+  committer: User,
+  message: String,
+  tree: Tree,
+  parents: List[Tree]
+) extends HasSha {
+}
+case class Tree(
+  url: String,
+  sha: String
+) extends HasSha {
+}
+
 case class User(
   login: String,
+  id: String,
   name: Option[String],
-  email: Option[String],
-  repository: Option[Repository]
+  email: Option[String]
 )
 
-case class Repository(
+case class Repo(
   name: String,
-  owner: String,
-  url: String
+  full_name: String,  // e.g. scala/scala
+  html_url: String
 )
 
 case class Pull(
   number: Int,
-  head: Commit,
+  state: String,
+  base: Ref,
+  head: Ref,
   user: User,
   title: String,
+  body: String,
+  created_at: String,
   updated_at: String
-  // mergeable: Boolean
+  // Not given in the "list" mode, only for individual pullreqs
+  // mergeable: Option[Boolean]
 ) extends Ordered[Pull] {
+  def isOpen = state == "open"
+  // def isNotMergeable = mergeable exists (x => !x)
+  // def isMergeable = mergeable exists (x => x)
   def compare(other: Pull): Int = number compare other.number
-  def sha10  = head.sha10
-  def ref    = head.ref
-  def branch = head.label.replace(':', '/')
-  def date   = updated_at takeWhile (_ != 'T')
-  def time   = updated_at drop (date.length + 1)
+  def sha        = head.sha10
+  def branch     = head.userAndBranch
+  def created    = created_at takeWhile (_ != 'T')
+  def updated    = updated_at takeWhile (_ != 'T')
+  def shortTitle = if (title.length <= 60) title else (title take 57).trim + "..."
 }
 
-case class Commit(
+case class Ref(
+  repo: Repo,
+  user: Option[User],
   sha: String,
-  label: String,
   ref: String,
-  repository: Repository
-) {
-  def sha10 = sha take 10
+  label: String
+) extends HasSha {
+  def userAndBranch = label.replace(':', '/')
 }
 
 class PullReqs(userAndRepo: String) {
   implicit val formats = DefaultFormats // Brings in default date formats etc.
 
-  val urlpath = "http://github.com/api/v2/json/pulls/" + userAndRepo + "/open"
+  val urlpath = "https://api.github.com/repos/" + userAndRepo + "/pulls"
   // val oauth   = "?access_token=" + sys.env("GITHUB_TOKEN")
   val url     = new java.net.URL(urlpath)
-  val jsonRaw     = slurp(url)
+  val jsonRaw = slurp(url)
   val json    = parse(slurp(url))
 
-  def pulls    = (json \ "pulls").extract[List[Pull]].sorted
-  def shas     = pulls map (_.sha10)
+  def pulls    = json.extract[List[Pull]].sorted
   def numbers  = pulls map (_.number)
-  def refs     = pulls map (_.ref)
-  def users    = pulls map (_.user)
   def branches = pulls map (_.branch)
   // def fields(key: String) = (json \\ "head" \\ key children) map (_.extract[String])
   
   def pp() = Process("jsonpp") #< new StringBufferInputStream(jsonRaw) !
   def showPulls() {
-    pulls foreach {
-      case pull @ Pull(number, Commit(sha, label, ref, repository), user, title, updated_at) =>
-        println("%3d  %10s  %-15s  %-60s".format(number, pull.date, user.login, title take 60))
+    pulls foreach { p =>
+      println("%3d  %10s  %-15s  %-60s".format(p.number, p.created, p.user.login, p.shortTitle))
     }
     println(branches.mkString("\ngit merge ", " ", ""))
     println(numbers map ("refs/pull/" + _ + "/head") mkString ("\ngit merge ", " ", ""))
@@ -79,7 +105,6 @@ object Main {
     args.toList match {
       case userAndRepo :: args =>
         val req = new PullReqs(userAndRepo)
-        println(req.urlpath)
 
         if (args.isEmpty) req.showPulls()
         else args foreach {
