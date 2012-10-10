@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# scala-rev-parse
+# Translate argument into a usable object name in $SCALA_SRC_HOME
+#
+
+declare -a scalac_args
+
+die () {
+  echo "$@"
+  exit 0
+}
+usage () {
+  local program="$(basename $0)"
+  cat <<EOM
+Usage: $program <git revision>
+
+"man gitrevisions" for git revision formats.
+
+Examples:
+  $program master~50
+  $program 2.10.x@{upstream}
+  $program origin/2.10.x@{yesterday}
+EOM
+}
+run-git () {
+  git --git-dir $SCALA_SRC_HOME/.git --no-pager "$@"
+}
+verify-rev () {
+  run-git rev-parse --quiet --verify "$1" >/dev/null
+}
+scala-rev-parse () {
+  local rev="$1"
+
+  if verify-rev "$rev"; then
+    echo "$rev"
+  else
+    rev=$(run-git log $(run-git rev-parse --since="$rev") --reverse --format=%H origin/master | head -1)
+    if verify-rev "$rev"; then
+      echo "$rev"
+    else
+      echo >&2 "Not a valid revision: $1" && exit 1
+    fi
+  fi
+}
+
+[[ $# -gt 0 ]]            || die "$(usage)"
+[[ -d $SCALA_SRC_HOME ]]  || die "Set \$SCALA_SRC_HOME to a scratch checkout of https://github.com/scala/scala ."
+
+scala-rev-parse "$1"

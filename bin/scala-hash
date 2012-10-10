@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+#
+# scala-hash
+# turns a git revision into a runnable scala/scalac by means of
+# downloading the build from http://scala-webapps.epfl.ch/artifacts
+#
+
+set -e
+unset HASH WHEN DONE failed verify echo_home
+
+die () {
+  echo "$@"
+  exit 0
+}
+echoerr () {
+  echo >&2 "$@"
+}
+usage () {
+  local program="$(basename $0)"
+  cat <<EOM
+Usage: $program <sha/branch> [-dv] [arg arg ...]
+
+  -d: approxidate backward from given branch
+  -h: don't run anything, only download and echo \$SCALA_HOME
+  -v: verify pack dir names against current tags
+
+Environment variables:
+  SCALA_SRC_HOME      path to scratch checkout of https://github.com/scala/scala
+  SCALA_PACKS_DIR     path to downloaded scala builds
+  RUNNER              which program to run (defaults to scala)
+
+Examples:
+  $program master -d 10.days.ago -nc -e '5 * 5'
+  RUNNER=scalac $program v2.10.0-M7 -version
+EOM
+}
+
+run-git () {
+  git --git-dir $SCALA_SRC_HOME/.git --no-pager "$@"
+}
+git-desc () {
+  run-git describe --long --tags --match=v2* "$@"
+}
+git-shas-command-line () {
+  echo run-git log "$@" --format=%H $HASH
+}
+git-shas-in-range () {
+  eval $(git-shas-command-line "$@")
+}
+
+pack-url-for-sha () {
+  local sha="$1"
+  echo "http://scala-webapps.epfl.ch/artifacts/$sha/pack.tgz"
+}
+
+pack-url-exists () {
+  local sha="$1"
+  curl --silent --fail -I "$(pack-url-for-sha $sha)" >/dev/null
+}
+
+all-pack-dir-shas () {
+  for d in $(find "$SCALA_PACKS_DIR" -type d -maxdepth 1 -print); do
+    echo ${d:(-10)}
+  done
+}
+
+pack-dirs-for-sha () {
+  local sha="$1"
+  find "$SCALA_PACKS_DIR" -type d -maxdepth 1 -name "*-g$sha" -print
+}
+
+pack-dir-name () {
+  echo "$SCALA_PACKS_DIR/scala-$(git-desc $1)"
+}
+
+download-scala () {
+  local sha=$1
+  local dir=$2
+  local url=$(pack-url-for-sha $sha)
+
+  echoerr -n [info] downloading $url ...
+  mkdir -p "$dir"
+  curl --fail --silent -f "$url" | tar -x -z -C "$dir" -f -
+
+  if [[ $PIPESTATUS -ne 0 ]]; then
+    echoerr "failed."
+  else
+    echoerr "done."
+  fi
+
+  # update directory time to match git commit date
+  local iso_time=$(run-git show --date=iso --pretty=format:%cd "$sha" | head -n 1)
+  local file_time=$(echo ${iso_time:0:17} | tr -d ':- ')
+  echoerr [info] scala revision from $iso_time downloaded to $dir
+  # annoying privlege elevation - judicious edit of /etc/sudoers recommended
+  sudo find "$dir" -print0 | xargs -0 touch -h -t "$file_time"
+}
+
+# Start command line / environment variable processing
+[[ $# -gt 0 ]]               || die "$(usage)"
+[[ -d $SCALA_PACKS_DIR ]]    || die "Set \$SCALA_PACKS_DIR to a path where downloaded builds can be cached."
+[[ -d $SCALA_SRC_HOME ]]     || die "Set \$SCALA_SRC_HOME to a scratch checkout of https://github.com/scala/scala ."
+which scala-hash 2>/dev/null || die "Cannot find required program scala-hash."
+[[ -z $RUNNER ]] && RUNNER=scala
+
+
+while [[ $# -gt 0 ]] && [[ -z $DONE ]]; do
+  case "$1" in
+    -v) verify=true && shift ;;
+    -h) echo_home=true && shift ;;
+    -d) approxidate=$(echo "$2" | tr ' ' '.') && WHEN="--since=\"$approxidate\" --reverse" && shift 2 ;;
+     *) if [[ -z "$HASH" ]]; then HASH="$1" && shift; else DONE=true; fi ;;
+  esac
+done
+
+[[ -z $HASH ]] && HASH=master
+
+if [[ -n $verify ]]; then
+  for sha in $(all-pack-dir-shas); do
+    res=$(pack-dirs-for-sha $sha)
+    num=$(echo "$res" | wc -w)
+    if [[ $num -gt 1 ]]; then
+      pack-dirs-for-sha $sha
+    fi
+  done
+
+  exit 0
+fi
+
+for sha in $($(git-shas-command-line $WHEN)); do
+  dir="$(pack-dir-name $sha)"
+  shome="$dir/pack"
+  path="$shome/bin/$RUNNER"
+
+  # If the runner doesn't exist, the pack dir doesn't exist, and
+  # the jenkins url does exist, download the pack.
+  [[ ! -f "$path" ]] && [[ ! -d "$dir" ]] && pack-url-exists "$sha" && download-scala "$sha" "$dir"
+
+  # Now the runner should exist, or the download failed.
+  if [[ -f "$path" ]]; then
+    if [[ -z $failed ]]; then
+      echoerr "[info] ${HASH:0:10} => $dir"
+    elif [[ -z $WHEN ]]; then
+      echoerr "[warn] ${HASH:0:10} failed, using closest available"
+      echoerr "[info] ${sha:0:10} => $dir"
+    fi
+
+    if [[ -n $echo_home ]]; then
+      echo "$shome" && exit 0
+    else
+      exec "$path" "$@"
+    fi
+  fi
+
+  failed=true # so we know to mention we're not using the requested version
+done
+
+cat <<EOM
+No scala version found.  Does the command line
+  $(git-shas-command-line $WHEN)
+describe any actual revisions?
+EOM
+
+exit 1

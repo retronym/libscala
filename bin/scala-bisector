@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+#
+# scala-bisect
+# find where things went south
+# TODO: this only deals with bugs which can be seen via scalac alone.
+# Needs to be fleshed out so we can also bisect for bugs which involve
+# successful compilation and some kind of runtime failure.
+#
+# scala-bisect v2.10.0-M5 v2.10.0-M6 foo.scala
+
+declare -a scalac_args
+
+
+die () {
+  echo "$@"
+  exit 0
+}
+echoerr () {
+  echo >&2 "$@"
+}
+run-git () {
+  git --git-dir $SCALA_SRC_HOME/.git --no-pager "$@"
+}
+git-desc () {
+  run-git describe --long --tags --match=v2* "$@"
+}
+git-date () {
+  run-git log -n1 --date=default --format=%cd "$@"
+}
+printf-color () {
+  local color=$1 && shift
+  local args="$@"
+
+  ansi-code () {
+    printf "\x1b[${1}m"
+  }
+  out () {
+    printf "$(ansi-code $1)$(ansi-code 1)${args[@]}$(ansi-code 0)"
+  }
+  case $color in
+    red) out 31 ;;
+  green) out 32 ;;
+ yellow) out 33 ;;
+      *) printf "${args[@]}" ;;
+  esac
+}
+
+usage () {
+  local program="$(basename $0)"
+  cat <<EOM
+Usage: $program <good rev> <bad rev> [arg arg arg...]
+
+The bisection is performed with each revision testing the return code of
+  \$SCALA_PACKS_DIR/<revision>/bin/scalac [arg arg arg...]
+
+Examples:
+  $program v2.10.0-M5 v2.10.0-M6 foo.scala
+  $program origin/2.10.x master -optimise foo.scala
+  $program 50.days.ago 10.days.ago foo.scala
+EOM
+}
+
+[[ $# -ge 3 ]]            || die "$(usage)"
+[[ -d $SCALA_PACKS_DIR ]] || die "Set \$SCALA_PACKS_DIR to a path where downloaded builds can be cached."
+[[ -d $SCALA_SRC_HOME ]]  || die "Set \$SCALA_SRC_HOME to a scratch checkout of https://github.com/scala/scala ."
+
+good=$(scala-rev-parse "$1") || die "Invalid revision: $1"
+bad=$(scala-rev-parse "$2") || die "Invalid revision: $2"
+shift 2
+
+for arg in "$@"; do
+  # make paths absolute if necessary since we're changing to the git dir
+  [[ -f "$arg" ]] && [[ ${arg:0:1} != "/" ]] && arg="$(pwd)/$arg"
+
+  scalac_args=( "${scalac_args[@]}" "$arg" )
+done
+
+log=$(mktemp -dt scala-bisect)
+mkdir "$log/out"
+
+cat >&2 <<EOM
+  start:   $(git-desc $good) ($(git-date $good))
+    end:   $(git-desc $bad) ($(git-date $bad))
+command:   scalac ${scalac_args[@]}
+  packs:   $SCALA_PACKS_DIR
+   repo:   $SCALA_SRC_HOME
+   logs:   $log
+
+EOM
+
+current () {
+  local sha=$(cat .git/BISECT_HEAD)
+  echo ${sha:0:10}
+}
+keepGoing () {
+  ! run-git bisect log | grep -q $(current)
+}
+
+cd $SCALA_SRC_HOME
+[[ -f $SCALA_SRC_HOME/.git/BISECT_HEAD ]] && run-git bisect reset
+run-git fetch --quiet --all
+run-git bisect start --no-checkout
+run-git bisect good $good
+run-git bisect bad $bad
+
+while [[ -f $SCALA_SRC_HOME/.git/BISECT_HEAD ]] && keepGoing; do
+  cur=$(current)
+
+  dir="$(find $SCALA_PACKS_DIR -maxdepth 1 -type d -name *$cur)"
+  [[ -d "$dir" ]] || dir=$(scala-hash -h $cur)
+
+  runner="$dir/pack/bin/scalac"
+
+  bisect () {
+    local outcome="$1" && shift
+    local color="$1" && shift
+    echo "[$(printf-color $color $cur)] $(git-date $cur)"
+    run-git bisect "$outcome" "$cur" >/dev/null
+  }
+
+  if [[ -f "$runner" ]]; then
+    # echoerr ""
+    # echoerr "% $runner ${scalac_args[@]}"
+    "$runner" -d "$log/out" "${scalac_args[@]}" >"$log/$cur.log" 2>&1
+    if [[ $? -eq 0 ]]; then
+      bisect good green ok
+    else
+      bisect bad red failed
+    fi
+  else
+    bisect skip yellow skipped
+  fi
+done
+
+run-git bisect run
+run-git bisect reset
