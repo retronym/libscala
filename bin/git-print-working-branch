@@ -2,5 +2,9 @@
 #
 # print the name of the currently checked out branch.
 
-ref=$(git symbolic-ref HEAD)
+remoteb () {
+  git branch -a --contains HEAD | grep remotes | head -1
+}
+
+ref=$(git symbolic-ref HEAD 2>/dev/null || remoteb)
 echo ${ref##refs/heads/}

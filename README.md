@@ -1,10 +1,15 @@
 Tools for scala developers.  I have a lot more but it is going to take
 me some time to organize everything.
 
-Usage:
+Add lines like these to your .profile or similar:
 
-    source /path/to/libscala.sh   # add to your .profile or similar
-    ./git-java/install.sh         # run this one time
+    export SCALA_SRC_HOME=/path/to/repo  # path to a scratch checkout of trunk
+    export SCALA_PACKS_DIR=/path/to/dir  # path to somewhere to cached downloaded builds
+    source /path/to/libscala.sh
+
+Run this one time:
+
+    ./git-java/install.sh
 
 If you're lucky, that's it.  Examples of available things:
 
@@ -21,11 +26,11 @@ There are a number of git-XXX wrappers in ~/bin, e.g.
 If you have a lot of git branches tied to a non-canonical version of the
 scala repository, you might want to look at git-remaster, which can fix that
 all up for you.
-    
+
 There is an sbt project in github-api which provides the basis for "pullreqs",
 a command you can run from (any project's) github clone to see something like this:
 
-    % pullreqs 
+    % pullreqs
 
      49  365c9bb163       soc  Migration improvements                    2012-01-09  SI-4990#2
      82  51667dc039  erikroze  Immutable TreeMap/TreeSet performance (S  2012-01-26  SI-5331
@@ -100,5 +105,5 @@ Display all 998 possibilities? (y or n)
 -XX:+PrintGCTimeStamps                    -XX:+PrintVMOptions
 -XX:+PrintHeapAtGC                        -XX:+PrintVMQWaitTime
 -XX:+PrintHeapAtGCExtended                -XX:+PrintWarnings
--XX:+PrintHeapAtSIGBREAK                  
+-XX:+PrintHeapAtSIGBREAK
 ```
