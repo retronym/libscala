@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# parse the reflog for recently checked out branches
+
+branches () {
+  git reflog --format=%d | egrep -v '^\s*$' | uniq | perl -pe 's/^\s*\(([^,]*).*\)\s*$/$1\n/'
+}
+
+# -t 1 indicates stdout connected to terminal
+if [[ -t 1 ]]; then
+  branches | less
+else
+  branches
+fi
