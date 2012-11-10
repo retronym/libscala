@@ -53,16 +53,21 @@ Usage: $program <good rev> <bad rev> [arg arg arg...]
 The bisection is performed with each revision testing the return code of
   \$SCALA_PACKS_DIR/<revision>/bin/scalac [arg arg arg...]
 
+Environment:
+  RUNNER alternative runner script. The default is scalac.
+
 Examples:
   $program v2.10.0-M5 v2.10.0-M6 foo.scala
   $program origin/2.10.x master -optimise foo.scala
   $program 50.days.ago 10.days.ago foo.scala
+  RUNNER=scala $program v2.10.0-M5 v2.10.0-M6 -nocompdaemon foo.scala
 EOM
 }
 
 [[ $# -ge 3 ]]            || die "$(usage)"
 [[ -d $SCALA_PACKS_DIR ]] || die "Set \$SCALA_PACKS_DIR to a path where downloaded builds can be cached."
 [[ -d $SCALA_SRC_HOME ]]  || die "Set \$SCALA_SRC_HOME to a scratch checkout of https://github.com/scala/scala ."
+[[ -z $RUNNER ]] && RUNNER=scala
 
 good=$(scala-rev-parse "$1") || die "Invalid revision: $1"
 bad=$(scala-rev-parse "$2") || die "Invalid revision: $2"
@@ -81,7 +86,7 @@ mkdir "$log/out"
 cat >&2 <<EOM
   start:   $(git-desc $good) ($(git-date $good))
     end:   $(git-desc $bad) ($(git-date $bad))
-command:   scalac ${scalac_args[@]}
+command:   $RUNNER ${scalac_args[@]}
   packs:   $SCALA_PACKS_DIR
    repo:   $SCALA_SRC_HOME
    logs:   $log
@@ -109,7 +114,7 @@ while [[ -f $SCALA_SRC_HOME/.git/BISECT_HEAD ]] && keepGoing; do
   dir="$(find $SCALA_PACKS_DIR -maxdepth 1 -type d -name *$cur)"
   [[ -d "$dir" ]] || dir=$(scala-hash -h $cur)
 
-  runner="$dir/pack/bin/scalac"
+  runnerpath="$dir/bin/${RUNNER}"
 
   bisect () {
     local outcome="$1" && shift
@@ -118,10 +123,10 @@ while [[ -f $SCALA_SRC_HOME/.git/BISECT_HEAD ]] && keepGoing; do
     run-git bisect "$outcome" "$cur" >/dev/null
   }
 
-  if [[ -f "$runner" ]]; then
+  if [[ -f "$runnerpath" ]]; then
     # echoerr ""
     # echoerr "% $runner ${scalac_args[@]}"
-    "$runner" -d "$log/out" "${scalac_args[@]}" >"$log/$cur.log" 2>&1
+    "$runnerpath" -d "$log/out" "${scalac_args[@]}" >"$log/$cur.log" 2>&1
     if [[ $? -eq 0 ]]; then
       bisect good green ok
     else
