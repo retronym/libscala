@@ -100,7 +100,6 @@ download-scala () {
 [[ $# -gt 0 ]]               || die "$(usage)"
 [[ -d $SCALA_PACKS_DIR ]]    || die "Set \$SCALA_PACKS_DIR to a path where downloaded builds can be cached."
 [[ -d $SCALA_SRC_HOME ]]     || die "Set \$SCALA_SRC_HOME to a scratch checkout of https://github.com/scala/scala ."
-which scala-hash 2>/dev/null || die "Cannot find required program scala-hash."
 [[ -z $RUNNER ]] && RUNNER=scala
 
 
