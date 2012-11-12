@@ -1,4 +1,4 @@
-# !/usr/bin/env bash
+#!/usr/bin/env bash
 #
 # Credit to "Ole J" and user208173
 #
@@ -22,7 +22,7 @@
 # based on the command and the given arguments, if there is a
 # completer for the command, and set the wrapper as the completer for
 # the alias.
-function wrap_alias() {
+wrap_alias() {
   [[ "$#" == 3 ]] || return 1
 
   local alias_name="$1"
@@ -57,7 +57,7 @@ function wrap_alias() {
   local wrapper_name="${namespace}${alias_name}"
 
   eval "
-function ${wrapper_name}() {
+${wrapper_name}() {
   ((COMP_CWORD+=$num_alias_arguments))
   args=( \"${alias_arguments}\" )
   COMP_WORDS=( $aliased_command \${args[@]} \${COMP_WORDS[@]:1} )
