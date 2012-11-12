@@ -46,6 +46,7 @@ complete -F _scala_svn_rev_completion gh-commit gh-svn
 # Delete the cached bytecode disassemblies
 alias git-javap-clean='git update-ref -d refs/notes/textconv/javap'
 
-# Install bash completion for all aliases, e.g. `gl --a<TAB>` will complete
-# as per `git log --a<TAB>`.
-source $libscalaBash/complete-alias
+# Add this line to your .profile if you want all your aliases to have
+# bash completion. WARNING: if you have a lot of aliases, this might
+# cause a small slowdown on login, in the order of a second.
+# source $libscalaBash/complete-alias
