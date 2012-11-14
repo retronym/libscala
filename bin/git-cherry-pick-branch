@@ -1,0 +1,27 @@
+#!/bin/bash -e
+#
+# Cherry pick a branch starting at it's merge base onto a new branch.
+#
+#
+#      o---o---o---T
+#     /             \
+# ---1---o---o---o---M-
+#
+# git-cherry-pick-branch M will cherry pick the commits from 1..T
+# into the current branch.
+#
+# If the merge commit merges multiple branches, you can
+# explicitly provide the `T` as the second parameter.
+[ $# -lt 2 ] || { echo "Usage: $0 merge-commit [pull-request-branch] [backport-branch]" && exit 0; }
+mergehash=$1
+prtip="${2:-$1^2}"
+head=`git describe`
+pr=`git show $mergehash | grep "Merge pull request" | awk -F '[ #]+' '{print $5}'`
+defaultbackportbranch=backport/$pr
+backportbranch=${3:-$defaultbackportbranch}
+git checkout -b $backportbranch
+git cherry-pick -x $(git merge-base $prtip $mergehash^1)..$prtip
+cherryhead=`git describe`
+git reset --hard $head
+git merge --squash $cherryhead
+git commit -F .git/SQUASH_MSG

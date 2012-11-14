@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Show the git log of a branch starting at it's merge base. 
+#
+#
+#      o---o---o---T
+#     /             \
+# ---1---o---o---o---M-
+#
+# git-log-branch M will log the commits from 1..T
+#
+# If the merge commit merges multiple branches, you can
+# explicitly provide the `T` as the second parameter.
+#
+
+[ $# -lt 2 ] || { echo "Usage: $0 merge-commit [pull-request-branch]" && exit 0; }
+mergehash=$1
+prtip="${2:-$1^2}"
+
+git log $(git merge-base $prtip $mergehash^1)..$prtip
