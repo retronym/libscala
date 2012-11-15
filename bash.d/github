@@ -38,3 +38,11 @@ gh-find () {
     done
   ) || echo "Can't find scala repo: set \$SCALA_SRC_HOME ."
 }
+
+gh-compare () {
+  open "$scalaGitUrl/compare/master/$1"
+}
+
+gh-pull () {
+  open "$scalaGitUrl/pull/$1"
+}

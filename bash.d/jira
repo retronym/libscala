@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Source this file to get handy scala Jira commands.
+#
+# jira-issue SI-1234
+# jira-issue 1234    # SI- prefix assumed 
+#
+# jira-search reporter=retronym and status=open
+# jira-search fixVersion=\'Unreleased-2.10.0\' and status=open
+#
+# OSXcentric - tell me how to do it portably.
+jira-issue () {
+  issue=$1
+  found=$(echo $issue | egrep '^\d+$')
+  if [ "$found" ]; then
+    issue="SI-$issue"
+  fi;
+  open "$scalaJiraUrl/browse/$issue"
+}
+
+jira-search () {
+  jqlEncoded=$(url-encode "$*")
+  url="$scalaJiraUrl/secure/IssueNavigator.jspa?reset=true&jqlQuery=$jqlEncoded"
+  open $url
+}
+
+url-encode () {
+  echo "$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$1")"
+}

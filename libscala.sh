@@ -27,6 +27,7 @@ export libscalaEtc="$libscalaRoot/etc"
 export scalaGitRepo="$SCALA_SRC_HOME"
 export scalaGitUrl="https://github.com/scala/scala"
 export scalaSvnMap="$libscalaEtc/scala-svn-to-sha1-map.txt"
+export scalaJiraUrl="http://issues.scala-lang.org"
 
 # thanks for the easy transition git
 # Can't use --no-edit because it isn't understood by anything
@@ -34,7 +35,7 @@ export scalaSvnMap="$libscalaEtc/scala-svn-to-sha1-map.txt"
 export GIT_MERGE_AUTOEDIT=no
 
 # Source the extra completion and helper functions.
-trySource scala-291 scala java github git-aliases git
+trySource scala-291 scala java github git-aliases git jira
 
 # Adding -XX: flags to java
 complete -o default -F _java_with_jvm_opts java
