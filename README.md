@@ -13,15 +13,32 @@ Run this one time:
 
 If you're lucky, that's it.  Examples of available things:
 
-    gh-commit <sha|svn> # accepts sha-1 or rev, shows in browser.  Tab-completion on svn revs!
-    java -XX:           # tab-completion on java -XX: options (a tad verbose at the moment)
-    scala -J-XX:        # also completes on -J-XX: options
-    gco <tab>           # a git checkout which completes on local branches only
-    gh-find Global      # open a browser to those files in trunk matching Global
+    gh-commit <sha|svn>        # accepts sha-1 or rev, shows in browser.  Tab-completion on svn revs!
+    java -XX:                  # tab-completion on java -XX: options (a tad verbose at the moment)
+    scala -J-XX:               # also completes on -J-XX: options
+    gco <tab>                  # a git checkout which completes on local branches only
+    gh-find Global             # open a browser to those files in trunk matching Global
+    gh-pull 666                # browse pull request #666
+    jira-issue 1234            # browse SI-1234 on everyone's favourite tracker
+    jira-search reporter=bob \
+      and fixVersion=\'2.9.2\' # execute JQL search
+    jira-text-search kaboom    # search summary, comments, and description for keywords
+    gh-new-pull-request 2.10.x # open the New Pull Request form in github
 
 There are a number of git-XXX wrappers in ~/bin, e.g.
 
-    git-diff-grep b1 b2 Bippy     # Show a diff between b1 and b2 - but only the hunks containing "Bippy"
+    git-diff-grep b1 b2 Bippy         # Show a diff between b1 and b2 - but only the hunks containing "Bippy"
+    git-log-branch $mergehash         # Git log of the feature branch merged in $mergehash
+    git-cherry-pick-branch $mergehash # Create a branch backport/$pullid with a squashed commit
+                                      # of the commits shown by `git-log-branch`.
+
+You can also install bash completion for all your aliases by adding the following to your .profile.
+(Warning: it does slow down your login time a touch.)
+
+    source $libscalaBash/complete-alias
+
+    % gco --a
+    --all      --amend    --author=
 
 If you have a lot of git branches tied to a non-canonical version of the
 scala repository, you might want to look at git-remaster, which can fix that

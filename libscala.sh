@@ -40,7 +40,10 @@ trySource scala-291 scala java github git-aliases git jira
 # Adding -XX: flags to java
 complete -o default -F _java_with_jvm_opts java
 # Adding -J-XX: flags to scala and friends
-complete -o default -F _scala_with_jvm_opts fsc scalac scala
+complete -o default -F _scala_with_jvm_opts fsc scalac scala pscalac pscala qscalac qscala scalac29 scala29 scalac3 scala3
+
+complete -o default -F _git g
+
 # Adding rXXXX svn revision completion to some gh- commands
 complete -F _scala_svn_rev_completion gh-commit gh-svn
 
