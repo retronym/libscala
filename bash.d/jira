@@ -8,6 +8,8 @@
 # jira-search reporter=retronym and status=open
 # jira-search fixVersion=\'Unreleased-2.10.0\' and status=open
 #
+# jira-text-search raw type
+#
 # OSXcentric - tell me how to do it portably.
 jira-issue () {
   issue=$1
@@ -22,6 +24,15 @@ jira-search () {
   jqlEncoded=$(url-encode "$*")
   url="$scalaJiraUrl/secure/IssueNavigator.jspa?reset=true&jqlQuery=$jqlEncoded"
   open $url
+}
+
+jira-text-search () {
+  jql=""
+  for s in "$@"; do
+    [ "$jql" == "" ] || jql="$jql AND "
+    jql="$jql (summary ~ \"$s\" OR description ~ \"$s\" OR comment ~ \"$s\")"
+  done  
+  jira-search $jql
 }
 
 url-encode () {
