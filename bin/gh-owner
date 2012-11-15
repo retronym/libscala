@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#
+
+both=$(gh-owner-and-repo) && echo ${both%%/*}

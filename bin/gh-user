@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+git config --get github.user || echo >&2 "config github.user is unset"

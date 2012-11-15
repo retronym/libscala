@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#
+
+git-origin-url | perl -pe 's/^.*?github\.com\/(.*)/$1/'
