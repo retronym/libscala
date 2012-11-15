@@ -12,5 +12,4 @@ target=${1:-master}
 [[ -n $pulled ]] || { echo "Failed to determine branch name" && exit 1; }
 
 url="https://github.com/$user/$repo/pull/new/$owner:$target...$pulled"
-
-echo $url
+open "$url"
