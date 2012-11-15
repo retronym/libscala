@@ -38,3 +38,18 @@ gh-find () {
     done
   ) || echo "Can't find scala repo: set \$SCALA_SRC_HOME ."
 }
+
+gh-compare () {
+  open "$scalaGitUrl/compare/master/$1"
+}
+
+gh-pull () {
+  open "$scalaGitUrl/pull/$1"
+}
+
+gh-new-pull () {
+  user=`git config --get github.user`
+  pulled=`git rev-parse --abbrev-ref HEAD`
+  target=$1
+  open "https://github.com/${user}/scala/pull/new/scala:${target}...$pulled"
+}
