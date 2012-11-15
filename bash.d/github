@@ -32,7 +32,7 @@ gh-svn () {
 }
 
 gh-find () {
-  [[ -d "$SCALA_SRC_HOME" ]] && ( cd "$SCALA_SRC_HOME" && 
+  [[ -d "$SCALA_SRC_HOME" ]] && ( cd "$SCALA_SRC_HOME" &&
     for f in $(ack --noenv --scala -f -g "$@" src); do
       gh-tree "$f"
     done
@@ -47,9 +47,11 @@ gh-pull () {
   open "$scalaGitUrl/pull/$1"
 }
 
+# https://github.com/paulp/scala/pull/new/scala:master...scala:2.10.x
 gh-new-pull () {
-  user=`git config --get github.user`
-  pulled=`git rev-parse --abbrev-ref HEAD`
-  target=$1
-  open "https://github.com/${user}/scala/pull/new/scala:${target}...$pulled"
+  user=$(git config --get github.user) || { echo "git config variable github.user is not set" && return 1; }
+  pulled="$(git rev-parse --abbrev-ref HEAD)"
+  [[ $pulled == "HEAD" ]] && echo "Failed to determine branch name" && return 1
+  target="scala:${1:-master}"
+  open "https://github.com/$user/scala/pull/new/$target...$pulled"
 }

@@ -2,7 +2,7 @@
 #
 
 [[ $# -gt 0 ]] || {
-  echo "Usage: $0 <command> [repo repo....]"
+  echo "Usage: $(basename $0) <command> [repo repo....]"
   echo "  Runs command with cwd of each repo, echoing the name of the repo if it returns true."
   exit 0
 }

@@ -3,7 +3,7 @@
 # Looks for a string in the git history and tries to show
 # only the patch hunks involving it.
 
-[ $# -eq 1 ] || { echo "Usage: $0 <PATTERN>" && exit 0; }
+[ $# -eq 1 ] || { echo "Usage: $(basename $0) <PATTERN>" && exit 0; }
 type grepdiff >/dev/null || { echo "Requires grepdiff." && exit 0; }
 
 revs=$($(dirname $0)/git-diff-find-revs "$1")
