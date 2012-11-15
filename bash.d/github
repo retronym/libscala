@@ -46,3 +46,10 @@ gh-compare () {
 gh-pull () {
   open "$scalaGitUrl/pull/$1"
 }
+
+gh-new-pull () {
+  user=`git config --get github.user`
+  pulled=`git rev-parse --abbrev-ref HEAD`
+  target=$1
+  open "https://github.com/${user}/scala/pull/new/scala:${target}...$pulled"
+}
