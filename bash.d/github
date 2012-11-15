@@ -32,7 +32,7 @@ gh-svn () {
 }
 
 gh-find () {
-  [[ -d "$SCALA_SRC_HOME" ]] && ( cd "$SCALA_SRC_HOME" && 
+  [[ -d "$SCALA_SRC_HOME" ]] && ( cd "$SCALA_SRC_HOME" &&
     for f in $(ack --noenv --scala -f -g "$@" src); do
       gh-tree "$f"
     done
@@ -45,11 +45,4 @@ gh-compare () {
 
 gh-pull () {
   open "$scalaGitUrl/pull/$1"
-}
-
-gh-new-pull () {
-  user=`git config --get github.user`
-  pulled=`git rev-parse --abbrev-ref HEAD`
-  target=$1
-  open "https://github.com/${user}/scala/pull/new/scala:${target}...$pulled"
 }

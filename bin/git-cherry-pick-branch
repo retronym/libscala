@@ -12,7 +12,7 @@
 #
 # If the merge commit merges multiple branches, you can
 # explicitly provide the `T` as the second parameter.
-[ $# -lt 2 ] || { echo "Usage: $0 merge-commit [pull-request-branch] [backport-branch]" && exit 0; }
+[[ $# -gt 0 ]] && [[ $# -le 3 ]] || { echo "Usage: $(basename $0) merge-commit [pull-request-branch] [backport-branch]" && exit 0; }
 mergehash=$1
 prtip="${2:-$1^2}"
 head=`git describe`

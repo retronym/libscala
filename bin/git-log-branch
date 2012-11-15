@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-# Show the git log of a branch starting at it's merge base. 
-#
+# Show the git log of a branch starting at it's merge base.
 #
 #      o---o---o---T
 #     /             \
@@ -13,7 +12,7 @@
 # explicitly provide the `T` as the second parameter.
 #
 
-[ $# -lt 2 ] || { echo "Usage: $0 merge-commit [pull-request-branch]" && exit 0; }
+[[ $# -gt 0 ]] && [[ $# -le 2 ]] || { echo "Usage: $(basename $0) merge-commit [pull-request-branch]" && exit 0; }
 mergehash=$1
 prtip="${2:-$1^2}"
 

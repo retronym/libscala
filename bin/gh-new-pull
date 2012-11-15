@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# https://github.com/paulp/scala/pull/new/scala:master...scala:2.10.x
+set -e
+
+user=$(gh-user)
+owner=$(gh-owner)
+repo=$(gh-repo)
+pulled=$(git-print-working-branch)
+target=${1:-master}
+
+[[ -n $pulled ]] || { echo "Failed to determine branch name" && exit 1; }
+
+url="https://github.com/$user/$repo/pull/new/$owner:$target...$pulled"
+
+echo $url

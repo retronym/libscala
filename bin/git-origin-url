@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+git config --local --get remote.origin.url || { echo >&2 "Not a git repository" && exit 1; }

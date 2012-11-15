@@ -5,7 +5,7 @@ set -e
 
 [[ $# -gt 0 ]] || {
   cat <<EOM
-Usage: $0 <ref>
+Usage: $(basename $0) <ref>
 
 ** Warning! This utterly destroys the current branch AND
 deletes every file in the tree which is not checked in by
@@ -50,7 +50,7 @@ commit () {
   local sha=$2
   local desc=$(git describe --always $sha)
   local timestamp=$(git log --format="%at" -n 1 $sha)
-  
+
   ( printf "($label $desc) " && git --no-pager log --format=%B -n 1 $sha ) | git commit --quiet --all --allow-empty --date=$timestamp --amend -F -
 }
 
@@ -69,7 +69,7 @@ reset_for () {
 cpick () {
   git cherry-pick --strategy=recursive -Xignore-space-change $1 &>/dev/null
 }
-  
+
 
 for sha in $commits; do
   desc=$(git describe --always $sha)
