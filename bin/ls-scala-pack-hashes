@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+
+cd $SCALA_PACKS_DIR && ls -1 | sed 's/^.*-g//'
+

@@ -22,7 +22,7 @@ Usage: $program <sha/branch> [-dv] [arg arg ...]
 
   -d: approxidate backward from given branch
   -h: don't run anything, only download and echo \$SCALA_HOME
-  -v: verify pack dir names against current tags
+  -v: verify pack dir names/times against current tags and git times
 
 Environment variables:
   SCALA_SRC_HOME      path to scratch checkout of https://github.com/scala/scala
@@ -66,11 +66,34 @@ all-pack-dir-shas () {
 
 pack-dirs-for-sha () {
   local sha="$1"
-  find "$SCALA_PACKS_DIR" -type d -maxdepth 1 -name "*-g$sha" -print
+  find "${SCALA_PACKS_DIR}/" -type d -maxdepth 1 -name "*-g$sha" -print
 }
 
 pack-dir-name () {
   echo "$SCALA_PACKS_DIR/scala-$(git-desc $1)"
+}
+
+get-iso-time () {
+  local sha="$1"
+  run-git show --date=iso --pretty=format:%cd "$sha" | head -n 1
+}
+
+get-file-time () {
+  local sha="$1"
+  local iso_time=$(get-iso-time "$1")
+
+  echo ${iso_time:0:17} | tr -d ':- '
+}
+
+# update directory time to match git commit date
+update-pack-time () {
+  local sha=$1
+  local dir=$2
+  local iso_time=$(run-git show --date=iso --pretty=format:%cd "$sha" | head -n 1)
+  local file_time=$(echo ${iso_time:0:17} | tr -d ':- ')
+  echoerr [info] scala revision from $iso_time downloaded to $dir
+  # annoying privlege elevation - judicious edit of /etc/sudoers recommended
+  sudo find "$dir" -print0 | xargs -0 touch -h -t "$file_time"
 }
 
 download-scala () {
@@ -88,12 +111,7 @@ download-scala () {
     echoerr "done."
   fi
 
-  # update directory time to match git commit date
-  local iso_time=$(run-git show --date=iso --pretty=format:%cd "$sha" | head -n 1)
-  local file_time=$(echo ${iso_time:0:17} | tr -d ':- ')
-  echoerr [info] scala revision from $iso_time downloaded to $dir
-  # annoying privlege elevation - judicious edit of /etc/sudoers recommended
-  sudo find "$dir" -print0 | xargs -0 touch -h -t "$file_time"
+  update-pack-time "$sha" "$dir"
 }
 
 # Start command line / environment variable processing
@@ -115,8 +133,11 @@ done
 [[ -z $HASH ]] && HASH=master
 
 if [[ -n $verify ]]; then
-  for sha in $(all-pack-dir-shas); do
+  for sha in $(ls-scala-pack-hashes); do
     res=$(pack-dirs-for-sha $sha)
+
+    [[ -n "$res" ]] && update-pack-time $sha $res
+
     num=$(echo "$res" | wc -w)
     if [[ $num -gt 1 ]]; then
       pack-dirs-for-sha $sha
