@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#
+
+sha=${1:-$(git-pwsha)}
+scala-build-log "$sha" | ack -A3 '\bFAILED|:error:\b'

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+
+sha40=$(scala-sha40 $1)
+url="http://scala-webapps.epfl.ch/artifacts/$sha40/buildLog.txt"
+curl --silent "$url"

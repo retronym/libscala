@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#
+
+cd "$SCALA_SRC_HOME" && git fetch --quiet origin && git log --format=%H -n1 "$@"
+
