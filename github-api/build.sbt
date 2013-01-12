@@ -1,9 +1,11 @@
 logLevel := Level.Warn
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.10.0"
+
+resolvers += Opts.resolver.sonatypeSnapshots
 
 libraryDependencies ++= Seq(
-  "net.liftweb" % "lift-json_2.9.1" % "2.4-M5"
+  "net.liftweb" %% "lift-json" % "2.5-SNAPSHOT"
 )
 
 retrieveManaged := true
