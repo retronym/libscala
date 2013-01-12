@@ -16,10 +16,7 @@ run () {
 }
 
 libscala=${LIBSCALA_HOME:-$(dirname $BASH_SOURCE)/..}
-
-scala=$(which scala-2.9 2>/dev/null)
-[[ -x "$scala" ]] || scala="$SCALA_HOME/bin/scala"
-[[ -x "$scala" ]] || die "Can't find scala-2.9."
+scala=$(find-scala 2.10)
 
 mkString () {
   local sep="$1"

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# Print the absolute path of scala matching the given version
+# if such can be found
+
+die () { echo "$@" && exit 1; }
+
+tryRunner() {
+  local version="$1"
+  local path="$2"
+
+  ${foo:0:$bip}
+
+  [[ -x "$path" ]] && {
+    v=$("$path" -version 2>&1 | perl -pe 's/.*?(\d+\.\d+\.\d+).*/\1/')
+    v=${v:0:${#version}}
+
+    [[ "$v" == "$version" ]]
+  }
+}
+
+findRunner() {
+  local version="$1"
+  local dotless=${version//./}
+  w () {
+    which "$1" 2>/dev/null || echo "$1"
+  }
+  for path in "$SCALA_HOME/bin/scala" "$(w scala-$version)" "$(w scala$dotless)" "$(w scala)"; do
+    if tryRunner "$version" "$path"; then
+      echo "$path" && return
+    fi
+  done
+
+  die "Can't find scala version $version."
+}
+
+findRunner "$1"
