@@ -30,7 +30,7 @@ alias gam='git commit -a -m'
 alias grh='git reset --hard'
 alias grhh='git reset --hard HEAD^'
 alias gmm='git merge master'
-alias grm='git rebase master'
+alias grm='git rebase --ignore-date master'
 alias grim='git rebase -i master'
 alias gra='git rebase --abort'
 
@@ -88,7 +88,7 @@ gsquash () {
   echo "goes wrong, revert to initial state by running:"
   echo "  git reset --hard $desc"
   echo ""
-  
+
   gm-run git-merge-with-opts --quiet "$@" && return
   echo "New/changed files: $(git diff --name-only master..)"
   echo ""
