@@ -44,5 +44,14 @@ gh-compare () {
 }
 
 gh-pull () {
-  open "$scalaGitUrl/pull/$1"
+  pullId=""
+  if [[ $# -eq 0 ]]; then
+    # Figure out the pull request from the current branch.
+    # Assumes ` fetch = +refs/pull/*/head:refs/remotes/origin/*` in /.git/config
+    git fetch origin > /dev/null
+    pullId=$(git-what-branch --allbranches `git describe` | perl -ple 's/.*origin\/(\d+).*/$1/')
+  else
+    pullId=$1
+  fi
+  open "$scalaGitUrl/pull/$pullId"
 }
