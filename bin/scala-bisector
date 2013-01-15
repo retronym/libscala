@@ -68,7 +68,7 @@ EOM
 [[ -d $SCALA_PACKS_DIR ]] || die "Set \$SCALA_PACKS_DIR to a path where downloaded builds can be cached."
 [[ -d $SCALA_SRC_HOME ]]  || die "Set \$SCALA_SRC_HOME to a scratch checkout of https://github.com/scala/scala ."
 [[ -z $RUNNER ]] && RUNNER=scala
-
+[[ -z $GREEN_STATUS ]] && GREEN_STATUS=0
 good=$(scala-rev-parse "$1") || die "Invalid revision: $1"
 bad=$(scala-rev-parse "$2") || die "Invalid revision: $2"
 shift 2
@@ -127,7 +127,7 @@ while [[ -f $SCALA_SRC_HOME/.git/BISECT_HEAD ]] && keepGoing; do
     # echoerr ""
     # echoerr "% $runner ${scalac_args[@]}"
     "$runnerpath" -d "$log/out" "${scalac_args[@]}" >"$log/$cur.log" 2>&1
-    if [[ $? -eq 0 ]]; then
+    if [[ $? -eq $GREEN_STATUS ]]; then
       bisect good green ok
     else
       bisect bad red failed
