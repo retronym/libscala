@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+
+# which sbt 2>/dev/null ||
+{
+  sbtjar=$(find ~/.ivy2 -name 'sbt-launch-0.1[2-9].*.jar' | tail -1)
+  if [[ -n "$sbtjar" ]]; then
+    echo java -Dsbt.log.noformat=true -jar "$sbtjar"
+  else
+    echo >&2 "No sbt in path and no sbt-launch jar to be found in ~/.ivy2"
+    exit 1
+  fi
+}
