@@ -6,7 +6,7 @@
 # Source this file to find your scala world somewhat enhanced.
 #
 
-[[ -d "$BASH_COMPLETION_DIR" ]] || [[ -d "$BASH_COMPLETION" ]] || {
+[[ -d "$BASH_COMPLETION_DIR" ]] || [[ -d "$BASH_COMPLETION" ]] || [[ -d "$BASH_COMPLETION_COMPAT_DIR" ]] || {
   echo "This won't work without bash completion set up."
   return
 }

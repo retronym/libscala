@@ -159,10 +159,11 @@ for sha in $($(git-shas-command-line $WHEN)); do
   # Now the runner should exist, or the download failed.
   if [[ -f "$path" ]]; then
     if [[ -z $failed ]]; then
-      echoerr "[info] ${HASH:0:10} => $dir"
+      true
+      # echoerr "[info] ${HASH:0:10} => $dir"
     elif [[ -z $WHEN ]]; then
       echoerr "[warn] ${HASH:0:10} failed, using closest available"
-      echoerr "[info] ${sha:0:10} => $dir"
+      # echoerr "[info] ${sha:0:10} => $dir"
     fi
 
     if [[ -n $echo_home ]]; then
