@@ -7,4 +7,10 @@ remoteb () {
 }
 
 ref=$(git symbolic-ref HEAD 2>/dev/null || remoteb)
-echo ${ref##refs/heads/}
+branch=${ref##refs/heads/}
+
+if [[ -n $branch ]]; then
+  echo "$branch"
+else
+  git-pwsha
+fi
