@@ -6,7 +6,7 @@
 #
 
 set -e
-unset HASH WHEN DONE failed verify echo_home
+declare HASH WHEN DONE failed verify echo_home
 
 die () {
   echo "$@"

@@ -12,6 +12,7 @@ alias gch='git checkout'
 alias gco='git commit'
 alias gd='git diff'
 
+unalias gcl 2>/dev/null
 gcl () { git clone "$1" && cd "$(basename ${1%%.git};)" && pwd; }
 
 # gl and gll differ only in completion - gll is local branches only
