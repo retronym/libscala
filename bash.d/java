@@ -18,23 +18,18 @@ _prefixed_jvm_opts () {
   local prefix="$1"
   local cur prev
   _get_comp_words_by_ref -n : cur prev
-  
+
   local opts
   if [[ $cur == ${prefix}-XX* ]]; then
     opts=$(_raw_jvm_opts "${prefix}-XX:")
   else
     opts="${prefix}-Xmx ${prefix}-Xms ${prefix}-XX:"
   fi
-  
-  COMPREPLY=( "${COMPREPLY[@]}" $(compgen -W "$opts" -- "${cur}") )
-}
 
-_java_with_jvm_opts () {
-  _java
-  _prefixed_jvm_opts ""
+  COMPREPLY=( "${COMPREPLY[@]}" $(compgen -W "$opts" -- "${cur}") )
 }
 
 _scala_with_jvm_opts () {
   _scala_completion
   _prefixed_jvm_opts "-J"
-} 
+}

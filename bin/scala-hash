@@ -36,7 +36,7 @@ EOM
 }
 
 run-git () {
-  git --git-dir $SCALA_SRC_HOME/.git --no-pager "$@"
+  /usr/local/bin/git --git-dir $SCALA_SRC_HOME/.git --no-pager "$@"
 }
 git-desc () {
   run-git describe --long --tags --match=v2* "$@"

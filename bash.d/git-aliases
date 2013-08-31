@@ -105,19 +105,12 @@ gm-run () {
   "$@"
 }
 
+__my_git_heads () {
+  __gitcomp "$(__git_heads)"
+}
+
 # completing on branches only, no paths
-complete -F _git_branch gb gbD grh gch
-complete -F _git_branch_local_only gds gmad gm-ours gm-theirs gsquash gsquash-ours gsquash-theirs
+complete -F __my_git_heads gb gbD grh gch gds gmad gm-ours gm-theirs gsquash gsquash-ours gsquash-theirs
 
 # branches and paths
-complete -o default -F _git_branch gc gl
-
-for cmd in $(cat <<EOM
-gll
-gdm..
-gdsm..
-git-diff-find-revs
-git-diff-grep
-git-diff-grep-revs
-EOM
-) ; do complete -o default -F _git_branch_local_only $cmd ; done
+complete -o default -F __my_git_heads gc gl gll gdm.. gdsm.. git-diff-find-revs git-diff-grep git-diff-grep-revs
