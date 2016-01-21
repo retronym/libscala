@@ -6,6 +6,7 @@ javapBin=javap
 [[ -x "$javapBin" ]] || javapBin="$JAVA_HOME/bin/javap"
 [[ -x "$javapBin" ]] || javapBin="/etc/alternatives/java_sdk/bin/javap"
 [[ -x "$javapBin" ]] || javapBin="/etc/alternatives/javap"
+[[ -x "$javapBin" ]] || javapBin="$HOME/.jenv/shims/javap"
 [[ -x "$javapBin" ]] || {
   echo >&2 "Cannot locate javap."
   exit 1
