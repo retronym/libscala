@@ -19,7 +19,7 @@
 
 export PATH="$PATH:$LIBSCALA_HOME/bin"
 
-export libscalaRoot="$(cd "$(dirname $BASH_SOURCE)" && pwd)"
+export libscalaRoot="$(builtin cd "$(dirname $BASH_SOURCE)" && pwd)"
 [[ -f "$libscalaRoot/bash.d/boot" ]] && . "$libscalaRoot/bash.d/boot"
 
 export libscalaBash="$libscalaRoot/bash.d"
